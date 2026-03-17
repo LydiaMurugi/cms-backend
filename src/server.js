@@ -10,6 +10,7 @@ import dutiesRoutes from './routes/dutiesRoutes.js'
 import programsRoutes from './routes/programsRoutes.js' 
 import resourceRoutes from './routes/resourceRoutes.js' 
 import notificationRoutes from './routes/notificationRoutes.js'   
+import tenantRoutes from './routes/tenantRoutes.js'
 
 const app = express()
 
@@ -19,6 +20,7 @@ app.use(express.json())
 app.get('/', (req, res) => {
   res.send('Church API running')
 })
+app.use('/api/tenants', tenantRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/users', membersRoutes)
 app.use("/api/dashboard", dashboardRoutes)

@@ -4,10 +4,10 @@ import pool from '../db.js'
 
 export const getMe = async (req, res) => {
   try {
-    const userId = req.user.userId || req.user.id  // handle both naming conventions
+    const userId = req.user.userId || req.user.id
 
     const result = await pool.query(
-      `SELECT id, name, email, phone, avatar, created_at, role
+      `SELECT id, name, email, phone, avatar, created_at, role, tenant_id, permissions
        FROM users
        WHERE id = $1`,
       [userId]
@@ -19,7 +19,11 @@ export const getMe = async (req, res) => {
       return res.status(404).json({ message: 'User not found' })
     }
 
-    res.json(user)
+    // Map DB column names to frontend camelCase
+    res.json({
+      ...user,
+      tenantId: user.tenant_id
+    })
   } catch (err) {
     console.error(err)
     res.status(500).json({ message: 'Server error' })
@@ -31,7 +35,7 @@ export const login = async (req, res) => {
     const { email, password } = req.body
 
     const result = await pool.query(
-      `SELECT id, name, email, phone, avatar, created_at, role, password_hash
+      `SELECT id, name, email, phone, avatar, created_at, role, password_hash, tenant_id, permissions
        FROM users
        WHERE email = $1`,
       [email]
@@ -52,10 +56,13 @@ export const login = async (req, res) => {
       return res.status(401).json({ error: 'Invalid password' })
     }
 
+    // Token now includes tenantId for backend scoping
     const token = jwt.sign(
       {
         userId: user.id,
         role: user.role,
+        tenantId: user.tenant_id
+        
       },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
@@ -71,6 +78,8 @@ export const login = async (req, res) => {
         avatar: user.avatar || null,
         created_at: user.created_at,
         role: user.role,
+        tenantId: user.tenant_id,
+        permissions: user.permissions
       },
     })
   } catch (error) {
@@ -81,7 +90,9 @@ export const login = async (req, res) => {
 
 export const register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body
+    // Added tenantId and permissions to the registration body
+    const { name, email, password, role, tenantId, permissions } = req.body
+
     const existing = await pool.query(
       'SELECT id FROM users WHERE email = $1',
       [email]
@@ -91,21 +102,20 @@ export const register = async (req, res) => {
       return res.status(400).json({ error: 'User already exists' })
     }
 
-    // hash password
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
     const result = await pool.query(
-      `INSERT INTO users (name, email, password_hash, role)
-       VALUES ($1, $2, $3, $4)
-       RETURNING id, name, email, phone, avatar, created_at, role`,
-      [name, email, passwordHash, role || 'member']
+      `INSERT INTO users (name, email, password_hash, role, tenant_id, permissions)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING id, name, email, phone, avatar, created_at, role, tenant_id, permissions`,
+      [name, email, passwordHash, role || 'member', tenantId || null, JSON.stringify(permissions || [])]
     )
 
     const user = result.rows[0]
 
     const token = jwt.sign(
-      { userId: user.id, role: user.role },
+      { userId: user.id, role: user.role, tenantId: user.tenant_id },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     )
@@ -120,6 +130,8 @@ export const register = async (req, res) => {
         avatar: user.avatar || null,
         created_at: user.created_at,
         role: user.role,
+        tenantId: user.tenant_id,
+        permissions: user.permissions
       },
     })
   } catch (error) {
@@ -128,13 +140,11 @@ export const register = async (req, res) => {
   }
 }
 
-// NEW: Update user profile
 export const updateMe = async (req, res) => {
   try {
-    const userId = req.user.userId || req.user.id  // handle both naming conventions
+    const userId = req.user.userId || req.user.id
     const { name, email, phone } = req.body
 
-    // Check if new email already exists (and belongs to a different user)
     if (email) {
       const existing = await pool.query(
         'SELECT id FROM users WHERE email = $1 AND id != $2',
@@ -151,7 +161,7 @@ export const updateMe = async (req, res) => {
               email = COALESCE($2, email),
               phone = COALESCE($3, phone)
         WHERE id = $4
-        RETURNING id, name, email, phone, avatar, created_at, role`,
+        RETURNING id, name, email, phone, avatar, created_at, role, tenant_id, permissions`,
       [name, email, phone, userId]
     )
 
@@ -170,6 +180,8 @@ export const updateMe = async (req, res) => {
         avatar: updatedUser.avatar || null,
         created_at: updatedUser.created_at,
         role: updatedUser.role,
+        tenantId: updatedUser.tenant_id,
+        permissions: updatedUser.permissions
       },
     })
   } catch (err) {
