@@ -3,16 +3,20 @@
    
   // Get all churches (Super Admin only)
   export const getAllTenants = async (req, res) => {
-       try {
+    try {
         const result = await pool.query(
-            'SELECT t.*, (SELECT COUNT(*) FROM users u WHERE u.tenant_id = t.id) as member_count FROM tenants t ORDER BY t.created_at DESC'
+            `SELECT t.*, 
+                (SELECT email FROM users u WHERE u.tenant_id = t.id AND u.role = 'church-admin' LIMIT 1) as admin_email,
+                (SELECT COUNT(*) FROM users u WHERE u.tenant_id = t.id) as member_count
+             FROM tenants t
+             ORDER BY t.created_at DESC`
         );
         res.json(result.rows);
     } catch (err) {
         console.error(err);
-         res.status(500).json({ error: 'Failed to fetch tenants' });
-       }
-  };
+        res.status(500).json({ error: 'Failed to fetch tenants' });
+    }
+};
   
  // Register a New Church + Initial Admin (Atomic Operation)
  export const registerTenant = async (req, res) => {
@@ -67,3 +71,28 @@
         client.release();
         }
     };
+    export const updateTenant = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { churchName, location, status } = req.body;
+
+        const result = await pool.query(
+            `UPDATE tenants 
+             SET name = COALESCE($1, name),
+                 location = COALESCE($2, location),
+                 status = COALESCE($3, status)
+             WHERE id = $4
+             RETURNING *`,
+            [churchName, location, status, id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Church not found' });
+        }
+
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Update failed' });
+    }
+};

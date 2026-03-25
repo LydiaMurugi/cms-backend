@@ -11,6 +11,7 @@ import programsRoutes from './routes/programsRoutes.js'
 import resourceRoutes from './routes/resourceRoutes.js' 
 import notificationRoutes from './routes/notificationRoutes.js'   
 import tenantRoutes from './routes/tenantRoutes.js'
+import settingsRoutes from './routes/settingsRoutes.js'
 
 const app = express()
 
@@ -31,6 +32,7 @@ app.use("/api/programs", programsRoutes);
 app.use("/api/resources", resourceRoutes)
 app.use("/uploads", express.static("uploads"))
 app.use("/api/notifications", notificationRoutes) 
+app.use("/api/settings", settingsRoutes)
 
 const PORT = 4000
 

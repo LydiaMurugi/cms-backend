@@ -4,6 +4,7 @@ import {
   createMember,
   updateMember,
   deleteMember,
+  setPassword,
 } from '../controllers/membersController.js'
 import { verifyToken } from '../middleware/authMiddleware.js'
 import { allowRoles } from '../middleware/roleMiddleware.js'
@@ -14,9 +15,20 @@ const router = express.Router()
 router.use(verifyToken)
 
 // Admin can manage members
-router.get('/', allowRoles('admin', 'leader'), getMembers)
-router.post('/', allowRoles('admin'), createMember)
-router.put('/:id', allowRoles('admin'), updateMember)
-router.delete('/:id', allowRoles('admin'), deleteMember)
+
+ // ✅ Update these lines in your backend routes file:
+  
+    // Allow both admin and leader to see the list
+    router.get('/', allowRoles('admin', 'leader', 'church-admin'), getMembers)
+
+    // Allow church-admin, admin, and leader to invite new members
+    router.post('/', allowRoles('admin', 'church-admin', 'leader'), createMember)
+    
+     // Allow password setting for the new member
+    router.post('/set-password', allowRoles('member'), setPassword)
+  
+    // Allow all admin roles to edit/delete
+   router.put('/:id', allowRoles('admin', 'church-admin', 'leader'), updateMember)
+   router.delete('/:id', allowRoles('admin', 'church-admin', 'leader'), deleteMember)
 
 export default router
