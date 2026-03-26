@@ -96,3 +96,46 @@
         res.status(500).json({ error: 'Update failed' });
     }
 };
+export const deleteTenant = async (req, res) => {
+    const client = await pool.connect();
+    try {
+        const { id } = req.params;
+
+        await client.query('BEGIN');
+
+        // 1. Check if church exists
+        const check = await client.query('SELECT name FROM tenants WHERE id = $1', [id]);
+        if (check.rows.length === 0) {
+            await client.query('ROLLBACK');
+            return res.status(404).json({ error: 'Church not found' });
+        }
+
+        // 2. Delete all related data (Cleanup)
+        // Note: If you have ON DELETE CASCADE in your SQL schema, 
+        // you only need the final DELETE tenants line.
+
+        // Delete duties assigned to members of this tenant
+        await client.query(`
+            DELETE FROM duties
+            WHERE assigned_id IN (SELECT id FROM users WHERE tenant_id = $1)
+        `, [id]);
+
+        // Delete all users (members and admins) belonging to this tenant
+        await client.query('DELETE FROM users WHERE tenant_id = $1', [id]);
+
+        // 3. Delete the Tenant itself
+        await client.query('DELETE FROM tenants WHERE id = $1', [id]);
+
+        await client.query('COMMIT');
+
+        console.log(`🗑️ Church "${check.rows[0].name}" and all associated data deleted.`);
+        res.json({ success: true, message: 'Church and all associated data removed successfully' });
+
+    } catch (err) {
+        await client.query('ROLLBACK');
+        console.error('Church Deletion Error:', err);
+        res.status(500).json({ error: 'Failed to delete church. There may be unhandled data dependencies.' });
+    } finally {
+        client.release();
+    }
+};

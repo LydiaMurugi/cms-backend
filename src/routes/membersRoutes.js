@@ -11,7 +11,12 @@ import { allowRoles } from '../middleware/roleMiddleware.js'
 
 
 const router = express.Router()
+
+ // Allow password setting for the new member
+router.post('/set-password', setPassword) 
 // Only authenticated users
+
+
 router.use(verifyToken)
 
 // Admin can manage members
@@ -24,9 +29,6 @@ router.use(verifyToken)
     // Allow church-admin, admin, and leader to invite new members
     router.post('/', allowRoles('admin', 'church-admin', 'leader'), createMember)
     
-     // Allow password setting for the new member
-    router.post('/set-password', allowRoles('member'), setPassword)
-  
     // Allow all admin roles to edit/delete
    router.put('/:id', allowRoles('admin', 'church-admin', 'leader'), updateMember)
    router.delete('/:id', allowRoles('admin', 'church-admin', 'leader'), deleteMember)

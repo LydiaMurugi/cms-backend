@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: church_cms_db
+    restart: always
+    environment:
+      POSTGRES_USER: lydiawambui
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: church_management
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # backend:
+  #   build: .
+  #   container_name: church_backend
+  #   restart: always
+  #   ports:
+  #     - "4000:4000"
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - db
+
+volumes:
+  postgres_data:
+
+
+  

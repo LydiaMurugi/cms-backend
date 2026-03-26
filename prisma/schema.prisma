@@ -1,0 +1,187 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated"
+  previewFeatures = ["driverAdapters"]
+  engineType      = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model chat_participants {
+  chat_id Int
+  user_id Int
+  chats   chats @relation(fields: [chat_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users   users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([chat_id, user_id])
+}
+
+model chats {
+  id                Int                 @id @default(autoincrement())
+  created_at        DateTime?           @default(now()) @db.Timestamp(6)
+  chat_participants chat_participants[]
+  messages          messages[]
+}
+
+model contributions {
+  id          Int       @id @default(autoincrement())
+  member_id   Int
+  amount      Decimal   @db.Decimal(12, 2)
+  date        DateTime  @default(dbgenerated("CURRENT_DATE")) @db.Date
+  category    String
+  method      String
+  notes       String?
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  member_name String
+  users       users     @relation(fields: [member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model duties {
+  id               Int       @id @default(autoincrement())
+  title            String?
+  assigned_id      Int?
+  date             DateTime? @db.Date
+  status           String?
+  category         String?
+  notes            String?
+  report_submitted Boolean?  @default(false)
+  users            users?    @relation(fields: [assigned_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model finance_categories {
+  id    Int     @id @default(autoincrement())
+  name  String? @unique
+  color String?
+}
+
+model messages {
+  id         Int       @id @default(autoincrement())
+  chat_id    Int?
+  sender_id  Int?
+  text       String?
+  read       Boolean?  @default(false)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  chats      chats?    @relation(fields: [chat_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users      users?    @relation(fields: [sender_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model notifications {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  title      String
+  message    String
+  read       Boolean  @default(false)
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model payment_methods {
+  id   Int     @id @default(autoincrement())
+  name String? @unique
+}
+
+model programs {
+  id       Int       @id @default(autoincrement())
+  title    String?
+  date     DateTime? @db.Date
+  time     String?
+  location String?
+  category String?
+  image    String?
+}
+
+model project_tasks {
+  id         Int       @id @default(autoincrement())
+  project_id Int?
+  title      String?
+  completed  Boolean?  @default(false)
+  projects   projects? @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model projects {
+  id            Int             @id @default(autoincrement())
+  title         String?
+  description   String?
+  status        String?
+  progress      Int?
+  priority      String?
+  start_date    DateTime?       @db.Date
+  end_date      DateTime?       @db.Date
+  assigned_to   String?
+  budget        Decimal?        @db.Decimal
+  spent         Decimal?        @db.Decimal
+  project_tasks project_tasks[]
+}
+
+model resources {
+  id          Int       @id @default(autoincrement())
+  title       String?
+  url         String?
+  uploaded_by Int?
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  users       users?    @relation(fields: [uploaded_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model services {
+  id             Int       @id @default(autoincrement())
+  title          String
+  service_date   DateTime  @db.Date
+  service_time   String?
+  livestream_url String?
+  created_at     DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model settings {
+  id            Int      @id @default(autoincrement())
+  church_name   String?
+  email         String?
+  currency      String?
+  tax_id        String?
+  enable_stripe Boolean? @default(false)
+  stripe_key    String?
+}
+
+model tenants {
+  id            Int       @id @default(autoincrement())
+  name          String
+  location      String?
+  website       String?
+  logo_url      String?
+  status        String?   @default("Active")
+  created_at    DateTime? @default(now()) @db.Timestamp(6)
+  currency      String?   @default("USD")
+  tax_id        String?
+  primary_color String?   @default("#795548")
+  users         users[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model users {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  email             String              @unique
+  password_hash     String?
+  role              String?
+  phone             String?
+  ministry_group    String?
+  status            String?             @default("Active")
+  joined            DateTime?           @db.Date
+  birthdate         DateTime?           @db.Date
+  address           String?
+  created_at        DateTime?           @default(now()) @db.Timestamp(6)
+  avatar            String?
+  tenant_id         Int?
+  permissions       Json?               @default("[]")
+  invite_token      String?
+  invite_expires    DateTime?           @db.Timestamp(6)
+  deleted_at        DateTime?           @db.Timestamp(6)
+  chat_participants chat_participants[]
+  contributions     contributions[]
+  duties            duties[]
+  messages          messages[]
+  notifications     notifications[]
+  resources         resources[]
+  tenants           tenants?            @relation(fields: [tenant_id], references: [id], onUpdate: NoAction)
+}

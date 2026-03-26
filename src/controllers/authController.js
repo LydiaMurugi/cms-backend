@@ -1,29 +1,29 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import pool from '../db.js'
+import db from "../lib/prisma.js"
 
 export const getMe = async (req, res) => {
   try {
-    const userId = req.user.userId || req.user.id
+       const userId = req.user.userId || req.user.id
+       const result = await db.users.findUnique({
+          where: { id: userId },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phone: true,
+            avatar: true,
+            created_at: true,
+            role: true,
+            tenant_id: true,
+            permissions: true
+          }
+        })
 
-    const result = await pool.query(
-      `SELECT id, name, email, phone, avatar, created_at, role, tenant_id, permissions
-       FROM users
-       WHERE id = $1`,
-      [userId]
-    )
-
-    const user = result.rows[0]
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' })
-    }
-
-    // Map DB column names to frontend camelCase
-    res.json({
-      ...user,
-      tenantId: user.tenant_id
-    })
+      if (!result) {
+        return res.status(404).json({ message: 'User not found' })
+      }
   } catch (err) {
     console.error(err)
     res.status(500).json({ message: 'Server error' })
