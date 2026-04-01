@@ -1,14 +1,19 @@
-import pool from "../db.js";
+import db from "../lib/prisma.js";
 
 export const getPrograms = async (req, res) => {
   try {
-    const result = await pool.query(`
-      SELECT *
-      FROM programs
-      ORDER BY date DESC
-    `);
+    const tenantId = req.headers['x-tenant-id'];
 
-    res.json(result.rows);
+    const programs = await db.programs.findMany({
+      where: {
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      },
+      orderBy: {
+        date: 'desc'
+      }
+    });
+
+    res.json(programs);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to fetch programs" });
@@ -18,17 +23,21 @@ export const getPrograms = async (req, res) => {
 export const createProgram = async (req, res) => {
   try {
     const { title, date, time, location, category, image } = req.body;
+    const tenantId = req.headers['x-tenant-id'];
 
-    const result = await pool.query(
-      `
-      INSERT INTO programs (title, date, time, location, category, image)
-      VALUES ($1,$2,$3,$4,$5,$6)
-      RETURNING *
-      `,
-      [title, date, time, location, category, image]
-    );
+    const newProgram = await db.programs.create({
+      data: {
+        title,
+        date: date ? new Date(date) : null,
+        time,
+        location,
+        category,
+        image,
+        tenant_id: tenantId ? parseInt(tenantId) : null
+      }
+    });
 
-    res.json(result.rows[0]);
+    res.json(newProgram);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create program" });

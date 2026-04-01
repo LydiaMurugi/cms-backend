@@ -1,4 +1,4 @@
-import pool from '../db.js'
+import db from "../lib/prisma.js"
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid'
 import { sendInviteEmail } from '../services/emailService.js'
@@ -6,22 +6,37 @@ import { sendInviteEmail } from '../services/emailService.js'
 // GET ALL MEMBERS
 export const getMembers = async (req, res) => {
   try {
-    const result = await pool.query(`
-      SELECT
-        id,
-        name,
-        email,
-        phone,
-        ministry_group AS "group",
-        status,
-        joined,
-        address,
-        birthdate
-      FROM users
-      ORDER BY id DESC
-    `)
+    const tenantId = req.headers['x-tenant-id'];
 
-    res.json(result.rows)
+    const members = await db.users.findMany({
+      where: {
+        tenant_id: tenantId ? parseInt(tenantId) : undefined,
+        role: 'member'
+      },
+      orderBy: {
+        id: 'desc'
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        ministry_group: true,
+        status: true,
+        joined: true,
+        address: true,
+        birthdate: true
+      }
+    })
+
+    // Map ministry_group to group for the response
+    const formattedMembers = members.map(m => ({
+      ...m,
+      group: m.ministry_group,
+      ministry_group: undefined
+    }))
+
+    res.json(formattedMembers)
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Failed to fetch members' })
@@ -31,6 +46,7 @@ export const getMembers = async (req, res) => {
 // CREATE MEMBER (INVITE-BASED FLOW)
 export const createMember = async (req, res) => {
   try {
+    const tenantId = req.headers['x-tenant-id'];
     const {
       name,
       email,
@@ -51,38 +67,48 @@ export const createMember = async (req, res) => {
     }
 
     // 🗄️ Insert user WITHOUT password
-    const result = await pool.query(
-      `
-      INSERT INTO users
-      (name, email, phone, ministry_group, address, birthdate, role, status, invite_token, invite_expires)
-      VALUES ($1, $2, $3, $4, $5, $6, 'member', 'Pending', $7, $8)
-      RETURNING
-        id,
+    const newUser = await db.users.create({
+      data: {
         name,
         email,
         phone,
-        ministry_group AS "group",
-        status,
-        joined,
+        ministry_group: group,
         address,
-        birthdate
-      `,
-      [name, email, phone, group, address, birthdate, inviteToken, inviteExpires]
-    )
-
-    const newUser = result.rows[0]
+        birthdate: birthdate ? new Date(birthdate) : null,
+        role: 'member',
+        status: 'Pending',
+        tenant_id: tenantId ? parseInt(tenantId) : null,
+        invite_token: inviteToken,
+        invite_expires: inviteExpires
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        ministry_group: true,
+        status: true,
+        joined: true,
+        address: true,
+        birthdate: true
+      }
+    })
 
     // 📧 Send invite email
-    if (sendInvite) {
+    if (sendInvite && inviteToken) {
       await sendInviteEmail(email, inviteToken)
     }
 
-    res.json(newUser)
+    res.json({
+      ...newUser,
+      group: newUser.ministry_group,
+      ministry_group: undefined
+    })
 
   } catch (error) {
     console.error('Database Error:', error)
 
-    if (error.code === '23505') {
+    if (error.code === 'P2002') {
       return res.status(400).json({ error: 'A member with this email already exists.' })
     }
 
@@ -96,39 +122,53 @@ export const setPassword = async (req, res) => {
     const { token, password } = req.body
 
     // 🔍 Find user by token
-    const result = await pool.query(
-      `SELECT * FROM users WHERE invite_token = $1`,
-      [token]
-    )
-
-    const user = result.rows[0]
+    const user = await db.users.findFirst({
+      where: { invite_token: token }
+    })
 
     if (!user) {
       return res.status(400).json({ error: 'Invalid token' })
     }
 
     // ⏳ Check if expired
-    if (new Date(user.invite_expires) < new Date()) {
+    if (user.invite_expires && new Date(user.invite_expires) < new Date()) {
       return res.status(400).json({ error: 'Token expired' })
     }
 
     // 🔐 Hash password
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    // ✅ Update user
-    await pool.query(
-      `
-      UPDATE users
-      SET password_hash=$1,
-          invite_token=NULL,
-          invite_expires=NULL,
-          status='Active'
-      WHERE id=$2
-      `,
-      [hashedPassword, user.id]
-    )
+    // ✅ Update user and their tenant (if they are a church-admin) atomically
+    const updatedUser = await db.$transaction(async (tx) => {
+      const u = await tx.users.update({
+        where: { id: user.id },
+        data: {
+          password_hash: hashedPassword,
+          invite_token: null,
+          invite_expires: null,
+          status: 'Active'
+        }
+      })
 
-    res.json({ message: 'Password set successfully' })
+      if (u.role === 'church-admin' && u.tenant_id) {
+        await tx.tenants.update({
+          where: { id: u.tenant_id },
+          data: { status: 'Active' }
+        })
+      }
+
+      return u
+    })
+
+    res.json({
+      message: 'Password set successfully',
+      user: {
+        id: updatedUser.id,
+        role: updatedUser.role,
+        tenantId: updatedUser.tenant_id,
+        status: updatedUser.status
+      }
+    })
 
   } catch (error) {
     console.error(error)
@@ -140,35 +180,44 @@ export const setPassword = async (req, res) => {
 export const updateMember = async (req, res) => {
   try {
     const { id } = req.params
+    const tenantId = req.headers['x-tenant-id'];
     const { name, email, phone, group, status } = req.body
 
-    const result = await pool.query(
-      `
-      UPDATE users
-      SET
-        name=$1,
-        email=$2,
-        phone=$3,
-        ministry_group=$4,
-        status=$5
-      WHERE id=$6
-      RETURNING
-        id,
+    const updatedUser = await db.users.update({
+      where: { 
+        id: parseInt(id),
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      },
+      data: {
         name,
         email,
         phone,
-        ministry_group AS "group",
-        status,
-        joined,
-        address,
-        birthdate
-      `,
-      [name, email, phone, group, status, id]
-    )
+        ministry_group: group,
+        status
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        ministry_group: true,
+        status: true,
+        joined: true,
+        address: true,
+        birthdate: true
+      }
+    })
 
-    res.json(result.rows[0])
+    res.json({
+      ...updatedUser,
+      group: updatedUser.ministry_group,
+      ministry_group: undefined
+    })
   } catch (error) {
     console.error(error)
+    if (error.code === 'P2025') {
+        return res.status(404).json({ error: 'Member not found' })
+    }
     res.status(500).json({ error: 'Failed to update member' })
   }
 }
@@ -177,12 +226,21 @@ export const updateMember = async (req, res) => {
 export const deleteMember = async (req, res) => {
   try {
     const { id } = req.params
+    const tenantId = req.headers['x-tenant-id'];
 
-    await pool.query('DELETE FROM users WHERE id=$1', [id])
+    await db.users.delete({
+      where: { 
+        id: parseInt(id),
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      }
+    })
 
     res.json({ success: true })
   } catch (error) {
     console.error(error)
+    if (error.code === 'P2025') {
+        return res.status(404).json({ error: 'Member not found' })
+    }
     res.status(500).json({ error: 'Failed to delete member' })
   }
 }

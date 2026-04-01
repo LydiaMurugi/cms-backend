@@ -1,53 +1,109 @@
-import pool from "../db.js"
+import db from "../lib/prisma.js"
 
 export const getMemberDashboard = async (req, res) => {
   try {
-    const userId = req.user.userId // from JWT
+    const userId = req.user.userId || req.user.id 
+    const tenantId = req.headers['x-tenant-id'];
 
-    // Upcoming program (next event)
-    const programResult = await pool.query(`
-      SELECT id, title, date, category
-      FROM programs
-      WHERE date >= CURRENT_DATE
-      ORDER BY date ASC
-      LIMIT 1
-    `)
+    const now = new Date();
+    const currentYear = now.getFullYear();
 
-    // Giving summary (from contributions table)
-    const givingResult = await pool.query(
-      `
-      SELECT COALESCE(SUM(amount), 0) AS total
-      FROM contributions
-      WHERE member_id = $1
-      AND EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM CURRENT_DATE)
-    `,
-      [userId]
-    )
+    // 1. Fetch member's specific pending/active duties
+    const myDuties = await db.duties.findMany({
+      where: {
+        assigned_id: parseInt(userId),
+        tenant_id: tenantId ? parseInt(tenantId) : undefined,
+        status: { in: ['Pending', 'In Progress', 'Blocked'] }
+      },
+      orderBy: { date: 'asc' },
+      take: 5
+    });
 
-    // Programs list
-    const programsResult = await pool.query(`
-      SELECT id, title, date, category
-      FROM programs
-      ORDER BY date DESC
-      LIMIT 5
-    `)
+    // 2. Upcoming program (next event)
+    const upcomingService = await db.programs.findFirst({
+      where: {
+        tenant_id: tenantId ? parseInt(tenantId) : undefined,
+        date: {
+          gte: now
+        }
+      },
+      select: {
+        id: true,
+        title: true,
+        date: true,
+        category: true
+      },
+      orderBy: {
+        date: 'asc'
+      }
+    });
 
-    // Resources list
-    const resourcesResult = await pool.query(`
-      SELECT id, title, created_at AS date, url
-      FROM resources
-      ORDER BY created_at DESC
-      LIMIT 5
-    `)
+    // 3. Giving summary (from contributions table)
+    const givingAggregate = await db.contributions.aggregate({
+      where: {
+        member_id: parseInt(userId),
+        tenant_id: tenantId ? parseInt(tenantId) : undefined,
+        date: {
+          gte: new Date(`${currentYear}-01-01`),
+          lte: new Date(`${currentYear}-12-31`)
+        }
+      },
+      _sum: {
+        amount: true
+      }
+    });
+
+    // 4. Programs list
+    const programs = await db.programs.findMany({
+      where: {
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      },
+      select: {
+        id: true,
+        title: true,
+        date: true,
+        category: true
+      },
+      orderBy: {
+        date: 'desc'
+      },
+      take: 5
+    });
+
+    // 5. Resources list
+    const resources = await db.resources.findMany({
+      where: {
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      },
+      select: {
+        id: true,
+        title: true,
+        created_at: true,
+        url: true
+      },
+      orderBy: {
+        created_at: 'desc'
+      },
+      take: 5
+    });
+
+    // Format resources to match previous output (created_at AS date)
+    const formattedResources = resources.map(r => ({
+      id: r.id,
+      title: r.title,
+      date: r.created_at,
+      url: r.url
+    }));
 
     res.json({
-      upcomingService: programResult.rows[0] || null,
+      upcomingService: upcomingService || null,
       givingSummary: {
-        totalThisYear: givingResult.rows[0].total,
+        totalThisYear: givingAggregate._sum.amount || 0,
         currency: "USD",
       },
-      programs: programsResult.rows,
-      resources: resourcesResult.rows,
+      myDuties: myDuties,
+      programs: programs,
+      resources: formattedResources,
     })
   } catch (error) {
     console.error(error)

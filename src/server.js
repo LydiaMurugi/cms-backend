@@ -1,6 +1,6 @@
+import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
-import  './db.js'
 import membersRoutes from './routes/membersRoutes.js'
 import authRoutes from './routes/authRoutes.js' 
 import dashboardRoutes from './routes/dashboardRoutes.js'

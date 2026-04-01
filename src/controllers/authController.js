@@ -1,29 +1,32 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import pool from '../db.js'
 import db from "../lib/prisma.js"
+import { v4 as uuidv4 } from 'uuid'
+import { sendInviteEmail } from '../services/emailService.js'
 
 export const getMe = async (req, res) => {
   try {
-       const userId = req.user.userId || req.user.id
-       const result = await db.users.findUnique({
-          where: { id: userId },
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            phone: true,
-            avatar: true,
-            created_at: true,
-            role: true,
-            tenant_id: true,
-            permissions: true
-          }
-        })
-
-      if (!result) {
-        return res.status(404).json({ message: 'User not found' })
+    const userId = req.user.userId || req.user.id
+    const result = await db.users.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        avatar: true,
+        created_at: true,
+        role: true,
+        tenant_id: true,
+        permissions: true
       }
+    })
+
+    if (!result) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
+    return res.json(result);
   } catch (err) {
     console.error(err)
     res.status(500).json({ message: 'Server error' })
@@ -34,18 +37,13 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body
 
-    const result = await pool.query(
-      `SELECT id, name, email, phone, avatar, created_at, role, password_hash, tenant_id, permissions
-       FROM users
-       WHERE email = $1`,
-      [email]
-    )
+    const user = await db.users.findUnique({
+      where: { email }
+    })
 
-    if (result.rows.length === 0) {
+    if (!user) {
       return res.status(401).json({ error: 'User not found' })
     }
-
-    const user = result.rows[0]
 
     const validPassword = await bcrypt.compare(
       password,
@@ -56,13 +54,11 @@ export const login = async (req, res) => {
       return res.status(401).json({ error: 'Invalid password' })
     }
 
-    // Token now includes tenantId for backend scoping
     const token = jwt.sign(
       {
         userId: user.id,
         role: user.role,
         tenantId: user.tenant_id
-        
       },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
@@ -90,53 +86,64 @@ export const login = async (req, res) => {
 
 export const register = async (req, res) => {
   try {
-    // Added tenantId and permissions to the registration body
-    const { name, email, password, role, tenantId, permissions } = req.body
+    const { name, email, role, tenantId, permissions, sendInvite = true } = req.body
 
-    const existing = await pool.query(
-      'SELECT id FROM users WHERE email = $1',
-      [email]
-    )
+    // 1. Check if user already exists
+    const existing = await db.users.findUnique({
+      where: { email }
+    })
 
-    if (existing.rows.length > 0) {
+    if (existing) {
       return res.status(400).json({ error: 'User already exists' })
     }
 
-    const saltRounds = 10
-    const passwordHash = await bcrypt.hash(password, saltRounds)
+    // 2. Prepare Invite Token (valid for 24 hours)
+    let inviteToken = null
+    let inviteExpires = null
 
-    const result = await pool.query(
-      `INSERT INTO users (name, email, password_hash, role, tenant_id, permissions)
-       VALUES ($1, $2, $3, $4, $5, $6)
-       RETURNING id, name, email, phone, avatar, created_at, role, tenant_id, permissions`,
-      [name, email, passwordHash, role || 'member', tenantId || null, JSON.stringify(permissions || [])]
-    )
+    if (sendInvite) {
+      inviteToken = uuidv4()
+      inviteExpires = new Date(Date.now() + 24 * 60 * 60 * 1000)
+    }
 
-    const user = result.rows[0]
+    // 3. Create User with 'Pending' status and NO password
+    const user = await db.users.create({
+      data: {
+        name,
+        email,
+        role: role || 'member',
+        tenant_id: tenantId || null,
+        permissions: permissions || [],
+        status: 'Pending',
+        invite_token: inviteToken,
+        invite_expires: inviteExpires
+      }
+    })
 
-    const token = jwt.sign(
-      { userId: user.id, role: user.role, tenantId: user.tenant_id },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    )
+    // 4. Trigger Resend Email
+    if (sendInvite && inviteToken) {
+      try {
+        await sendInviteEmail(email, inviteToken)
+      } catch (emailErr) {
+        console.error('Email failed to send, but user was created:', emailErr)
+      }
+    }
 
+    // 5. Respond
     res.status(201).json({
-      token,
+      message: 'Invitation sent successfully',
       user: {
         id: user.id,
         name: user.name,
         email: user.email,
-        phone: user.phone || null,
-        avatar: user.avatar || null,
-        created_at: user.created_at,
         role: user.role,
-        tenantId: user.tenant_id,
-        permissions: user.permissions
+        status: user.status,
+        tenantId: user.tenant_id
       },
     })
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Registration failed' })
+    console.error('Registration/Invite Error:', error)
+    res.status(500).json({ error: 'Failed to process invitation' })
   }
 }
 
@@ -146,30 +153,26 @@ export const updateMe = async (req, res) => {
     const { name, email, phone } = req.body
 
     if (email) {
-      const existing = await pool.query(
-        'SELECT id FROM users WHERE email = $1 AND id != $2',
-        [email, userId]
-      )
-      if (existing.rows.length > 0) {
+      const existing = await db.users.findFirst({
+        where: {
+          email,
+          NOT: { id: userId }
+        }
+      })
+      if (existing) {
         return res.status(400).json({ error: 'Email already in use' })
       }
     }
 
-    const result = await pool.query(
-      `UPDATE users
-          SET name = COALESCE($1, name),
-              email = COALESCE($2, email),
-              phone = COALESCE($3, phone)
-        WHERE id = $4
-        RETURNING id, name, email, phone, avatar, created_at, role, tenant_id, permissions`,
-      [name, email, phone, userId]
-    )
+    const updateData = {};
+    if (name !== undefined) updateData.name = name;
+    if (email !== undefined) updateData.email = email;
+    if (phone !== undefined) updateData.phone = phone;
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'User not found' })
-    }
-
-    const updatedUser = result.rows[0]
+    const updatedUser = await db.users.update({
+      where: { id: userId },
+      data: updateData
+    })
 
     res.json({
       user: {
@@ -186,6 +189,9 @@ export const updateMe = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
+    if (err.code === 'P2025') {
+      return res.status(404).json({ error: 'User not found' })
+    }
     res.status(500).json({ error: 'Failed to update profile' })
   }
 }

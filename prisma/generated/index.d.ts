@@ -2303,10 +2303,22 @@ export namespace Prisma {
 
   export type TenantsCountOutputType = {
     users: number
+    duties: number
+    contributions: number
+    notifications: number
+    programs: number
+    projects: number
+    resources: number
   }
 
   export type TenantsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | TenantsCountOutputTypeCountUsersArgs
+    duties?: boolean | TenantsCountOutputTypeCountDutiesArgs
+    contributions?: boolean | TenantsCountOutputTypeCountContributionsArgs
+    notifications?: boolean | TenantsCountOutputTypeCountNotificationsArgs
+    programs?: boolean | TenantsCountOutputTypeCountProgramsArgs
+    projects?: boolean | TenantsCountOutputTypeCountProjectsArgs
+    resources?: boolean | TenantsCountOutputTypeCountResourcesArgs
   }
 
   // Custom InputTypes
@@ -2325,6 +2337,48 @@ export namespace Prisma {
    */
   export type TenantsCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: usersWhereInput
+  }
+
+  /**
+   * TenantsCountOutputType without action
+   */
+  export type TenantsCountOutputTypeCountDutiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: dutiesWhereInput
+  }
+
+  /**
+   * TenantsCountOutputType without action
+   */
+  export type TenantsCountOutputTypeCountContributionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: contributionsWhereInput
+  }
+
+  /**
+   * TenantsCountOutputType without action
+   */
+  export type TenantsCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: notificationsWhereInput
+  }
+
+  /**
+   * TenantsCountOutputType without action
+   */
+  export type TenantsCountOutputTypeCountProgramsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: programsWhereInput
+  }
+
+  /**
+   * TenantsCountOutputType without action
+   */
+  export type TenantsCountOutputTypeCountProjectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: projectsWhereInput
+  }
+
+  /**
+   * TenantsCountOutputType without action
+   */
+  export type TenantsCountOutputTypeCountResourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: resourcesWhereInput
   }
 
 
@@ -4590,18 +4644,21 @@ export namespace Prisma {
 
   export type ContributionsAvgAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     member_id: number | null
     amount: Decimal | null
   }
 
   export type ContributionsSumAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     member_id: number | null
     amount: Decimal | null
   }
 
   export type ContributionsMinAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     member_id: number | null
     amount: Decimal | null
     date: Date | null
@@ -4614,6 +4671,7 @@ export namespace Prisma {
 
   export type ContributionsMaxAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     member_id: number | null
     amount: Decimal | null
     date: Date | null
@@ -4626,6 +4684,7 @@ export namespace Prisma {
 
   export type ContributionsCountAggregateOutputType = {
     id: number
+    tenant_id: number
     member_id: number
     amount: number
     date: number
@@ -4640,18 +4699,21 @@ export namespace Prisma {
 
   export type ContributionsAvgAggregateInputType = {
     id?: true
+    tenant_id?: true
     member_id?: true
     amount?: true
   }
 
   export type ContributionsSumAggregateInputType = {
     id?: true
+    tenant_id?: true
     member_id?: true
     amount?: true
   }
 
   export type ContributionsMinAggregateInputType = {
     id?: true
+    tenant_id?: true
     member_id?: true
     amount?: true
     date?: true
@@ -4664,6 +4726,7 @@ export namespace Prisma {
 
   export type ContributionsMaxAggregateInputType = {
     id?: true
+    tenant_id?: true
     member_id?: true
     amount?: true
     date?: true
@@ -4676,6 +4739,7 @@ export namespace Prisma {
 
   export type ContributionsCountAggregateInputType = {
     id?: true
+    tenant_id?: true
     member_id?: true
     amount?: true
     date?: true
@@ -4775,6 +4839,7 @@ export namespace Prisma {
 
   export type ContributionsGroupByOutputType = {
     id: number
+    tenant_id: number | null
     member_id: number
     amount: Decimal
     date: Date
@@ -4806,6 +4871,7 @@ export namespace Prisma {
 
   export type contributionsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     member_id?: boolean
     amount?: boolean
     date?: boolean
@@ -4815,10 +4881,12 @@ export namespace Prisma {
     created_at?: boolean
     member_name?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | contributions$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["contributions"]>
 
   export type contributionsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     member_id?: boolean
     amount?: boolean
     date?: boolean
@@ -4828,10 +4896,12 @@ export namespace Prisma {
     created_at?: boolean
     member_name?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | contributions$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["contributions"]>
 
   export type contributionsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     member_id?: boolean
     amount?: boolean
     date?: boolean
@@ -4841,10 +4911,12 @@ export namespace Prisma {
     created_at?: boolean
     member_name?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | contributions$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["contributions"]>
 
   export type contributionsSelectScalar = {
     id?: boolean
+    tenant_id?: boolean
     member_id?: boolean
     amount?: boolean
     date?: boolean
@@ -4855,24 +4927,29 @@ export namespace Prisma {
     member_name?: boolean
   }
 
-  export type contributionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "member_id" | "amount" | "date" | "category" | "method" | "notes" | "created_at" | "member_name", ExtArgs["result"]["contributions"]>
+  export type contributionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenant_id" | "member_id" | "amount" | "date" | "category" | "method" | "notes" | "created_at" | "member_name", ExtArgs["result"]["contributions"]>
   export type contributionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | contributions$tenantsArgs<ExtArgs>
   }
   export type contributionsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | contributions$tenantsArgs<ExtArgs>
   }
   export type contributionsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | contributions$tenantsArgs<ExtArgs>
   }
 
   export type $contributionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "contributions"
     objects: {
       users: Prisma.$usersPayload<ExtArgs>
+      tenants: Prisma.$tenantsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      tenant_id: number | null
       member_id: number
       amount: Prisma.Decimal
       date: Date
@@ -5276,6 +5353,7 @@ export namespace Prisma {
   export interface Prisma__contributionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     users<T extends usersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usersDefaultArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tenants<T extends contributions$tenantsArgs<ExtArgs> = {}>(args?: Subset<T, contributions$tenantsArgs<ExtArgs>>): Prisma__tenantsClient<$Result.GetResult<Prisma.$tenantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5306,6 +5384,7 @@ export namespace Prisma {
    */
   interface contributionsFieldRefs {
     readonly id: FieldRef<"contributions", 'Int'>
+    readonly tenant_id: FieldRef<"contributions", 'Int'>
     readonly member_id: FieldRef<"contributions", 'Int'>
     readonly amount: FieldRef<"contributions", 'Decimal'>
     readonly date: FieldRef<"contributions", 'DateTime'>
@@ -5715,6 +5794,25 @@ export namespace Prisma {
   }
 
   /**
+   * contributions.tenants
+   */
+  export type contributions$tenantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tenants
+     */
+    select?: tenantsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tenants
+     */
+    omit?: tenantsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tenantsInclude<ExtArgs> | null
+    where?: tenantsWhereInput
+  }
+
+  /**
    * contributions without action
    */
   export type contributionsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5747,16 +5845,19 @@ export namespace Prisma {
 
   export type DutiesAvgAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     assigned_id: number | null
   }
 
   export type DutiesSumAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     assigned_id: number | null
   }
 
   export type DutiesMinAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     title: string | null
     assigned_id: number | null
     date: Date | null
@@ -5764,10 +5865,12 @@ export namespace Prisma {
     category: string | null
     notes: string | null
     report_submitted: boolean | null
+    updated_at: Date | null
   }
 
   export type DutiesMaxAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     title: string | null
     assigned_id: number | null
     date: Date | null
@@ -5775,33 +5878,40 @@ export namespace Prisma {
     category: string | null
     notes: string | null
     report_submitted: boolean | null
+    updated_at: Date | null
   }
 
   export type DutiesCountAggregateOutputType = {
     id: number
+    tenant_id: number
     title: number
     assigned_id: number
     date: number
     status: number
     category: number
     notes: number
+    comments: number
     report_submitted: number
+    updated_at: number
     _all: number
   }
 
 
   export type DutiesAvgAggregateInputType = {
     id?: true
+    tenant_id?: true
     assigned_id?: true
   }
 
   export type DutiesSumAggregateInputType = {
     id?: true
+    tenant_id?: true
     assigned_id?: true
   }
 
   export type DutiesMinAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     assigned_id?: true
     date?: true
@@ -5809,10 +5919,12 @@ export namespace Prisma {
     category?: true
     notes?: true
     report_submitted?: true
+    updated_at?: true
   }
 
   export type DutiesMaxAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     assigned_id?: true
     date?: true
@@ -5820,17 +5932,21 @@ export namespace Prisma {
     category?: true
     notes?: true
     report_submitted?: true
+    updated_at?: true
   }
 
   export type DutiesCountAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     assigned_id?: true
     date?: true
     status?: true
     category?: true
     notes?: true
+    comments?: true
     report_submitted?: true
+    updated_at?: true
     _all?: true
   }
 
@@ -5922,13 +6038,16 @@ export namespace Prisma {
 
   export type DutiesGroupByOutputType = {
     id: number
+    tenant_id: number | null
     title: string | null
     assigned_id: number | null
     date: Date | null
     status: string | null
     category: string | null
     notes: string | null
+    comments: JsonValue | null
     report_submitted: boolean | null
+    updated_at: Date | null
     _count: DutiesCountAggregateOutputType | null
     _avg: DutiesAvgAggregateOutputType | null
     _sum: DutiesSumAggregateOutputType | null
@@ -5952,76 +6071,98 @@ export namespace Prisma {
 
   export type dutiesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     assigned_id?: boolean
     date?: boolean
     status?: boolean
     category?: boolean
     notes?: boolean
+    comments?: boolean
     report_submitted?: boolean
+    updated_at?: boolean
     users?: boolean | duties$usersArgs<ExtArgs>
+    tenants?: boolean | duties$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["duties"]>
 
   export type dutiesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     assigned_id?: boolean
     date?: boolean
     status?: boolean
     category?: boolean
     notes?: boolean
+    comments?: boolean
     report_submitted?: boolean
+    updated_at?: boolean
     users?: boolean | duties$usersArgs<ExtArgs>
+    tenants?: boolean | duties$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["duties"]>
 
   export type dutiesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     assigned_id?: boolean
     date?: boolean
     status?: boolean
     category?: boolean
     notes?: boolean
+    comments?: boolean
     report_submitted?: boolean
+    updated_at?: boolean
     users?: boolean | duties$usersArgs<ExtArgs>
+    tenants?: boolean | duties$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["duties"]>
 
   export type dutiesSelectScalar = {
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     assigned_id?: boolean
     date?: boolean
     status?: boolean
     category?: boolean
     notes?: boolean
+    comments?: boolean
     report_submitted?: boolean
+    updated_at?: boolean
   }
 
-  export type dutiesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "assigned_id" | "date" | "status" | "category" | "notes" | "report_submitted", ExtArgs["result"]["duties"]>
+  export type dutiesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenant_id" | "title" | "assigned_id" | "date" | "status" | "category" | "notes" | "comments" | "report_submitted" | "updated_at", ExtArgs["result"]["duties"]>
   export type dutiesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | duties$usersArgs<ExtArgs>
+    tenants?: boolean | duties$tenantsArgs<ExtArgs>
   }
   export type dutiesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | duties$usersArgs<ExtArgs>
+    tenants?: boolean | duties$tenantsArgs<ExtArgs>
   }
   export type dutiesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | duties$usersArgs<ExtArgs>
+    tenants?: boolean | duties$tenantsArgs<ExtArgs>
   }
 
   export type $dutiesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "duties"
     objects: {
       users: Prisma.$usersPayload<ExtArgs> | null
+      tenants: Prisma.$tenantsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      tenant_id: number | null
       title: string | null
       assigned_id: number | null
       date: Date | null
       status: string | null
       category: string | null
       notes: string | null
+      comments: Prisma.JsonValue | null
       report_submitted: boolean | null
+      updated_at: Date | null
     }, ExtArgs["result"]["duties"]>
     composites: {}
   }
@@ -6417,6 +6558,7 @@ export namespace Prisma {
   export interface Prisma__dutiesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     users<T extends duties$usersArgs<ExtArgs> = {}>(args?: Subset<T, duties$usersArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    tenants<T extends duties$tenantsArgs<ExtArgs> = {}>(args?: Subset<T, duties$tenantsArgs<ExtArgs>>): Prisma__tenantsClient<$Result.GetResult<Prisma.$tenantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6447,13 +6589,16 @@ export namespace Prisma {
    */
   interface dutiesFieldRefs {
     readonly id: FieldRef<"duties", 'Int'>
+    readonly tenant_id: FieldRef<"duties", 'Int'>
     readonly title: FieldRef<"duties", 'String'>
     readonly assigned_id: FieldRef<"duties", 'Int'>
     readonly date: FieldRef<"duties", 'DateTime'>
     readonly status: FieldRef<"duties", 'String'>
     readonly category: FieldRef<"duties", 'String'>
     readonly notes: FieldRef<"duties", 'String'>
+    readonly comments: FieldRef<"duties", 'Json'>
     readonly report_submitted: FieldRef<"duties", 'Boolean'>
+    readonly updated_at: FieldRef<"duties", 'DateTime'>
   }
     
 
@@ -6871,6 +7016,25 @@ export namespace Prisma {
      */
     include?: usersInclude<ExtArgs> | null
     where?: usersWhereInput
+  }
+
+  /**
+   * duties.tenants
+   */
+  export type duties$tenantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tenants
+     */
+    select?: tenantsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tenants
+     */
+    omit?: tenantsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tenantsInclude<ExtArgs> | null
+    where?: tenantsWhereInput
   }
 
   /**
@@ -9078,16 +9242,19 @@ export namespace Prisma {
 
   export type NotificationsAvgAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     user_id: number | null
   }
 
   export type NotificationsSumAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     user_id: number | null
   }
 
   export type NotificationsMinAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     user_id: number | null
     title: string | null
     message: string | null
@@ -9097,6 +9264,7 @@ export namespace Prisma {
 
   export type NotificationsMaxAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     user_id: number | null
     title: string | null
     message: string | null
@@ -9106,6 +9274,7 @@ export namespace Prisma {
 
   export type NotificationsCountAggregateOutputType = {
     id: number
+    tenant_id: number
     user_id: number
     title: number
     message: number
@@ -9117,16 +9286,19 @@ export namespace Prisma {
 
   export type NotificationsAvgAggregateInputType = {
     id?: true
+    tenant_id?: true
     user_id?: true
   }
 
   export type NotificationsSumAggregateInputType = {
     id?: true
+    tenant_id?: true
     user_id?: true
   }
 
   export type NotificationsMinAggregateInputType = {
     id?: true
+    tenant_id?: true
     user_id?: true
     title?: true
     message?: true
@@ -9136,6 +9308,7 @@ export namespace Prisma {
 
   export type NotificationsMaxAggregateInputType = {
     id?: true
+    tenant_id?: true
     user_id?: true
     title?: true
     message?: true
@@ -9145,6 +9318,7 @@ export namespace Prisma {
 
   export type NotificationsCountAggregateInputType = {
     id?: true
+    tenant_id?: true
     user_id?: true
     title?: true
     message?: true
@@ -9241,6 +9415,7 @@ export namespace Prisma {
 
   export type NotificationsGroupByOutputType = {
     id: number
+    tenant_id: number | null
     user_id: number
     title: string
     message: string
@@ -9269,36 +9444,43 @@ export namespace Prisma {
 
   export type notificationsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     user_id?: boolean
     title?: boolean
     message?: boolean
     read?: boolean
     created_at?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | notifications$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["notifications"]>
 
   export type notificationsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     user_id?: boolean
     title?: boolean
     message?: boolean
     read?: boolean
     created_at?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | notifications$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["notifications"]>
 
   export type notificationsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     user_id?: boolean
     title?: boolean
     message?: boolean
     read?: boolean
     created_at?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | notifications$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["notifications"]>
 
   export type notificationsSelectScalar = {
     id?: boolean
+    tenant_id?: boolean
     user_id?: boolean
     title?: boolean
     message?: boolean
@@ -9306,24 +9488,29 @@ export namespace Prisma {
     created_at?: boolean
   }
 
-  export type notificationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "title" | "message" | "read" | "created_at", ExtArgs["result"]["notifications"]>
+  export type notificationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenant_id" | "user_id" | "title" | "message" | "read" | "created_at", ExtArgs["result"]["notifications"]>
   export type notificationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | notifications$tenantsArgs<ExtArgs>
   }
   export type notificationsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | notifications$tenantsArgs<ExtArgs>
   }
   export type notificationsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | usersDefaultArgs<ExtArgs>
+    tenants?: boolean | notifications$tenantsArgs<ExtArgs>
   }
 
   export type $notificationsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "notifications"
     objects: {
       users: Prisma.$usersPayload<ExtArgs>
+      tenants: Prisma.$tenantsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      tenant_id: number | null
       user_id: number
       title: string
       message: string
@@ -9724,6 +9911,7 @@ export namespace Prisma {
   export interface Prisma__notificationsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     users<T extends usersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usersDefaultArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tenants<T extends notifications$tenantsArgs<ExtArgs> = {}>(args?: Subset<T, notifications$tenantsArgs<ExtArgs>>): Prisma__tenantsClient<$Result.GetResult<Prisma.$tenantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9754,6 +9942,7 @@ export namespace Prisma {
    */
   interface notificationsFieldRefs {
     readonly id: FieldRef<"notifications", 'Int'>
+    readonly tenant_id: FieldRef<"notifications", 'Int'>
     readonly user_id: FieldRef<"notifications", 'Int'>
     readonly title: FieldRef<"notifications", 'String'>
     readonly message: FieldRef<"notifications", 'String'>
@@ -10157,6 +10346,25 @@ export namespace Prisma {
      * Limit how many notifications to delete.
      */
     limit?: number
+  }
+
+  /**
+   * notifications.tenants
+   */
+  export type notifications$tenantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tenants
+     */
+    select?: tenantsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tenants
+     */
+    omit?: tenantsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tenantsInclude<ExtArgs> | null
+    where?: tenantsWhereInput
   }
 
   /**
@@ -11187,14 +11395,17 @@ export namespace Prisma {
 
   export type ProgramsAvgAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
   }
 
   export type ProgramsSumAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
   }
 
   export type ProgramsMinAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     title: string | null
     date: Date | null
     time: string | null
@@ -11205,6 +11416,7 @@ export namespace Prisma {
 
   export type ProgramsMaxAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     title: string | null
     date: Date | null
     time: string | null
@@ -11215,6 +11427,7 @@ export namespace Prisma {
 
   export type ProgramsCountAggregateOutputType = {
     id: number
+    tenant_id: number
     title: number
     date: number
     time: number
@@ -11227,14 +11440,17 @@ export namespace Prisma {
 
   export type ProgramsAvgAggregateInputType = {
     id?: true
+    tenant_id?: true
   }
 
   export type ProgramsSumAggregateInputType = {
     id?: true
+    tenant_id?: true
   }
 
   export type ProgramsMinAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     date?: true
     time?: true
@@ -11245,6 +11461,7 @@ export namespace Prisma {
 
   export type ProgramsMaxAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     date?: true
     time?: true
@@ -11255,6 +11472,7 @@ export namespace Prisma {
 
   export type ProgramsCountAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     date?: true
     time?: true
@@ -11352,6 +11570,7 @@ export namespace Prisma {
 
   export type ProgramsGroupByOutputType = {
     id: number
+    tenant_id: number | null
     title: string | null
     date: Date | null
     time: string | null
@@ -11381,36 +11600,43 @@ export namespace Prisma {
 
   export type programsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     date?: boolean
     time?: boolean
     location?: boolean
     category?: boolean
     image?: boolean
+    tenants?: boolean | programs$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["programs"]>
 
   export type programsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     date?: boolean
     time?: boolean
     location?: boolean
     category?: boolean
     image?: boolean
+    tenants?: boolean | programs$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["programs"]>
 
   export type programsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     date?: boolean
     time?: boolean
     location?: boolean
     category?: boolean
     image?: boolean
+    tenants?: boolean | programs$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["programs"]>
 
   export type programsSelectScalar = {
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     date?: boolean
     time?: boolean
@@ -11419,13 +11645,25 @@ export namespace Prisma {
     image?: boolean
   }
 
-  export type programsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "date" | "time" | "location" | "category" | "image", ExtArgs["result"]["programs"]>
+  export type programsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenant_id" | "title" | "date" | "time" | "location" | "category" | "image", ExtArgs["result"]["programs"]>
+  export type programsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenants?: boolean | programs$tenantsArgs<ExtArgs>
+  }
+  export type programsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenants?: boolean | programs$tenantsArgs<ExtArgs>
+  }
+  export type programsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenants?: boolean | programs$tenantsArgs<ExtArgs>
+  }
 
   export type $programsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "programs"
-    objects: {}
+    objects: {
+      tenants: Prisma.$tenantsPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      tenant_id: number | null
       title: string | null
       date: Date | null
       time: string | null
@@ -11826,6 +12064,7 @@ export namespace Prisma {
    */
   export interface Prisma__programsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenants<T extends programs$tenantsArgs<ExtArgs> = {}>(args?: Subset<T, programs$tenantsArgs<ExtArgs>>): Prisma__tenantsClient<$Result.GetResult<Prisma.$tenantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11856,6 +12095,7 @@ export namespace Prisma {
    */
   interface programsFieldRefs {
     readonly id: FieldRef<"programs", 'Int'>
+    readonly tenant_id: FieldRef<"programs", 'Int'>
     readonly title: FieldRef<"programs", 'String'>
     readonly date: FieldRef<"programs", 'DateTime'>
     readonly time: FieldRef<"programs", 'String'>
@@ -11879,6 +12119,10 @@ export namespace Prisma {
      */
     omit?: programsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsInclude<ExtArgs> | null
+    /**
      * Filter, which programs to fetch.
      */
     where: programsWhereUniqueInput
@@ -11897,6 +12141,10 @@ export namespace Prisma {
      */
     omit?: programsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsInclude<ExtArgs> | null
+    /**
      * Filter, which programs to fetch.
      */
     where: programsWhereUniqueInput
@@ -11914,6 +12162,10 @@ export namespace Prisma {
      * Omit specific fields from the programs
      */
     omit?: programsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsInclude<ExtArgs> | null
     /**
      * Filter, which programs to fetch.
      */
@@ -11963,6 +12215,10 @@ export namespace Prisma {
      */
     omit?: programsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsInclude<ExtArgs> | null
+    /**
      * Filter, which programs to fetch.
      */
     where?: programsWhereInput
@@ -12010,6 +12266,10 @@ export namespace Prisma {
      * Omit specific fields from the programs
      */
     omit?: programsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsInclude<ExtArgs> | null
     /**
      * Filter, which programs to fetch.
      */
@@ -12059,6 +12319,10 @@ export namespace Prisma {
      */
     omit?: programsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsInclude<ExtArgs> | null
+    /**
      * The data needed to create a programs.
      */
     data?: XOR<programsCreateInput, programsUncheckedCreateInput>
@@ -12092,6 +12356,10 @@ export namespace Prisma {
      */
     data: programsCreateManyInput | programsCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -12106,6 +12374,10 @@ export namespace Prisma {
      * Omit specific fields from the programs
      */
     omit?: programsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsInclude<ExtArgs> | null
     /**
      * The data needed to update a programs.
      */
@@ -12158,6 +12430,10 @@ export namespace Prisma {
      * Limit how many programs to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -12172,6 +12448,10 @@ export namespace Prisma {
      * Omit specific fields from the programs
      */
     omit?: programsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsInclude<ExtArgs> | null
     /**
      * The filter to search for the programs to update in case it exists.
      */
@@ -12199,6 +12479,10 @@ export namespace Prisma {
      */
     omit?: programsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsInclude<ExtArgs> | null
+    /**
      * Filter which programs to delete.
      */
     where: programsWhereUniqueInput
@@ -12219,6 +12503,25 @@ export namespace Prisma {
   }
 
   /**
+   * programs.tenants
+   */
+  export type programs$tenantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tenants
+     */
+    select?: tenantsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tenants
+     */
+    omit?: tenantsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tenantsInclude<ExtArgs> | null
+    where?: tenantsWhereInput
+  }
+
+  /**
    * programs without action
    */
   export type programsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12230,6 +12533,10 @@ export namespace Prisma {
      * Omit specific fields from the programs
      */
     omit?: programsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsInclude<ExtArgs> | null
   }
 
 
@@ -13354,6 +13661,7 @@ export namespace Prisma {
 
   export type ProjectsAvgAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     progress: number | null
     budget: Decimal | null
     spent: Decimal | null
@@ -13361,6 +13669,7 @@ export namespace Prisma {
 
   export type ProjectsSumAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     progress: number | null
     budget: Decimal | null
     spent: Decimal | null
@@ -13368,6 +13677,7 @@ export namespace Prisma {
 
   export type ProjectsMinAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     title: string | null
     description: string | null
     status: string | null
@@ -13382,6 +13692,7 @@ export namespace Prisma {
 
   export type ProjectsMaxAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     title: string | null
     description: string | null
     status: string | null
@@ -13396,8 +13707,10 @@ export namespace Prisma {
 
   export type ProjectsCountAggregateOutputType = {
     id: number
+    tenant_id: number
     title: number
     description: number
+    comments: number
     status: number
     progress: number
     priority: number
@@ -13412,6 +13725,7 @@ export namespace Prisma {
 
   export type ProjectsAvgAggregateInputType = {
     id?: true
+    tenant_id?: true
     progress?: true
     budget?: true
     spent?: true
@@ -13419,6 +13733,7 @@ export namespace Prisma {
 
   export type ProjectsSumAggregateInputType = {
     id?: true
+    tenant_id?: true
     progress?: true
     budget?: true
     spent?: true
@@ -13426,6 +13741,7 @@ export namespace Prisma {
 
   export type ProjectsMinAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     description?: true
     status?: true
@@ -13440,6 +13756,7 @@ export namespace Prisma {
 
   export type ProjectsMaxAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     description?: true
     status?: true
@@ -13454,8 +13771,10 @@ export namespace Prisma {
 
   export type ProjectsCountAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     description?: true
+    comments?: true
     status?: true
     progress?: true
     priority?: true
@@ -13555,8 +13874,10 @@ export namespace Prisma {
 
   export type ProjectsGroupByOutputType = {
     id: number
+    tenant_id: number | null
     title: string | null
     description: string | null
+    comments: JsonValue | null
     status: string | null
     progress: number | null
     priority: string | null
@@ -13588,8 +13909,10 @@ export namespace Prisma {
 
   export type projectsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     description?: boolean
+    comments?: boolean
     status?: boolean
     progress?: boolean
     priority?: boolean
@@ -13599,13 +13922,16 @@ export namespace Prisma {
     budget?: boolean
     spent?: boolean
     project_tasks?: boolean | projects$project_tasksArgs<ExtArgs>
+    tenants?: boolean | projects$tenantsArgs<ExtArgs>
     _count?: boolean | ProjectsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["projects"]>
 
   export type projectsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     description?: boolean
+    comments?: boolean
     status?: boolean
     progress?: boolean
     priority?: boolean
@@ -13614,12 +13940,15 @@ export namespace Prisma {
     assigned_to?: boolean
     budget?: boolean
     spent?: boolean
+    tenants?: boolean | projects$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["projects"]>
 
   export type projectsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     description?: boolean
+    comments?: boolean
     status?: boolean
     progress?: boolean
     priority?: boolean
@@ -13628,12 +13957,15 @@ export namespace Prisma {
     assigned_to?: boolean
     budget?: boolean
     spent?: boolean
+    tenants?: boolean | projects$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["projects"]>
 
   export type projectsSelectScalar = {
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     description?: boolean
+    comments?: boolean
     status?: boolean
     progress?: boolean
     priority?: boolean
@@ -13644,23 +13976,31 @@ export namespace Prisma {
     spent?: boolean
   }
 
-  export type projectsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "status" | "progress" | "priority" | "start_date" | "end_date" | "assigned_to" | "budget" | "spent", ExtArgs["result"]["projects"]>
+  export type projectsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenant_id" | "title" | "description" | "comments" | "status" | "progress" | "priority" | "start_date" | "end_date" | "assigned_to" | "budget" | "spent", ExtArgs["result"]["projects"]>
   export type projectsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project_tasks?: boolean | projects$project_tasksArgs<ExtArgs>
+    tenants?: boolean | projects$tenantsArgs<ExtArgs>
     _count?: boolean | ProjectsCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type projectsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type projectsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type projectsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenants?: boolean | projects$tenantsArgs<ExtArgs>
+  }
+  export type projectsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenants?: boolean | projects$tenantsArgs<ExtArgs>
+  }
 
   export type $projectsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "projects"
     objects: {
       project_tasks: Prisma.$project_tasksPayload<ExtArgs>[]
+      tenants: Prisma.$tenantsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      tenant_id: number | null
       title: string | null
       description: string | null
+      comments: Prisma.JsonValue | null
       status: string | null
       progress: number | null
       priority: string | null
@@ -14064,6 +14404,7 @@ export namespace Prisma {
   export interface Prisma__projectsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     project_tasks<T extends projects$project_tasksArgs<ExtArgs> = {}>(args?: Subset<T, projects$project_tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$project_tasksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tenants<T extends projects$tenantsArgs<ExtArgs> = {}>(args?: Subset<T, projects$tenantsArgs<ExtArgs>>): Prisma__tenantsClient<$Result.GetResult<Prisma.$tenantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14094,8 +14435,10 @@ export namespace Prisma {
    */
   interface projectsFieldRefs {
     readonly id: FieldRef<"projects", 'Int'>
+    readonly tenant_id: FieldRef<"projects", 'Int'>
     readonly title: FieldRef<"projects", 'String'>
     readonly description: FieldRef<"projects", 'String'>
+    readonly comments: FieldRef<"projects", 'Json'>
     readonly status: FieldRef<"projects", 'String'>
     readonly progress: FieldRef<"projects", 'Int'>
     readonly priority: FieldRef<"projects", 'String'>
@@ -14358,6 +14701,10 @@ export namespace Prisma {
      */
     data: projectsCreateManyInput | projectsCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: projectsIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -14428,6 +14775,10 @@ export namespace Prisma {
      * Limit how many projects to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: projectsIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -14521,6 +14872,25 @@ export namespace Prisma {
   }
 
   /**
+   * projects.tenants
+   */
+  export type projects$tenantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tenants
+     */
+    select?: tenantsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tenants
+     */
+    omit?: tenantsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tenantsInclude<ExtArgs> | null
+    where?: tenantsWhereInput
+  }
+
+  /**
    * projects without action
    */
   export type projectsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14553,16 +14923,19 @@ export namespace Prisma {
 
   export type ResourcesAvgAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     uploaded_by: number | null
   }
 
   export type ResourcesSumAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     uploaded_by: number | null
   }
 
   export type ResourcesMinAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     title: string | null
     url: string | null
     uploaded_by: number | null
@@ -14571,6 +14944,7 @@ export namespace Prisma {
 
   export type ResourcesMaxAggregateOutputType = {
     id: number | null
+    tenant_id: number | null
     title: string | null
     url: string | null
     uploaded_by: number | null
@@ -14579,6 +14953,7 @@ export namespace Prisma {
 
   export type ResourcesCountAggregateOutputType = {
     id: number
+    tenant_id: number
     title: number
     url: number
     uploaded_by: number
@@ -14589,16 +14964,19 @@ export namespace Prisma {
 
   export type ResourcesAvgAggregateInputType = {
     id?: true
+    tenant_id?: true
     uploaded_by?: true
   }
 
   export type ResourcesSumAggregateInputType = {
     id?: true
+    tenant_id?: true
     uploaded_by?: true
   }
 
   export type ResourcesMinAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     url?: true
     uploaded_by?: true
@@ -14607,6 +14985,7 @@ export namespace Prisma {
 
   export type ResourcesMaxAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     url?: true
     uploaded_by?: true
@@ -14615,6 +14994,7 @@ export namespace Prisma {
 
   export type ResourcesCountAggregateInputType = {
     id?: true
+    tenant_id?: true
     title?: true
     url?: true
     uploaded_by?: true
@@ -14710,6 +15090,7 @@ export namespace Prisma {
 
   export type ResourcesGroupByOutputType = {
     id: number
+    tenant_id: number | null
     title: string | null
     url: string | null
     uploaded_by: number | null
@@ -14737,57 +15118,69 @@ export namespace Prisma {
 
   export type resourcesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     url?: boolean
     uploaded_by?: boolean
     created_at?: boolean
     users?: boolean | resources$usersArgs<ExtArgs>
+    tenants?: boolean | resources$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["resources"]>
 
   export type resourcesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     url?: boolean
     uploaded_by?: boolean
     created_at?: boolean
     users?: boolean | resources$usersArgs<ExtArgs>
+    tenants?: boolean | resources$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["resources"]>
 
   export type resourcesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     url?: boolean
     uploaded_by?: boolean
     created_at?: boolean
     users?: boolean | resources$usersArgs<ExtArgs>
+    tenants?: boolean | resources$tenantsArgs<ExtArgs>
   }, ExtArgs["result"]["resources"]>
 
   export type resourcesSelectScalar = {
     id?: boolean
+    tenant_id?: boolean
     title?: boolean
     url?: boolean
     uploaded_by?: boolean
     created_at?: boolean
   }
 
-  export type resourcesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "url" | "uploaded_by" | "created_at", ExtArgs["result"]["resources"]>
+  export type resourcesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenant_id" | "title" | "url" | "uploaded_by" | "created_at", ExtArgs["result"]["resources"]>
   export type resourcesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | resources$usersArgs<ExtArgs>
+    tenants?: boolean | resources$tenantsArgs<ExtArgs>
   }
   export type resourcesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | resources$usersArgs<ExtArgs>
+    tenants?: boolean | resources$tenantsArgs<ExtArgs>
   }
   export type resourcesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | resources$usersArgs<ExtArgs>
+    tenants?: boolean | resources$tenantsArgs<ExtArgs>
   }
 
   export type $resourcesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "resources"
     objects: {
       users: Prisma.$usersPayload<ExtArgs> | null
+      tenants: Prisma.$tenantsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      tenant_id: number | null
       title: string | null
       url: string | null
       uploaded_by: number | null
@@ -15187,6 +15580,7 @@ export namespace Prisma {
   export interface Prisma__resourcesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     users<T extends resources$usersArgs<ExtArgs> = {}>(args?: Subset<T, resources$usersArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    tenants<T extends resources$tenantsArgs<ExtArgs> = {}>(args?: Subset<T, resources$tenantsArgs<ExtArgs>>): Prisma__tenantsClient<$Result.GetResult<Prisma.$tenantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15217,6 +15611,7 @@ export namespace Prisma {
    */
   interface resourcesFieldRefs {
     readonly id: FieldRef<"resources", 'Int'>
+    readonly tenant_id: FieldRef<"resources", 'Int'>
     readonly title: FieldRef<"resources", 'String'>
     readonly url: FieldRef<"resources", 'String'>
     readonly uploaded_by: FieldRef<"resources", 'Int'>
@@ -15638,6 +16033,25 @@ export namespace Prisma {
      */
     include?: usersInclude<ExtArgs> | null
     where?: usersWhereInput
+  }
+
+  /**
+   * resources.tenants
+   */
+  export type resources$tenantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tenants
+     */
+    select?: tenantsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tenants
+     */
+    omit?: tenantsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tenantsInclude<ExtArgs> | null
+    where?: tenantsWhereInput
   }
 
   /**
@@ -18005,6 +18419,12 @@ export namespace Prisma {
     tax_id?: boolean
     primary_color?: boolean
     users?: boolean | tenants$usersArgs<ExtArgs>
+    duties?: boolean | tenants$dutiesArgs<ExtArgs>
+    contributions?: boolean | tenants$contributionsArgs<ExtArgs>
+    notifications?: boolean | tenants$notificationsArgs<ExtArgs>
+    programs?: boolean | tenants$programsArgs<ExtArgs>
+    projects?: boolean | tenants$projectsArgs<ExtArgs>
+    resources?: boolean | tenants$resourcesArgs<ExtArgs>
     _count?: boolean | TenantsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tenants"]>
 
@@ -18050,6 +18470,12 @@ export namespace Prisma {
   export type tenantsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "location" | "website" | "logo_url" | "status" | "created_at" | "currency" | "tax_id" | "primary_color", ExtArgs["result"]["tenants"]>
   export type tenantsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | tenants$usersArgs<ExtArgs>
+    duties?: boolean | tenants$dutiesArgs<ExtArgs>
+    contributions?: boolean | tenants$contributionsArgs<ExtArgs>
+    notifications?: boolean | tenants$notificationsArgs<ExtArgs>
+    programs?: boolean | tenants$programsArgs<ExtArgs>
+    projects?: boolean | tenants$projectsArgs<ExtArgs>
+    resources?: boolean | tenants$resourcesArgs<ExtArgs>
     _count?: boolean | TenantsCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type tenantsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -18059,6 +18485,12 @@ export namespace Prisma {
     name: "tenants"
     objects: {
       users: Prisma.$usersPayload<ExtArgs>[]
+      duties: Prisma.$dutiesPayload<ExtArgs>[]
+      contributions: Prisma.$contributionsPayload<ExtArgs>[]
+      notifications: Prisma.$notificationsPayload<ExtArgs>[]
+      programs: Prisma.$programsPayload<ExtArgs>[]
+      projects: Prisma.$projectsPayload<ExtArgs>[]
+      resources: Prisma.$resourcesPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -18466,6 +18898,12 @@ export namespace Prisma {
   export interface Prisma__tenantsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     users<T extends tenants$usersArgs<ExtArgs> = {}>(args?: Subset<T, tenants$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    duties<T extends tenants$dutiesArgs<ExtArgs> = {}>(args?: Subset<T, tenants$dutiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$dutiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    contributions<T extends tenants$contributionsArgs<ExtArgs> = {}>(args?: Subset<T, tenants$contributionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$contributionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends tenants$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, tenants$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$notificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    programs<T extends tenants$programsArgs<ExtArgs> = {}>(args?: Subset<T, tenants$programsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$programsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    projects<T extends tenants$projectsArgs<ExtArgs> = {}>(args?: Subset<T, tenants$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$projectsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    resources<T extends tenants$resourcesArgs<ExtArgs> = {}>(args?: Subset<T, tenants$resourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$resourcesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -18919,6 +19357,150 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UsersScalarFieldEnum | UsersScalarFieldEnum[]
+  }
+
+  /**
+   * tenants.duties
+   */
+  export type tenants$dutiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the duties
+     */
+    select?: dutiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the duties
+     */
+    omit?: dutiesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: dutiesInclude<ExtArgs> | null
+    where?: dutiesWhereInput
+    orderBy?: dutiesOrderByWithRelationInput | dutiesOrderByWithRelationInput[]
+    cursor?: dutiesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DutiesScalarFieldEnum | DutiesScalarFieldEnum[]
+  }
+
+  /**
+   * tenants.contributions
+   */
+  export type tenants$contributionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contributions
+     */
+    select?: contributionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contributions
+     */
+    omit?: contributionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contributionsInclude<ExtArgs> | null
+    where?: contributionsWhereInput
+    orderBy?: contributionsOrderByWithRelationInput | contributionsOrderByWithRelationInput[]
+    cursor?: contributionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ContributionsScalarFieldEnum | ContributionsScalarFieldEnum[]
+  }
+
+  /**
+   * tenants.notifications
+   */
+  export type tenants$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the notifications
+     */
+    select?: notificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the notifications
+     */
+    omit?: notificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: notificationsInclude<ExtArgs> | null
+    where?: notificationsWhereInput
+    orderBy?: notificationsOrderByWithRelationInput | notificationsOrderByWithRelationInput[]
+    cursor?: notificationsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationsScalarFieldEnum | NotificationsScalarFieldEnum[]
+  }
+
+  /**
+   * tenants.programs
+   */
+  export type tenants$programsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the programs
+     */
+    select?: programsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the programs
+     */
+    omit?: programsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: programsInclude<ExtArgs> | null
+    where?: programsWhereInput
+    orderBy?: programsOrderByWithRelationInput | programsOrderByWithRelationInput[]
+    cursor?: programsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProgramsScalarFieldEnum | ProgramsScalarFieldEnum[]
+  }
+
+  /**
+   * tenants.projects
+   */
+  export type tenants$projectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the projects
+     */
+    select?: projectsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the projects
+     */
+    omit?: projectsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: projectsInclude<ExtArgs> | null
+    where?: projectsWhereInput
+    orderBy?: projectsOrderByWithRelationInput | projectsOrderByWithRelationInput[]
+    cursor?: projectsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProjectsScalarFieldEnum | ProjectsScalarFieldEnum[]
+  }
+
+  /**
+   * tenants.resources
+   */
+  export type tenants$resourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the resources
+     */
+    select?: resourcesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the resources
+     */
+    omit?: resourcesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: resourcesInclude<ExtArgs> | null
+    where?: resourcesWhereInput
+    orderBy?: resourcesOrderByWithRelationInput | resourcesOrderByWithRelationInput[]
+    cursor?: resourcesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResourcesScalarFieldEnum | ResourcesScalarFieldEnum[]
   }
 
   /**
@@ -20427,6 +21009,7 @@ export namespace Prisma {
 
   export const ContributionsScalarFieldEnum: {
     id: 'id',
+    tenant_id: 'tenant_id',
     member_id: 'member_id',
     amount: 'amount',
     date: 'date',
@@ -20442,13 +21025,16 @@ export namespace Prisma {
 
   export const DutiesScalarFieldEnum: {
     id: 'id',
+    tenant_id: 'tenant_id',
     title: 'title',
     assigned_id: 'assigned_id',
     date: 'date',
     status: 'status',
     category: 'category',
     notes: 'notes',
-    report_submitted: 'report_submitted'
+    comments: 'comments',
+    report_submitted: 'report_submitted',
+    updated_at: 'updated_at'
   };
 
   export type DutiesScalarFieldEnum = (typeof DutiesScalarFieldEnum)[keyof typeof DutiesScalarFieldEnum]
@@ -20477,6 +21063,7 @@ export namespace Prisma {
 
   export const NotificationsScalarFieldEnum: {
     id: 'id',
+    tenant_id: 'tenant_id',
     user_id: 'user_id',
     title: 'title',
     message: 'message',
@@ -20497,6 +21084,7 @@ export namespace Prisma {
 
   export const ProgramsScalarFieldEnum: {
     id: 'id',
+    tenant_id: 'tenant_id',
     title: 'title',
     date: 'date',
     time: 'time',
@@ -20520,8 +21108,10 @@ export namespace Prisma {
 
   export const ProjectsScalarFieldEnum: {
     id: 'id',
+    tenant_id: 'tenant_id',
     title: 'title',
     description: 'description',
+    comments: 'comments',
     status: 'status',
     progress: 'progress',
     priority: 'priority',
@@ -20537,6 +21127,7 @@ export namespace Prisma {
 
   export const ResourcesScalarFieldEnum: {
     id: 'id',
+    tenant_id: 'tenant_id',
     title: 'title',
     url: 'url',
     uploaded_by: 'uploaded_by',
@@ -20714,13 +21305,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'Json'
    */
   export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -20731,6 +21315,13 @@ export namespace Prisma {
    * Reference to a field of type 'QueryMode'
    */
   export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -20847,6 +21438,7 @@ export namespace Prisma {
     OR?: contributionsWhereInput[]
     NOT?: contributionsWhereInput | contributionsWhereInput[]
     id?: IntFilter<"contributions"> | number
+    tenant_id?: IntNullableFilter<"contributions"> | number | null
     member_id?: IntFilter<"contributions"> | number
     amount?: DecimalFilter<"contributions"> | Decimal | DecimalJsLike | number | string
     date?: DateTimeFilter<"contributions"> | Date | string
@@ -20856,10 +21448,12 @@ export namespace Prisma {
     created_at?: DateTimeNullableFilter<"contributions"> | Date | string | null
     member_name?: StringFilter<"contributions"> | string
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }
 
   export type contributionsOrderByWithRelationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     member_id?: SortOrder
     amount?: SortOrder
     date?: SortOrder
@@ -20869,6 +21463,7 @@ export namespace Prisma {
     created_at?: SortOrderInput | SortOrder
     member_name?: SortOrder
     users?: usersOrderByWithRelationInput
+    tenants?: tenantsOrderByWithRelationInput
   }
 
   export type contributionsWhereUniqueInput = Prisma.AtLeast<{
@@ -20876,6 +21471,7 @@ export namespace Prisma {
     AND?: contributionsWhereInput | contributionsWhereInput[]
     OR?: contributionsWhereInput[]
     NOT?: contributionsWhereInput | contributionsWhereInput[]
+    tenant_id?: IntNullableFilter<"contributions"> | number | null
     member_id?: IntFilter<"contributions"> | number
     amount?: DecimalFilter<"contributions"> | Decimal | DecimalJsLike | number | string
     date?: DateTimeFilter<"contributions"> | Date | string
@@ -20885,10 +21481,12 @@ export namespace Prisma {
     created_at?: DateTimeNullableFilter<"contributions"> | Date | string | null
     member_name?: StringFilter<"contributions"> | string
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }, "id">
 
   export type contributionsOrderByWithAggregationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     member_id?: SortOrder
     amount?: SortOrder
     date?: SortOrder
@@ -20909,6 +21507,7 @@ export namespace Prisma {
     OR?: contributionsScalarWhereWithAggregatesInput[]
     NOT?: contributionsScalarWhereWithAggregatesInput | contributionsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"contributions"> | number
+    tenant_id?: IntNullableWithAggregatesFilter<"contributions"> | number | null
     member_id?: IntWithAggregatesFilter<"contributions"> | number
     amount?: DecimalWithAggregatesFilter<"contributions"> | Decimal | DecimalJsLike | number | string
     date?: DateTimeWithAggregatesFilter<"contributions"> | Date | string
@@ -20924,26 +21523,34 @@ export namespace Prisma {
     OR?: dutiesWhereInput[]
     NOT?: dutiesWhereInput | dutiesWhereInput[]
     id?: IntFilter<"duties"> | number
+    tenant_id?: IntNullableFilter<"duties"> | number | null
     title?: StringNullableFilter<"duties"> | string | null
     assigned_id?: IntNullableFilter<"duties"> | number | null
     date?: DateTimeNullableFilter<"duties"> | Date | string | null
     status?: StringNullableFilter<"duties"> | string | null
     category?: StringNullableFilter<"duties"> | string | null
     notes?: StringNullableFilter<"duties"> | string | null
+    comments?: JsonNullableFilter<"duties">
     report_submitted?: BoolNullableFilter<"duties"> | boolean | null
+    updated_at?: DateTimeNullableFilter<"duties"> | Date | string | null
     users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }
 
   export type dutiesOrderByWithRelationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     title?: SortOrderInput | SortOrder
     assigned_id?: SortOrderInput | SortOrder
     date?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     category?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
+    comments?: SortOrderInput | SortOrder
     report_submitted?: SortOrderInput | SortOrder
+    updated_at?: SortOrderInput | SortOrder
     users?: usersOrderByWithRelationInput
+    tenants?: tenantsOrderByWithRelationInput
   }
 
   export type dutiesWhereUniqueInput = Prisma.AtLeast<{
@@ -20951,25 +21558,32 @@ export namespace Prisma {
     AND?: dutiesWhereInput | dutiesWhereInput[]
     OR?: dutiesWhereInput[]
     NOT?: dutiesWhereInput | dutiesWhereInput[]
+    tenant_id?: IntNullableFilter<"duties"> | number | null
     title?: StringNullableFilter<"duties"> | string | null
     assigned_id?: IntNullableFilter<"duties"> | number | null
     date?: DateTimeNullableFilter<"duties"> | Date | string | null
     status?: StringNullableFilter<"duties"> | string | null
     category?: StringNullableFilter<"duties"> | string | null
     notes?: StringNullableFilter<"duties"> | string | null
+    comments?: JsonNullableFilter<"duties">
     report_submitted?: BoolNullableFilter<"duties"> | boolean | null
+    updated_at?: DateTimeNullableFilter<"duties"> | Date | string | null
     users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }, "id">
 
   export type dutiesOrderByWithAggregationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     title?: SortOrderInput | SortOrder
     assigned_id?: SortOrderInput | SortOrder
     date?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     category?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
+    comments?: SortOrderInput | SortOrder
     report_submitted?: SortOrderInput | SortOrder
+    updated_at?: SortOrderInput | SortOrder
     _count?: dutiesCountOrderByAggregateInput
     _avg?: dutiesAvgOrderByAggregateInput
     _max?: dutiesMaxOrderByAggregateInput
@@ -20982,13 +21596,16 @@ export namespace Prisma {
     OR?: dutiesScalarWhereWithAggregatesInput[]
     NOT?: dutiesScalarWhereWithAggregatesInput | dutiesScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"duties"> | number
+    tenant_id?: IntNullableWithAggregatesFilter<"duties"> | number | null
     title?: StringNullableWithAggregatesFilter<"duties"> | string | null
     assigned_id?: IntNullableWithAggregatesFilter<"duties"> | number | null
     date?: DateTimeNullableWithAggregatesFilter<"duties"> | Date | string | null
     status?: StringNullableWithAggregatesFilter<"duties"> | string | null
     category?: StringNullableWithAggregatesFilter<"duties"> | string | null
     notes?: StringNullableWithAggregatesFilter<"duties"> | string | null
+    comments?: JsonNullableWithAggregatesFilter<"duties">
     report_submitted?: BoolNullableWithAggregatesFilter<"duties"> | boolean | null
+    updated_at?: DateTimeNullableWithAggregatesFilter<"duties"> | Date | string | null
   }
 
   export type finance_categoriesWhereInput = {
@@ -21105,22 +21722,26 @@ export namespace Prisma {
     OR?: notificationsWhereInput[]
     NOT?: notificationsWhereInput | notificationsWhereInput[]
     id?: IntFilter<"notifications"> | number
+    tenant_id?: IntNullableFilter<"notifications"> | number | null
     user_id?: IntFilter<"notifications"> | number
     title?: StringFilter<"notifications"> | string
     message?: StringFilter<"notifications"> | string
     read?: BoolFilter<"notifications"> | boolean
     created_at?: DateTimeFilter<"notifications"> | Date | string
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }
 
   export type notificationsOrderByWithRelationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     user_id?: SortOrder
     title?: SortOrder
     message?: SortOrder
     read?: SortOrder
     created_at?: SortOrder
     users?: usersOrderByWithRelationInput
+    tenants?: tenantsOrderByWithRelationInput
   }
 
   export type notificationsWhereUniqueInput = Prisma.AtLeast<{
@@ -21128,16 +21749,19 @@ export namespace Prisma {
     AND?: notificationsWhereInput | notificationsWhereInput[]
     OR?: notificationsWhereInput[]
     NOT?: notificationsWhereInput | notificationsWhereInput[]
+    tenant_id?: IntNullableFilter<"notifications"> | number | null
     user_id?: IntFilter<"notifications"> | number
     title?: StringFilter<"notifications"> | string
     message?: StringFilter<"notifications"> | string
     read?: BoolFilter<"notifications"> | boolean
     created_at?: DateTimeFilter<"notifications"> | Date | string
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }, "id">
 
   export type notificationsOrderByWithAggregationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     user_id?: SortOrder
     title?: SortOrder
     message?: SortOrder
@@ -21155,6 +21779,7 @@ export namespace Prisma {
     OR?: notificationsScalarWhereWithAggregatesInput[]
     NOT?: notificationsScalarWhereWithAggregatesInput | notificationsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"notifications"> | number
+    tenant_id?: IntNullableWithAggregatesFilter<"notifications"> | number | null
     user_id?: IntWithAggregatesFilter<"notifications"> | number
     title?: StringWithAggregatesFilter<"notifications"> | string
     message?: StringWithAggregatesFilter<"notifications"> | string
@@ -21206,22 +21831,26 @@ export namespace Prisma {
     OR?: programsWhereInput[]
     NOT?: programsWhereInput | programsWhereInput[]
     id?: IntFilter<"programs"> | number
+    tenant_id?: IntNullableFilter<"programs"> | number | null
     title?: StringNullableFilter<"programs"> | string | null
     date?: DateTimeNullableFilter<"programs"> | Date | string | null
     time?: StringNullableFilter<"programs"> | string | null
     location?: StringNullableFilter<"programs"> | string | null
     category?: StringNullableFilter<"programs"> | string | null
     image?: StringNullableFilter<"programs"> | string | null
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }
 
   export type programsOrderByWithRelationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     title?: SortOrderInput | SortOrder
     date?: SortOrderInput | SortOrder
     time?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
     category?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
+    tenants?: tenantsOrderByWithRelationInput
   }
 
   export type programsWhereUniqueInput = Prisma.AtLeast<{
@@ -21229,16 +21858,19 @@ export namespace Prisma {
     AND?: programsWhereInput | programsWhereInput[]
     OR?: programsWhereInput[]
     NOT?: programsWhereInput | programsWhereInput[]
+    tenant_id?: IntNullableFilter<"programs"> | number | null
     title?: StringNullableFilter<"programs"> | string | null
     date?: DateTimeNullableFilter<"programs"> | Date | string | null
     time?: StringNullableFilter<"programs"> | string | null
     location?: StringNullableFilter<"programs"> | string | null
     category?: StringNullableFilter<"programs"> | string | null
     image?: StringNullableFilter<"programs"> | string | null
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }, "id">
 
   export type programsOrderByWithAggregationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     title?: SortOrderInput | SortOrder
     date?: SortOrderInput | SortOrder
     time?: SortOrderInput | SortOrder
@@ -21257,6 +21889,7 @@ export namespace Prisma {
     OR?: programsScalarWhereWithAggregatesInput[]
     NOT?: programsScalarWhereWithAggregatesInput | programsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"programs"> | number
+    tenant_id?: IntNullableWithAggregatesFilter<"programs"> | number | null
     title?: StringNullableWithAggregatesFilter<"programs"> | string | null
     date?: DateTimeNullableWithAggregatesFilter<"programs"> | Date | string | null
     time?: StringNullableWithAggregatesFilter<"programs"> | string | null
@@ -21322,8 +21955,10 @@ export namespace Prisma {
     OR?: projectsWhereInput[]
     NOT?: projectsWhereInput | projectsWhereInput[]
     id?: IntFilter<"projects"> | number
+    tenant_id?: IntNullableFilter<"projects"> | number | null
     title?: StringNullableFilter<"projects"> | string | null
     description?: StringNullableFilter<"projects"> | string | null
+    comments?: JsonNullableFilter<"projects">
     status?: StringNullableFilter<"projects"> | string | null
     progress?: IntNullableFilter<"projects"> | number | null
     priority?: StringNullableFilter<"projects"> | string | null
@@ -21333,12 +21968,15 @@ export namespace Prisma {
     budget?: DecimalNullableFilter<"projects"> | Decimal | DecimalJsLike | number | string | null
     spent?: DecimalNullableFilter<"projects"> | Decimal | DecimalJsLike | number | string | null
     project_tasks?: Project_tasksListRelationFilter
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }
 
   export type projectsOrderByWithRelationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     title?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
+    comments?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     progress?: SortOrderInput | SortOrder
     priority?: SortOrderInput | SortOrder
@@ -21348,6 +21986,7 @@ export namespace Prisma {
     budget?: SortOrderInput | SortOrder
     spent?: SortOrderInput | SortOrder
     project_tasks?: project_tasksOrderByRelationAggregateInput
+    tenants?: tenantsOrderByWithRelationInput
   }
 
   export type projectsWhereUniqueInput = Prisma.AtLeast<{
@@ -21355,8 +21994,10 @@ export namespace Prisma {
     AND?: projectsWhereInput | projectsWhereInput[]
     OR?: projectsWhereInput[]
     NOT?: projectsWhereInput | projectsWhereInput[]
+    tenant_id?: IntNullableFilter<"projects"> | number | null
     title?: StringNullableFilter<"projects"> | string | null
     description?: StringNullableFilter<"projects"> | string | null
+    comments?: JsonNullableFilter<"projects">
     status?: StringNullableFilter<"projects"> | string | null
     progress?: IntNullableFilter<"projects"> | number | null
     priority?: StringNullableFilter<"projects"> | string | null
@@ -21366,12 +22007,15 @@ export namespace Prisma {
     budget?: DecimalNullableFilter<"projects"> | Decimal | DecimalJsLike | number | string | null
     spent?: DecimalNullableFilter<"projects"> | Decimal | DecimalJsLike | number | string | null
     project_tasks?: Project_tasksListRelationFilter
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }, "id">
 
   export type projectsOrderByWithAggregationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     title?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
+    comments?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     progress?: SortOrderInput | SortOrder
     priority?: SortOrderInput | SortOrder
@@ -21392,8 +22036,10 @@ export namespace Prisma {
     OR?: projectsScalarWhereWithAggregatesInput[]
     NOT?: projectsScalarWhereWithAggregatesInput | projectsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"projects"> | number
+    tenant_id?: IntNullableWithAggregatesFilter<"projects"> | number | null
     title?: StringNullableWithAggregatesFilter<"projects"> | string | null
     description?: StringNullableWithAggregatesFilter<"projects"> | string | null
+    comments?: JsonNullableWithAggregatesFilter<"projects">
     status?: StringNullableWithAggregatesFilter<"projects"> | string | null
     progress?: IntNullableWithAggregatesFilter<"projects"> | number | null
     priority?: StringNullableWithAggregatesFilter<"projects"> | string | null
@@ -21409,20 +22055,24 @@ export namespace Prisma {
     OR?: resourcesWhereInput[]
     NOT?: resourcesWhereInput | resourcesWhereInput[]
     id?: IntFilter<"resources"> | number
+    tenant_id?: IntNullableFilter<"resources"> | number | null
     title?: StringNullableFilter<"resources"> | string | null
     url?: StringNullableFilter<"resources"> | string | null
     uploaded_by?: IntNullableFilter<"resources"> | number | null
     created_at?: DateTimeNullableFilter<"resources"> | Date | string | null
     users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }
 
   export type resourcesOrderByWithRelationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     title?: SortOrderInput | SortOrder
     url?: SortOrderInput | SortOrder
     uploaded_by?: SortOrderInput | SortOrder
     created_at?: SortOrderInput | SortOrder
     users?: usersOrderByWithRelationInput
+    tenants?: tenantsOrderByWithRelationInput
   }
 
   export type resourcesWhereUniqueInput = Prisma.AtLeast<{
@@ -21430,15 +22080,18 @@ export namespace Prisma {
     AND?: resourcesWhereInput | resourcesWhereInput[]
     OR?: resourcesWhereInput[]
     NOT?: resourcesWhereInput | resourcesWhereInput[]
+    tenant_id?: IntNullableFilter<"resources"> | number | null
     title?: StringNullableFilter<"resources"> | string | null
     url?: StringNullableFilter<"resources"> | string | null
     uploaded_by?: IntNullableFilter<"resources"> | number | null
     created_at?: DateTimeNullableFilter<"resources"> | Date | string | null
     users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
   }, "id">
 
   export type resourcesOrderByWithAggregationInput = {
     id?: SortOrder
+    tenant_id?: SortOrderInput | SortOrder
     title?: SortOrderInput | SortOrder
     url?: SortOrderInput | SortOrder
     uploaded_by?: SortOrderInput | SortOrder
@@ -21455,6 +22108,7 @@ export namespace Prisma {
     OR?: resourcesScalarWhereWithAggregatesInput[]
     NOT?: resourcesScalarWhereWithAggregatesInput | resourcesScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"resources"> | number
+    tenant_id?: IntNullableWithAggregatesFilter<"resources"> | number | null
     title?: StringNullableWithAggregatesFilter<"resources"> | string | null
     url?: StringNullableWithAggregatesFilter<"resources"> | string | null
     uploaded_by?: IntNullableWithAggregatesFilter<"resources"> | number | null
@@ -21599,6 +22253,12 @@ export namespace Prisma {
     tax_id?: StringNullableFilter<"tenants"> | string | null
     primary_color?: StringNullableFilter<"tenants"> | string | null
     users?: UsersListRelationFilter
+    duties?: DutiesListRelationFilter
+    contributions?: ContributionsListRelationFilter
+    notifications?: NotificationsListRelationFilter
+    programs?: ProgramsListRelationFilter
+    projects?: ProjectsListRelationFilter
+    resources?: ResourcesListRelationFilter
   }
 
   export type tenantsOrderByWithRelationInput = {
@@ -21613,6 +22273,12 @@ export namespace Prisma {
     tax_id?: SortOrderInput | SortOrder
     primary_color?: SortOrderInput | SortOrder
     users?: usersOrderByRelationAggregateInput
+    duties?: dutiesOrderByRelationAggregateInput
+    contributions?: contributionsOrderByRelationAggregateInput
+    notifications?: notificationsOrderByRelationAggregateInput
+    programs?: programsOrderByRelationAggregateInput
+    projects?: projectsOrderByRelationAggregateInput
+    resources?: resourcesOrderByRelationAggregateInput
   }
 
   export type tenantsWhereUniqueInput = Prisma.AtLeast<{
@@ -21630,6 +22296,12 @@ export namespace Prisma {
     tax_id?: StringNullableFilter<"tenants"> | string | null
     primary_color?: StringNullableFilter<"tenants"> | string | null
     users?: UsersListRelationFilter
+    duties?: DutiesListRelationFilter
+    contributions?: ContributionsListRelationFilter
+    notifications?: NotificationsListRelationFilter
+    programs?: ProgramsListRelationFilter
+    projects?: ProjectsListRelationFilter
+    resources?: ResourcesListRelationFilter
   }, "id">
 
   export type tenantsOrderByWithAggregationInput = {
@@ -21728,6 +22400,7 @@ export namespace Prisma {
   export type usersWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     email?: string
+    invite_token?: string
     AND?: usersWhereInput | usersWhereInput[]
     OR?: usersWhereInput[]
     NOT?: usersWhereInput | usersWhereInput[]
@@ -21744,7 +22417,6 @@ export namespace Prisma {
     avatar?: StringNullableFilter<"users"> | string | null
     tenant_id?: IntNullableFilter<"users"> | number | null
     permissions?: JsonNullableFilter<"users">
-    invite_token?: StringNullableFilter<"users"> | string | null
     invite_expires?: DateTimeNullableFilter<"users"> | Date | string | null
     deleted_at?: DateTimeNullableFilter<"users"> | Date | string | null
     chat_participants?: Chat_participantsListRelationFilter
@@ -21754,7 +22426,7 @@ export namespace Prisma {
     notifications?: NotificationsListRelationFilter
     resources?: ResourcesListRelationFilter
     tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
-  }, "id" | "email">
+  }, "id" | "email" | "invite_token">
 
   export type usersOrderByWithAggregationInput = {
     id?: SortOrder
@@ -21889,10 +22561,12 @@ export namespace Prisma {
     created_at?: Date | string | null
     member_name: string
     users: usersCreateNestedOneWithoutContributionsInput
+    tenants?: tenantsCreateNestedOneWithoutContributionsInput
   }
 
   export type contributionsUncheckedCreateInput = {
     id?: number
+    tenant_id?: number | null
     member_id: number
     amount: Decimal | DecimalJsLike | number | string
     date?: Date | string
@@ -21912,10 +22586,12 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     member_name?: StringFieldUpdateOperationsInput | string
     users?: usersUpdateOneRequiredWithoutContributionsNestedInput
+    tenants?: tenantsUpdateOneWithoutContributionsNestedInput
   }
 
   export type contributionsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     member_id?: IntFieldUpdateOperationsInput | number
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21928,6 +22604,7 @@ export namespace Prisma {
 
   export type contributionsCreateManyInput = {
     id?: number
+    tenant_id?: number | null
     member_id: number
     amount: Decimal | DecimalJsLike | number | string
     date?: Date | string
@@ -21950,6 +22627,7 @@ export namespace Prisma {
 
   export type contributionsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     member_id?: IntFieldUpdateOperationsInput | number
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21966,19 +22644,25 @@ export namespace Prisma {
     status?: string | null
     category?: string | null
     notes?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: boolean | null
+    updated_at?: Date | string | null
     users?: usersCreateNestedOneWithoutDutiesInput
+    tenants?: tenantsCreateNestedOneWithoutDutiesInput
   }
 
   export type dutiesUncheckedCreateInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     assigned_id?: number | null
     date?: Date | string | null
     status?: string | null
     category?: string | null
     notes?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: boolean | null
+    updated_at?: Date | string | null
   }
 
   export type dutiesUpdateInput = {
@@ -21987,30 +22671,39 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: usersUpdateOneWithoutDutiesNestedInput
+    tenants?: tenantsUpdateOneWithoutDutiesNestedInput
   }
 
   export type dutiesUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     assigned_id?: NullableIntFieldUpdateOperationsInput | number | null
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type dutiesCreateManyInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     assigned_id?: number | null
     date?: Date | string | null
     status?: string | null
     category?: string | null
     notes?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: boolean | null
+    updated_at?: Date | string | null
   }
 
   export type dutiesUpdateManyMutationInput = {
@@ -22019,18 +22712,23 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type dutiesUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     assigned_id?: NullableIntFieldUpdateOperationsInput | number | null
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type finance_categoriesCreateInput = {
@@ -22136,10 +22834,12 @@ export namespace Prisma {
     read?: boolean
     created_at?: Date | string
     users: usersCreateNestedOneWithoutNotificationsInput
+    tenants?: tenantsCreateNestedOneWithoutNotificationsInput
   }
 
   export type notificationsUncheckedCreateInput = {
     id?: number
+    tenant_id?: number | null
     user_id: number
     title: string
     message: string
@@ -22153,10 +22853,12 @@ export namespace Prisma {
     read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: usersUpdateOneRequiredWithoutNotificationsNestedInput
+    tenants?: tenantsUpdateOneWithoutNotificationsNestedInput
   }
 
   export type notificationsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     user_id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
@@ -22166,6 +22868,7 @@ export namespace Prisma {
 
   export type notificationsCreateManyInput = {
     id?: number
+    tenant_id?: number | null
     user_id: number
     title: string
     message: string
@@ -22182,6 +22885,7 @@ export namespace Prisma {
 
   export type notificationsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     user_id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
@@ -22228,10 +22932,12 @@ export namespace Prisma {
     location?: string | null
     category?: string | null
     image?: string | null
+    tenants?: tenantsCreateNestedOneWithoutProgramsInput
   }
 
   export type programsUncheckedCreateInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     date?: Date | string | null
     time?: string | null
@@ -22247,10 +22953,12 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    tenants?: tenantsUpdateOneWithoutProgramsNestedInput
   }
 
   export type programsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22261,6 +22969,7 @@ export namespace Prisma {
 
   export type programsCreateManyInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     date?: Date | string | null
     time?: string | null
@@ -22280,6 +22989,7 @@ export namespace Prisma {
 
   export type programsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22336,6 +23046,7 @@ export namespace Prisma {
   export type projectsCreateInput = {
     title?: string | null
     description?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     status?: string | null
     progress?: number | null
     priority?: string | null
@@ -22345,12 +23056,15 @@ export namespace Prisma {
     budget?: Decimal | DecimalJsLike | number | string | null
     spent?: Decimal | DecimalJsLike | number | string | null
     project_tasks?: project_tasksCreateNestedManyWithoutProjectsInput
+    tenants?: tenantsCreateNestedOneWithoutProjectsInput
   }
 
   export type projectsUncheckedCreateInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     description?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     status?: string | null
     progress?: number | null
     priority?: string | null
@@ -22365,6 +23079,7 @@ export namespace Prisma {
   export type projectsUpdateInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     status?: NullableStringFieldUpdateOperationsInput | string | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     priority?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22374,12 +23089,15 @@ export namespace Prisma {
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     spent?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     project_tasks?: project_tasksUpdateManyWithoutProjectsNestedInput
+    tenants?: tenantsUpdateOneWithoutProjectsNestedInput
   }
 
   export type projectsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     status?: NullableStringFieldUpdateOperationsInput | string | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     priority?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22393,8 +23111,10 @@ export namespace Prisma {
 
   export type projectsCreateManyInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     description?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     status?: string | null
     progress?: number | null
     priority?: string | null
@@ -22408,6 +23128,7 @@ export namespace Prisma {
   export type projectsUpdateManyMutationInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     status?: NullableStringFieldUpdateOperationsInput | string | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     priority?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22420,8 +23141,10 @@ export namespace Prisma {
 
   export type projectsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     status?: NullableStringFieldUpdateOperationsInput | string | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     priority?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22437,10 +23160,12 @@ export namespace Prisma {
     url?: string | null
     created_at?: Date | string | null
     users?: usersCreateNestedOneWithoutResourcesInput
+    tenants?: tenantsCreateNestedOneWithoutResourcesInput
   }
 
   export type resourcesUncheckedCreateInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     url?: string | null
     uploaded_by?: number | null
@@ -22452,10 +23177,12 @@ export namespace Prisma {
     url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: usersUpdateOneWithoutResourcesNestedInput
+    tenants?: tenantsUpdateOneWithoutResourcesNestedInput
   }
 
   export type resourcesUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     uploaded_by?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22464,6 +23191,7 @@ export namespace Prisma {
 
   export type resourcesCreateManyInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     url?: string | null
     uploaded_by?: number | null
@@ -22478,6 +23206,7 @@ export namespace Prisma {
 
   export type resourcesUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     uploaded_by?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22622,6 +23351,12 @@ export namespace Prisma {
     tax_id?: string | null
     primary_color?: string | null
     users?: usersCreateNestedManyWithoutTenantsInput
+    duties?: dutiesCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsCreateNestedManyWithoutTenantsInput
+    programs?: programsCreateNestedManyWithoutTenantsInput
+    projects?: projectsCreateNestedManyWithoutTenantsInput
+    resources?: resourcesCreateNestedManyWithoutTenantsInput
   }
 
   export type tenantsUncheckedCreateInput = {
@@ -22636,6 +23371,12 @@ export namespace Prisma {
     tax_id?: string | null
     primary_color?: string | null
     users?: usersUncheckedCreateNestedManyWithoutTenantsInput
+    duties?: dutiesUncheckedCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsUncheckedCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsUncheckedCreateNestedManyWithoutTenantsInput
+    programs?: programsUncheckedCreateNestedManyWithoutTenantsInput
+    projects?: projectsUncheckedCreateNestedManyWithoutTenantsInput
+    resources?: resourcesUncheckedCreateNestedManyWithoutTenantsInput
   }
 
   export type tenantsUpdateInput = {
@@ -22649,6 +23390,12 @@ export namespace Prisma {
     tax_id?: NullableStringFieldUpdateOperationsInput | string | null
     primary_color?: NullableStringFieldUpdateOperationsInput | string | null
     users?: usersUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUpdateManyWithoutTenantsNestedInput
+    programs?: programsUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUpdateManyWithoutTenantsNestedInput
   }
 
   export type tenantsUncheckedUpdateInput = {
@@ -22663,6 +23410,12 @@ export namespace Prisma {
     tax_id?: NullableStringFieldUpdateOperationsInput | string | null
     primary_color?: NullableStringFieldUpdateOperationsInput | string | null
     users?: usersUncheckedUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUncheckedUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUncheckedUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUncheckedUpdateManyWithoutTenantsNestedInput
+    programs?: programsUncheckedUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUncheckedUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUncheckedUpdateManyWithoutTenantsNestedInput
   }
 
   export type tenantsCreateManyInput = {
@@ -23010,6 +23763,17 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type DecimalFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
@@ -23062,8 +23826,14 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type TenantsNullableScalarRelationFilter = {
+    is?: tenantsWhereInput | null
+    isNot?: tenantsWhereInput | null
+  }
+
   export type contributionsCountOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     member_id?: SortOrder
     amount?: SortOrder
     date?: SortOrder
@@ -23076,12 +23846,14 @@ export namespace Prisma {
 
   export type contributionsAvgOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     member_id?: SortOrder
     amount?: SortOrder
   }
 
   export type contributionsMaxOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     member_id?: SortOrder
     amount?: SortOrder
     date?: SortOrder
@@ -23094,6 +23866,7 @@ export namespace Prisma {
 
   export type contributionsMinOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     member_id?: SortOrder
     amount?: SortOrder
     date?: SortOrder
@@ -23106,8 +23879,25 @@ export namespace Prisma {
 
   export type contributionsSumOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     member_id?: SortOrder
     amount?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
@@ -23175,16 +23965,28 @@ export namespace Prisma {
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type BoolNullableFilter<$PrismaModel = never> = {
@@ -23199,22 +24001,27 @@ export namespace Prisma {
 
   export type dutiesCountOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     assigned_id?: SortOrder
     date?: SortOrder
     status?: SortOrder
     category?: SortOrder
     notes?: SortOrder
+    comments?: SortOrder
     report_submitted?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type dutiesAvgOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     assigned_id?: SortOrder
   }
 
   export type dutiesMaxOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     assigned_id?: SortOrder
     date?: SortOrder
@@ -23222,10 +24029,12 @@ export namespace Prisma {
     category?: SortOrder
     notes?: SortOrder
     report_submitted?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type dutiesMinOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     assigned_id?: SortOrder
     date?: SortOrder
@@ -23233,27 +24042,39 @@ export namespace Prisma {
     category?: SortOrder
     notes?: SortOrder
     report_submitted?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type dutiesSumOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     assigned_id?: SortOrder
   }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -23341,6 +24162,7 @@ export namespace Prisma {
 
   export type notificationsCountOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     user_id?: SortOrder
     title?: SortOrder
     message?: SortOrder
@@ -23350,11 +24172,13 @@ export namespace Prisma {
 
   export type notificationsAvgOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     user_id?: SortOrder
   }
 
   export type notificationsMaxOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     user_id?: SortOrder
     title?: SortOrder
     message?: SortOrder
@@ -23364,6 +24188,7 @@ export namespace Prisma {
 
   export type notificationsMinOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     user_id?: SortOrder
     title?: SortOrder
     message?: SortOrder
@@ -23373,6 +24198,7 @@ export namespace Prisma {
 
   export type notificationsSumOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     user_id?: SortOrder
   }
 
@@ -23409,6 +24235,7 @@ export namespace Prisma {
 
   export type programsCountOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     date?: SortOrder
     time?: SortOrder
@@ -23419,10 +24246,12 @@ export namespace Prisma {
 
   export type programsAvgOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
   }
 
   export type programsMaxOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     date?: SortOrder
     time?: SortOrder
@@ -23433,6 +24262,7 @@ export namespace Prisma {
 
   export type programsMinOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     date?: SortOrder
     time?: SortOrder
@@ -23443,6 +24273,7 @@ export namespace Prisma {
 
   export type programsSumOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
   }
 
   export type ProjectsNullableScalarRelationFilter = {
@@ -23504,8 +24335,10 @@ export namespace Prisma {
 
   export type projectsCountOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    comments?: SortOrder
     status?: SortOrder
     progress?: SortOrder
     priority?: SortOrder
@@ -23518,6 +24351,7 @@ export namespace Prisma {
 
   export type projectsAvgOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     progress?: SortOrder
     budget?: SortOrder
     spent?: SortOrder
@@ -23525,6 +24359,7 @@ export namespace Prisma {
 
   export type projectsMaxOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
@@ -23539,6 +24374,7 @@ export namespace Prisma {
 
   export type projectsMinOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
@@ -23553,6 +24389,7 @@ export namespace Prisma {
 
   export type projectsSumOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     progress?: SortOrder
     budget?: SortOrder
     spent?: SortOrder
@@ -23576,6 +24413,7 @@ export namespace Prisma {
 
   export type resourcesCountOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     url?: SortOrder
     uploaded_by?: SortOrder
@@ -23584,11 +24422,13 @@ export namespace Prisma {
 
   export type resourcesAvgOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     uploaded_by?: SortOrder
   }
 
   export type resourcesMaxOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     url?: SortOrder
     uploaded_by?: SortOrder
@@ -23597,6 +24437,7 @@ export namespace Prisma {
 
   export type resourcesMinOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     title?: SortOrder
     url?: SortOrder
     uploaded_by?: SortOrder
@@ -23605,6 +24446,7 @@ export namespace Prisma {
 
   export type resourcesSumOrderByAggregateInput = {
     id?: SortOrder
+    tenant_id?: SortOrder
     uploaded_by?: SortOrder
   }
 
@@ -23687,7 +24529,67 @@ export namespace Prisma {
     none?: usersWhereInput
   }
 
+  export type DutiesListRelationFilter = {
+    every?: dutiesWhereInput
+    some?: dutiesWhereInput
+    none?: dutiesWhereInput
+  }
+
+  export type ContributionsListRelationFilter = {
+    every?: contributionsWhereInput
+    some?: contributionsWhereInput
+    none?: contributionsWhereInput
+  }
+
+  export type NotificationsListRelationFilter = {
+    every?: notificationsWhereInput
+    some?: notificationsWhereInput
+    none?: notificationsWhereInput
+  }
+
+  export type ProgramsListRelationFilter = {
+    every?: programsWhereInput
+    some?: programsWhereInput
+    none?: programsWhereInput
+  }
+
+  export type ProjectsListRelationFilter = {
+    every?: projectsWhereInput
+    some?: projectsWhereInput
+    none?: projectsWhereInput
+  }
+
+  export type ResourcesListRelationFilter = {
+    every?: resourcesWhereInput
+    some?: resourcesWhereInput
+    none?: resourcesWhereInput
+  }
+
   export type usersOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type dutiesOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type contributionsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type notificationsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type programsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type projectsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type resourcesOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -23736,74 +24638,6 @@ export namespace Prisma {
 
   export type tenantsSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-  export type JsonNullableFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type ContributionsListRelationFilter = {
-    every?: contributionsWhereInput
-    some?: contributionsWhereInput
-    none?: contributionsWhereInput
-  }
-
-  export type DutiesListRelationFilter = {
-    every?: dutiesWhereInput
-    some?: dutiesWhereInput
-    none?: dutiesWhereInput
-  }
-
-  export type NotificationsListRelationFilter = {
-    every?: notificationsWhereInput
-    some?: notificationsWhereInput
-    none?: notificationsWhereInput
-  }
-
-  export type ResourcesListRelationFilter = {
-    every?: resourcesWhereInput
-    some?: resourcesWhereInput
-    none?: resourcesWhereInput
-  }
-
-  export type TenantsNullableScalarRelationFilter = {
-    is?: tenantsWhereInput | null
-    isNot?: tenantsWhereInput | null
-  }
-
-  export type contributionsOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type dutiesOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type notificationsOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type resourcesOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type usersCountOrderByAggregateInput = {
@@ -23875,32 +24709,6 @@ export namespace Prisma {
   export type usersSumOrderByAggregateInput = {
     id?: SortOrder
     tenant_id?: SortOrder
-  }
-  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedJsonNullableFilter<$PrismaModel>
-    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type chatsCreateNestedOneWithoutChat_participantsInput = {
@@ -24033,6 +24841,12 @@ export namespace Prisma {
     connect?: usersWhereUniqueInput
   }
 
+  export type tenantsCreateNestedOneWithoutContributionsInput = {
+    create?: XOR<tenantsCreateWithoutContributionsInput, tenantsUncheckedCreateWithoutContributionsInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutContributionsInput
+    connect?: tenantsWhereUniqueInput
+  }
+
   export type DecimalFieldUpdateOperationsInput = {
     set?: Decimal | DecimalJsLike | number | string
     increment?: Decimal | DecimalJsLike | number | string
@@ -24061,10 +24875,34 @@ export namespace Prisma {
     update?: XOR<XOR<usersUpdateToOneWithWhereWithoutContributionsInput, usersUpdateWithoutContributionsInput>, usersUncheckedUpdateWithoutContributionsInput>
   }
 
+  export type tenantsUpdateOneWithoutContributionsNestedInput = {
+    create?: XOR<tenantsCreateWithoutContributionsInput, tenantsUncheckedCreateWithoutContributionsInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutContributionsInput
+    upsert?: tenantsUpsertWithoutContributionsInput
+    disconnect?: tenantsWhereInput | boolean
+    delete?: tenantsWhereInput | boolean
+    connect?: tenantsWhereUniqueInput
+    update?: XOR<XOR<tenantsUpdateToOneWithWhereWithoutContributionsInput, tenantsUpdateWithoutContributionsInput>, tenantsUncheckedUpdateWithoutContributionsInput>
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type usersCreateNestedOneWithoutDutiesInput = {
     create?: XOR<usersCreateWithoutDutiesInput, usersUncheckedCreateWithoutDutiesInput>
     connectOrCreate?: usersCreateOrConnectWithoutDutiesInput
     connect?: usersWhereUniqueInput
+  }
+
+  export type tenantsCreateNestedOneWithoutDutiesInput = {
+    create?: XOR<tenantsCreateWithoutDutiesInput, tenantsUncheckedCreateWithoutDutiesInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutDutiesInput
+    connect?: tenantsWhereUniqueInput
   }
 
   export type NullableBoolFieldUpdateOperationsInput = {
@@ -24081,12 +24919,14 @@ export namespace Prisma {
     update?: XOR<XOR<usersUpdateToOneWithWhereWithoutDutiesInput, usersUpdateWithoutDutiesInput>, usersUncheckedUpdateWithoutDutiesInput>
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type tenantsUpdateOneWithoutDutiesNestedInput = {
+    create?: XOR<tenantsCreateWithoutDutiesInput, tenantsUncheckedCreateWithoutDutiesInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutDutiesInput
+    upsert?: tenantsUpsertWithoutDutiesInput
+    disconnect?: tenantsWhereInput | boolean
+    delete?: tenantsWhereInput | boolean
+    connect?: tenantsWhereUniqueInput
+    update?: XOR<XOR<tenantsUpdateToOneWithWhereWithoutDutiesInput, tenantsUpdateWithoutDutiesInput>, tenantsUncheckedUpdateWithoutDutiesInput>
   }
 
   export type chatsCreateNestedOneWithoutMessagesInput = {
@@ -24127,6 +24967,12 @@ export namespace Prisma {
     connect?: usersWhereUniqueInput
   }
 
+  export type tenantsCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<tenantsCreateWithoutNotificationsInput, tenantsUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutNotificationsInput
+    connect?: tenantsWhereUniqueInput
+  }
+
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
   }
@@ -24137,6 +24983,32 @@ export namespace Prisma {
     upsert?: usersUpsertWithoutNotificationsInput
     connect?: usersWhereUniqueInput
     update?: XOR<XOR<usersUpdateToOneWithWhereWithoutNotificationsInput, usersUpdateWithoutNotificationsInput>, usersUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type tenantsUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<tenantsCreateWithoutNotificationsInput, tenantsUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutNotificationsInput
+    upsert?: tenantsUpsertWithoutNotificationsInput
+    disconnect?: tenantsWhereInput | boolean
+    delete?: tenantsWhereInput | boolean
+    connect?: tenantsWhereUniqueInput
+    update?: XOR<XOR<tenantsUpdateToOneWithWhereWithoutNotificationsInput, tenantsUpdateWithoutNotificationsInput>, tenantsUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type tenantsCreateNestedOneWithoutProgramsInput = {
+    create?: XOR<tenantsCreateWithoutProgramsInput, tenantsUncheckedCreateWithoutProgramsInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutProgramsInput
+    connect?: tenantsWhereUniqueInput
+  }
+
+  export type tenantsUpdateOneWithoutProgramsNestedInput = {
+    create?: XOR<tenantsCreateWithoutProgramsInput, tenantsUncheckedCreateWithoutProgramsInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutProgramsInput
+    upsert?: tenantsUpsertWithoutProgramsInput
+    disconnect?: tenantsWhereInput | boolean
+    delete?: tenantsWhereInput | boolean
+    connect?: tenantsWhereUniqueInput
+    update?: XOR<XOR<tenantsUpdateToOneWithWhereWithoutProgramsInput, tenantsUpdateWithoutProgramsInput>, tenantsUncheckedUpdateWithoutProgramsInput>
   }
 
   export type projectsCreateNestedOneWithoutProject_tasksInput = {
@@ -24160,6 +25032,12 @@ export namespace Prisma {
     connectOrCreate?: project_tasksCreateOrConnectWithoutProjectsInput | project_tasksCreateOrConnectWithoutProjectsInput[]
     createMany?: project_tasksCreateManyProjectsInputEnvelope
     connect?: project_tasksWhereUniqueInput | project_tasksWhereUniqueInput[]
+  }
+
+  export type tenantsCreateNestedOneWithoutProjectsInput = {
+    create?: XOR<tenantsCreateWithoutProjectsInput, tenantsUncheckedCreateWithoutProjectsInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutProjectsInput
+    connect?: tenantsWhereUniqueInput
   }
 
   export type project_tasksUncheckedCreateNestedManyWithoutProjectsInput = {
@@ -24191,6 +25069,16 @@ export namespace Prisma {
     deleteMany?: project_tasksScalarWhereInput | project_tasksScalarWhereInput[]
   }
 
+  export type tenantsUpdateOneWithoutProjectsNestedInput = {
+    create?: XOR<tenantsCreateWithoutProjectsInput, tenantsUncheckedCreateWithoutProjectsInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutProjectsInput
+    upsert?: tenantsUpsertWithoutProjectsInput
+    disconnect?: tenantsWhereInput | boolean
+    delete?: tenantsWhereInput | boolean
+    connect?: tenantsWhereUniqueInput
+    update?: XOR<XOR<tenantsUpdateToOneWithWhereWithoutProjectsInput, tenantsUpdateWithoutProjectsInput>, tenantsUncheckedUpdateWithoutProjectsInput>
+  }
+
   export type project_tasksUncheckedUpdateManyWithoutProjectsNestedInput = {
     create?: XOR<project_tasksCreateWithoutProjectsInput, project_tasksUncheckedCreateWithoutProjectsInput> | project_tasksCreateWithoutProjectsInput[] | project_tasksUncheckedCreateWithoutProjectsInput[]
     connectOrCreate?: project_tasksCreateOrConnectWithoutProjectsInput | project_tasksCreateOrConnectWithoutProjectsInput[]
@@ -24211,6 +25099,12 @@ export namespace Prisma {
     connect?: usersWhereUniqueInput
   }
 
+  export type tenantsCreateNestedOneWithoutResourcesInput = {
+    create?: XOR<tenantsCreateWithoutResourcesInput, tenantsUncheckedCreateWithoutResourcesInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutResourcesInput
+    connect?: tenantsWhereUniqueInput
+  }
+
   export type usersUpdateOneWithoutResourcesNestedInput = {
     create?: XOR<usersCreateWithoutResourcesInput, usersUncheckedCreateWithoutResourcesInput>
     connectOrCreate?: usersCreateOrConnectWithoutResourcesInput
@@ -24221,6 +25115,16 @@ export namespace Prisma {
     update?: XOR<XOR<usersUpdateToOneWithWhereWithoutResourcesInput, usersUpdateWithoutResourcesInput>, usersUncheckedUpdateWithoutResourcesInput>
   }
 
+  export type tenantsUpdateOneWithoutResourcesNestedInput = {
+    create?: XOR<tenantsCreateWithoutResourcesInput, tenantsUncheckedCreateWithoutResourcesInput>
+    connectOrCreate?: tenantsCreateOrConnectWithoutResourcesInput
+    upsert?: tenantsUpsertWithoutResourcesInput
+    disconnect?: tenantsWhereInput | boolean
+    delete?: tenantsWhereInput | boolean
+    connect?: tenantsWhereUniqueInput
+    update?: XOR<XOR<tenantsUpdateToOneWithWhereWithoutResourcesInput, tenantsUpdateWithoutResourcesInput>, tenantsUncheckedUpdateWithoutResourcesInput>
+  }
+
   export type usersCreateNestedManyWithoutTenantsInput = {
     create?: XOR<usersCreateWithoutTenantsInput, usersUncheckedCreateWithoutTenantsInput> | usersCreateWithoutTenantsInput[] | usersUncheckedCreateWithoutTenantsInput[]
     connectOrCreate?: usersCreateOrConnectWithoutTenantsInput | usersCreateOrConnectWithoutTenantsInput[]
@@ -24228,11 +25132,95 @@ export namespace Prisma {
     connect?: usersWhereUniqueInput | usersWhereUniqueInput[]
   }
 
+  export type dutiesCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<dutiesCreateWithoutTenantsInput, dutiesUncheckedCreateWithoutTenantsInput> | dutiesCreateWithoutTenantsInput[] | dutiesUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: dutiesCreateOrConnectWithoutTenantsInput | dutiesCreateOrConnectWithoutTenantsInput[]
+    createMany?: dutiesCreateManyTenantsInputEnvelope
+    connect?: dutiesWhereUniqueInput | dutiesWhereUniqueInput[]
+  }
+
+  export type contributionsCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<contributionsCreateWithoutTenantsInput, contributionsUncheckedCreateWithoutTenantsInput> | contributionsCreateWithoutTenantsInput[] | contributionsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: contributionsCreateOrConnectWithoutTenantsInput | contributionsCreateOrConnectWithoutTenantsInput[]
+    createMany?: contributionsCreateManyTenantsInputEnvelope
+    connect?: contributionsWhereUniqueInput | contributionsWhereUniqueInput[]
+  }
+
+  export type notificationsCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<notificationsCreateWithoutTenantsInput, notificationsUncheckedCreateWithoutTenantsInput> | notificationsCreateWithoutTenantsInput[] | notificationsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: notificationsCreateOrConnectWithoutTenantsInput | notificationsCreateOrConnectWithoutTenantsInput[]
+    createMany?: notificationsCreateManyTenantsInputEnvelope
+    connect?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
+  }
+
+  export type programsCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<programsCreateWithoutTenantsInput, programsUncheckedCreateWithoutTenantsInput> | programsCreateWithoutTenantsInput[] | programsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: programsCreateOrConnectWithoutTenantsInput | programsCreateOrConnectWithoutTenantsInput[]
+    createMany?: programsCreateManyTenantsInputEnvelope
+    connect?: programsWhereUniqueInput | programsWhereUniqueInput[]
+  }
+
+  export type projectsCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<projectsCreateWithoutTenantsInput, projectsUncheckedCreateWithoutTenantsInput> | projectsCreateWithoutTenantsInput[] | projectsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: projectsCreateOrConnectWithoutTenantsInput | projectsCreateOrConnectWithoutTenantsInput[]
+    createMany?: projectsCreateManyTenantsInputEnvelope
+    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+  }
+
+  export type resourcesCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<resourcesCreateWithoutTenantsInput, resourcesUncheckedCreateWithoutTenantsInput> | resourcesCreateWithoutTenantsInput[] | resourcesUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: resourcesCreateOrConnectWithoutTenantsInput | resourcesCreateOrConnectWithoutTenantsInput[]
+    createMany?: resourcesCreateManyTenantsInputEnvelope
+    connect?: resourcesWhereUniqueInput | resourcesWhereUniqueInput[]
+  }
+
   export type usersUncheckedCreateNestedManyWithoutTenantsInput = {
     create?: XOR<usersCreateWithoutTenantsInput, usersUncheckedCreateWithoutTenantsInput> | usersCreateWithoutTenantsInput[] | usersUncheckedCreateWithoutTenantsInput[]
     connectOrCreate?: usersCreateOrConnectWithoutTenantsInput | usersCreateOrConnectWithoutTenantsInput[]
     createMany?: usersCreateManyTenantsInputEnvelope
     connect?: usersWhereUniqueInput | usersWhereUniqueInput[]
+  }
+
+  export type dutiesUncheckedCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<dutiesCreateWithoutTenantsInput, dutiesUncheckedCreateWithoutTenantsInput> | dutiesCreateWithoutTenantsInput[] | dutiesUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: dutiesCreateOrConnectWithoutTenantsInput | dutiesCreateOrConnectWithoutTenantsInput[]
+    createMany?: dutiesCreateManyTenantsInputEnvelope
+    connect?: dutiesWhereUniqueInput | dutiesWhereUniqueInput[]
+  }
+
+  export type contributionsUncheckedCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<contributionsCreateWithoutTenantsInput, contributionsUncheckedCreateWithoutTenantsInput> | contributionsCreateWithoutTenantsInput[] | contributionsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: contributionsCreateOrConnectWithoutTenantsInput | contributionsCreateOrConnectWithoutTenantsInput[]
+    createMany?: contributionsCreateManyTenantsInputEnvelope
+    connect?: contributionsWhereUniqueInput | contributionsWhereUniqueInput[]
+  }
+
+  export type notificationsUncheckedCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<notificationsCreateWithoutTenantsInput, notificationsUncheckedCreateWithoutTenantsInput> | notificationsCreateWithoutTenantsInput[] | notificationsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: notificationsCreateOrConnectWithoutTenantsInput | notificationsCreateOrConnectWithoutTenantsInput[]
+    createMany?: notificationsCreateManyTenantsInputEnvelope
+    connect?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
+  }
+
+  export type programsUncheckedCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<programsCreateWithoutTenantsInput, programsUncheckedCreateWithoutTenantsInput> | programsCreateWithoutTenantsInput[] | programsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: programsCreateOrConnectWithoutTenantsInput | programsCreateOrConnectWithoutTenantsInput[]
+    createMany?: programsCreateManyTenantsInputEnvelope
+    connect?: programsWhereUniqueInput | programsWhereUniqueInput[]
+  }
+
+  export type projectsUncheckedCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<projectsCreateWithoutTenantsInput, projectsUncheckedCreateWithoutTenantsInput> | projectsCreateWithoutTenantsInput[] | projectsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: projectsCreateOrConnectWithoutTenantsInput | projectsCreateOrConnectWithoutTenantsInput[]
+    createMany?: projectsCreateManyTenantsInputEnvelope
+    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+  }
+
+  export type resourcesUncheckedCreateNestedManyWithoutTenantsInput = {
+    create?: XOR<resourcesCreateWithoutTenantsInput, resourcesUncheckedCreateWithoutTenantsInput> | resourcesCreateWithoutTenantsInput[] | resourcesUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: resourcesCreateOrConnectWithoutTenantsInput | resourcesCreateOrConnectWithoutTenantsInput[]
+    createMany?: resourcesCreateManyTenantsInputEnvelope
+    connect?: resourcesWhereUniqueInput | resourcesWhereUniqueInput[]
   }
 
   export type usersUpdateManyWithoutTenantsNestedInput = {
@@ -24249,6 +25237,90 @@ export namespace Prisma {
     deleteMany?: usersScalarWhereInput | usersScalarWhereInput[]
   }
 
+  export type dutiesUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<dutiesCreateWithoutTenantsInput, dutiesUncheckedCreateWithoutTenantsInput> | dutiesCreateWithoutTenantsInput[] | dutiesUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: dutiesCreateOrConnectWithoutTenantsInput | dutiesCreateOrConnectWithoutTenantsInput[]
+    upsert?: dutiesUpsertWithWhereUniqueWithoutTenantsInput | dutiesUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: dutiesCreateManyTenantsInputEnvelope
+    set?: dutiesWhereUniqueInput | dutiesWhereUniqueInput[]
+    disconnect?: dutiesWhereUniqueInput | dutiesWhereUniqueInput[]
+    delete?: dutiesWhereUniqueInput | dutiesWhereUniqueInput[]
+    connect?: dutiesWhereUniqueInput | dutiesWhereUniqueInput[]
+    update?: dutiesUpdateWithWhereUniqueWithoutTenantsInput | dutiesUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: dutiesUpdateManyWithWhereWithoutTenantsInput | dutiesUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: dutiesScalarWhereInput | dutiesScalarWhereInput[]
+  }
+
+  export type contributionsUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<contributionsCreateWithoutTenantsInput, contributionsUncheckedCreateWithoutTenantsInput> | contributionsCreateWithoutTenantsInput[] | contributionsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: contributionsCreateOrConnectWithoutTenantsInput | contributionsCreateOrConnectWithoutTenantsInput[]
+    upsert?: contributionsUpsertWithWhereUniqueWithoutTenantsInput | contributionsUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: contributionsCreateManyTenantsInputEnvelope
+    set?: contributionsWhereUniqueInput | contributionsWhereUniqueInput[]
+    disconnect?: contributionsWhereUniqueInput | contributionsWhereUniqueInput[]
+    delete?: contributionsWhereUniqueInput | contributionsWhereUniqueInput[]
+    connect?: contributionsWhereUniqueInput | contributionsWhereUniqueInput[]
+    update?: contributionsUpdateWithWhereUniqueWithoutTenantsInput | contributionsUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: contributionsUpdateManyWithWhereWithoutTenantsInput | contributionsUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: contributionsScalarWhereInput | contributionsScalarWhereInput[]
+  }
+
+  export type notificationsUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<notificationsCreateWithoutTenantsInput, notificationsUncheckedCreateWithoutTenantsInput> | notificationsCreateWithoutTenantsInput[] | notificationsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: notificationsCreateOrConnectWithoutTenantsInput | notificationsCreateOrConnectWithoutTenantsInput[]
+    upsert?: notificationsUpsertWithWhereUniqueWithoutTenantsInput | notificationsUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: notificationsCreateManyTenantsInputEnvelope
+    set?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
+    disconnect?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
+    delete?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
+    connect?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
+    update?: notificationsUpdateWithWhereUniqueWithoutTenantsInput | notificationsUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: notificationsUpdateManyWithWhereWithoutTenantsInput | notificationsUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: notificationsScalarWhereInput | notificationsScalarWhereInput[]
+  }
+
+  export type programsUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<programsCreateWithoutTenantsInput, programsUncheckedCreateWithoutTenantsInput> | programsCreateWithoutTenantsInput[] | programsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: programsCreateOrConnectWithoutTenantsInput | programsCreateOrConnectWithoutTenantsInput[]
+    upsert?: programsUpsertWithWhereUniqueWithoutTenantsInput | programsUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: programsCreateManyTenantsInputEnvelope
+    set?: programsWhereUniqueInput | programsWhereUniqueInput[]
+    disconnect?: programsWhereUniqueInput | programsWhereUniqueInput[]
+    delete?: programsWhereUniqueInput | programsWhereUniqueInput[]
+    connect?: programsWhereUniqueInput | programsWhereUniqueInput[]
+    update?: programsUpdateWithWhereUniqueWithoutTenantsInput | programsUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: programsUpdateManyWithWhereWithoutTenantsInput | programsUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: programsScalarWhereInput | programsScalarWhereInput[]
+  }
+
+  export type projectsUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<projectsCreateWithoutTenantsInput, projectsUncheckedCreateWithoutTenantsInput> | projectsCreateWithoutTenantsInput[] | projectsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: projectsCreateOrConnectWithoutTenantsInput | projectsCreateOrConnectWithoutTenantsInput[]
+    upsert?: projectsUpsertWithWhereUniqueWithoutTenantsInput | projectsUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: projectsCreateManyTenantsInputEnvelope
+    set?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    disconnect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    delete?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    update?: projectsUpdateWithWhereUniqueWithoutTenantsInput | projectsUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: projectsUpdateManyWithWhereWithoutTenantsInput | projectsUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: projectsScalarWhereInput | projectsScalarWhereInput[]
+  }
+
+  export type resourcesUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<resourcesCreateWithoutTenantsInput, resourcesUncheckedCreateWithoutTenantsInput> | resourcesCreateWithoutTenantsInput[] | resourcesUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: resourcesCreateOrConnectWithoutTenantsInput | resourcesCreateOrConnectWithoutTenantsInput[]
+    upsert?: resourcesUpsertWithWhereUniqueWithoutTenantsInput | resourcesUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: resourcesCreateManyTenantsInputEnvelope
+    set?: resourcesWhereUniqueInput | resourcesWhereUniqueInput[]
+    disconnect?: resourcesWhereUniqueInput | resourcesWhereUniqueInput[]
+    delete?: resourcesWhereUniqueInput | resourcesWhereUniqueInput[]
+    connect?: resourcesWhereUniqueInput | resourcesWhereUniqueInput[]
+    update?: resourcesUpdateWithWhereUniqueWithoutTenantsInput | resourcesUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: resourcesUpdateManyWithWhereWithoutTenantsInput | resourcesUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: resourcesScalarWhereInput | resourcesScalarWhereInput[]
+  }
+
   export type usersUncheckedUpdateManyWithoutTenantsNestedInput = {
     create?: XOR<usersCreateWithoutTenantsInput, usersUncheckedCreateWithoutTenantsInput> | usersCreateWithoutTenantsInput[] | usersUncheckedCreateWithoutTenantsInput[]
     connectOrCreate?: usersCreateOrConnectWithoutTenantsInput | usersCreateOrConnectWithoutTenantsInput[]
@@ -24261,6 +25333,90 @@ export namespace Prisma {
     update?: usersUpdateWithWhereUniqueWithoutTenantsInput | usersUpdateWithWhereUniqueWithoutTenantsInput[]
     updateMany?: usersUpdateManyWithWhereWithoutTenantsInput | usersUpdateManyWithWhereWithoutTenantsInput[]
     deleteMany?: usersScalarWhereInput | usersScalarWhereInput[]
+  }
+
+  export type dutiesUncheckedUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<dutiesCreateWithoutTenantsInput, dutiesUncheckedCreateWithoutTenantsInput> | dutiesCreateWithoutTenantsInput[] | dutiesUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: dutiesCreateOrConnectWithoutTenantsInput | dutiesCreateOrConnectWithoutTenantsInput[]
+    upsert?: dutiesUpsertWithWhereUniqueWithoutTenantsInput | dutiesUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: dutiesCreateManyTenantsInputEnvelope
+    set?: dutiesWhereUniqueInput | dutiesWhereUniqueInput[]
+    disconnect?: dutiesWhereUniqueInput | dutiesWhereUniqueInput[]
+    delete?: dutiesWhereUniqueInput | dutiesWhereUniqueInput[]
+    connect?: dutiesWhereUniqueInput | dutiesWhereUniqueInput[]
+    update?: dutiesUpdateWithWhereUniqueWithoutTenantsInput | dutiesUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: dutiesUpdateManyWithWhereWithoutTenantsInput | dutiesUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: dutiesScalarWhereInput | dutiesScalarWhereInput[]
+  }
+
+  export type contributionsUncheckedUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<contributionsCreateWithoutTenantsInput, contributionsUncheckedCreateWithoutTenantsInput> | contributionsCreateWithoutTenantsInput[] | contributionsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: contributionsCreateOrConnectWithoutTenantsInput | contributionsCreateOrConnectWithoutTenantsInput[]
+    upsert?: contributionsUpsertWithWhereUniqueWithoutTenantsInput | contributionsUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: contributionsCreateManyTenantsInputEnvelope
+    set?: contributionsWhereUniqueInput | contributionsWhereUniqueInput[]
+    disconnect?: contributionsWhereUniqueInput | contributionsWhereUniqueInput[]
+    delete?: contributionsWhereUniqueInput | contributionsWhereUniqueInput[]
+    connect?: contributionsWhereUniqueInput | contributionsWhereUniqueInput[]
+    update?: contributionsUpdateWithWhereUniqueWithoutTenantsInput | contributionsUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: contributionsUpdateManyWithWhereWithoutTenantsInput | contributionsUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: contributionsScalarWhereInput | contributionsScalarWhereInput[]
+  }
+
+  export type notificationsUncheckedUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<notificationsCreateWithoutTenantsInput, notificationsUncheckedCreateWithoutTenantsInput> | notificationsCreateWithoutTenantsInput[] | notificationsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: notificationsCreateOrConnectWithoutTenantsInput | notificationsCreateOrConnectWithoutTenantsInput[]
+    upsert?: notificationsUpsertWithWhereUniqueWithoutTenantsInput | notificationsUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: notificationsCreateManyTenantsInputEnvelope
+    set?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
+    disconnect?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
+    delete?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
+    connect?: notificationsWhereUniqueInput | notificationsWhereUniqueInput[]
+    update?: notificationsUpdateWithWhereUniqueWithoutTenantsInput | notificationsUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: notificationsUpdateManyWithWhereWithoutTenantsInput | notificationsUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: notificationsScalarWhereInput | notificationsScalarWhereInput[]
+  }
+
+  export type programsUncheckedUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<programsCreateWithoutTenantsInput, programsUncheckedCreateWithoutTenantsInput> | programsCreateWithoutTenantsInput[] | programsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: programsCreateOrConnectWithoutTenantsInput | programsCreateOrConnectWithoutTenantsInput[]
+    upsert?: programsUpsertWithWhereUniqueWithoutTenantsInput | programsUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: programsCreateManyTenantsInputEnvelope
+    set?: programsWhereUniqueInput | programsWhereUniqueInput[]
+    disconnect?: programsWhereUniqueInput | programsWhereUniqueInput[]
+    delete?: programsWhereUniqueInput | programsWhereUniqueInput[]
+    connect?: programsWhereUniqueInput | programsWhereUniqueInput[]
+    update?: programsUpdateWithWhereUniqueWithoutTenantsInput | programsUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: programsUpdateManyWithWhereWithoutTenantsInput | programsUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: programsScalarWhereInput | programsScalarWhereInput[]
+  }
+
+  export type projectsUncheckedUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<projectsCreateWithoutTenantsInput, projectsUncheckedCreateWithoutTenantsInput> | projectsCreateWithoutTenantsInput[] | projectsUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: projectsCreateOrConnectWithoutTenantsInput | projectsCreateOrConnectWithoutTenantsInput[]
+    upsert?: projectsUpsertWithWhereUniqueWithoutTenantsInput | projectsUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: projectsCreateManyTenantsInputEnvelope
+    set?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    disconnect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    delete?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    update?: projectsUpdateWithWhereUniqueWithoutTenantsInput | projectsUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: projectsUpdateManyWithWhereWithoutTenantsInput | projectsUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: projectsScalarWhereInput | projectsScalarWhereInput[]
+  }
+
+  export type resourcesUncheckedUpdateManyWithoutTenantsNestedInput = {
+    create?: XOR<resourcesCreateWithoutTenantsInput, resourcesUncheckedCreateWithoutTenantsInput> | resourcesCreateWithoutTenantsInput[] | resourcesUncheckedCreateWithoutTenantsInput[]
+    connectOrCreate?: resourcesCreateOrConnectWithoutTenantsInput | resourcesCreateOrConnectWithoutTenantsInput[]
+    upsert?: resourcesUpsertWithWhereUniqueWithoutTenantsInput | resourcesUpsertWithWhereUniqueWithoutTenantsInput[]
+    createMany?: resourcesCreateManyTenantsInputEnvelope
+    set?: resourcesWhereUniqueInput | resourcesWhereUniqueInput[]
+    disconnect?: resourcesWhereUniqueInput | resourcesWhereUniqueInput[]
+    delete?: resourcesWhereUniqueInput | resourcesWhereUniqueInput[]
+    connect?: resourcesWhereUniqueInput | resourcesWhereUniqueInput[]
+    update?: resourcesUpdateWithWhereUniqueWithoutTenantsInput | resourcesUpdateWithWhereUniqueWithoutTenantsInput[]
+    updateMany?: resourcesUpdateManyWithWhereWithoutTenantsInput | resourcesUpdateManyWithWhereWithoutTenantsInput[]
+    deleteMany?: resourcesScalarWhereInput | resourcesScalarWhereInput[]
   }
 
   export type chat_participantsCreateNestedManyWithoutUsersInput = {
@@ -24655,6 +25811,33 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
@@ -24723,32 +25906,28 @@ export namespace Prisma {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
 
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -24797,29 +25976,6 @@ export namespace Prisma {
     _sum?: NestedDecimalNullableFilter<$PrismaModel>
     _min?: NestedDecimalNullableFilter<$PrismaModel>
     _max?: NestedDecimalNullableFilter<$PrismaModel>
-  }
-  export type NestedJsonNullableFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type chatsCreateWithoutChat_participantsInput = {
@@ -25129,6 +26285,48 @@ export namespace Prisma {
     create: XOR<usersCreateWithoutContributionsInput, usersUncheckedCreateWithoutContributionsInput>
   }
 
+  export type tenantsCreateWithoutContributionsInput = {
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersCreateNestedManyWithoutTenantsInput
+    duties?: dutiesCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsCreateNestedManyWithoutTenantsInput
+    programs?: programsCreateNestedManyWithoutTenantsInput
+    projects?: projectsCreateNestedManyWithoutTenantsInput
+    resources?: resourcesCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsUncheckedCreateWithoutContributionsInput = {
+    id?: number
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersUncheckedCreateNestedManyWithoutTenantsInput
+    duties?: dutiesUncheckedCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsUncheckedCreateNestedManyWithoutTenantsInput
+    programs?: programsUncheckedCreateNestedManyWithoutTenantsInput
+    projects?: projectsUncheckedCreateNestedManyWithoutTenantsInput
+    resources?: resourcesUncheckedCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsCreateOrConnectWithoutContributionsInput = {
+    where: tenantsWhereUniqueInput
+    create: XOR<tenantsCreateWithoutContributionsInput, tenantsUncheckedCreateWithoutContributionsInput>
+  }
+
   export type usersUpsertWithoutContributionsInput = {
     update: XOR<usersUpdateWithoutContributionsInput, usersUncheckedUpdateWithoutContributionsInput>
     create: XOR<usersCreateWithoutContributionsInput, usersUncheckedCreateWithoutContributionsInput>
@@ -25191,6 +26389,54 @@ export namespace Prisma {
     resources?: resourcesUncheckedUpdateManyWithoutUsersNestedInput
   }
 
+  export type tenantsUpsertWithoutContributionsInput = {
+    update: XOR<tenantsUpdateWithoutContributionsInput, tenantsUncheckedUpdateWithoutContributionsInput>
+    create: XOR<tenantsCreateWithoutContributionsInput, tenantsUncheckedCreateWithoutContributionsInput>
+    where?: tenantsWhereInput
+  }
+
+  export type tenantsUpdateToOneWithWhereWithoutContributionsInput = {
+    where?: tenantsWhereInput
+    data: XOR<tenantsUpdateWithoutContributionsInput, tenantsUncheckedUpdateWithoutContributionsInput>
+  }
+
+  export type tenantsUpdateWithoutContributionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUpdateManyWithoutTenantsNestedInput
+    programs?: programsUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUpdateManyWithoutTenantsNestedInput
+  }
+
+  export type tenantsUncheckedUpdateWithoutContributionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUncheckedUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUncheckedUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUncheckedUpdateManyWithoutTenantsNestedInput
+    programs?: programsUncheckedUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUncheckedUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUncheckedUpdateManyWithoutTenantsNestedInput
+  }
+
   export type usersCreateWithoutDutiesInput = {
     name: string
     email: string
@@ -25245,6 +26491,48 @@ export namespace Prisma {
   export type usersCreateOrConnectWithoutDutiesInput = {
     where: usersWhereUniqueInput
     create: XOR<usersCreateWithoutDutiesInput, usersUncheckedCreateWithoutDutiesInput>
+  }
+
+  export type tenantsCreateWithoutDutiesInput = {
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsCreateNestedManyWithoutTenantsInput
+    programs?: programsCreateNestedManyWithoutTenantsInput
+    projects?: projectsCreateNestedManyWithoutTenantsInput
+    resources?: resourcesCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsUncheckedCreateWithoutDutiesInput = {
+    id?: number
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersUncheckedCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsUncheckedCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsUncheckedCreateNestedManyWithoutTenantsInput
+    programs?: programsUncheckedCreateNestedManyWithoutTenantsInput
+    projects?: projectsUncheckedCreateNestedManyWithoutTenantsInput
+    resources?: resourcesUncheckedCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsCreateOrConnectWithoutDutiesInput = {
+    where: tenantsWhereUniqueInput
+    create: XOR<tenantsCreateWithoutDutiesInput, tenantsUncheckedCreateWithoutDutiesInput>
   }
 
   export type usersUpsertWithoutDutiesInput = {
@@ -25307,6 +26595,54 @@ export namespace Prisma {
     messages?: messagesUncheckedUpdateManyWithoutUsersNestedInput
     notifications?: notificationsUncheckedUpdateManyWithoutUsersNestedInput
     resources?: resourcesUncheckedUpdateManyWithoutUsersNestedInput
+  }
+
+  export type tenantsUpsertWithoutDutiesInput = {
+    update: XOR<tenantsUpdateWithoutDutiesInput, tenantsUncheckedUpdateWithoutDutiesInput>
+    create: XOR<tenantsCreateWithoutDutiesInput, tenantsUncheckedCreateWithoutDutiesInput>
+    where?: tenantsWhereInput
+  }
+
+  export type tenantsUpdateToOneWithWhereWithoutDutiesInput = {
+    where?: tenantsWhereInput
+    data: XOR<tenantsUpdateWithoutDutiesInput, tenantsUncheckedUpdateWithoutDutiesInput>
+  }
+
+  export type tenantsUpdateWithoutDutiesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUpdateManyWithoutTenantsNestedInput
+    programs?: programsUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUpdateManyWithoutTenantsNestedInput
+  }
+
+  export type tenantsUncheckedUpdateWithoutDutiesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUncheckedUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUncheckedUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUncheckedUpdateManyWithoutTenantsNestedInput
+    programs?: programsUncheckedUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUncheckedUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUncheckedUpdateManyWithoutTenantsNestedInput
   }
 
   export type chatsCreateWithoutMessagesInput = {
@@ -25521,6 +26857,48 @@ export namespace Prisma {
     create: XOR<usersCreateWithoutNotificationsInput, usersUncheckedCreateWithoutNotificationsInput>
   }
 
+  export type tenantsCreateWithoutNotificationsInput = {
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersCreateNestedManyWithoutTenantsInput
+    duties?: dutiesCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsCreateNestedManyWithoutTenantsInput
+    programs?: programsCreateNestedManyWithoutTenantsInput
+    projects?: projectsCreateNestedManyWithoutTenantsInput
+    resources?: resourcesCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsUncheckedCreateWithoutNotificationsInput = {
+    id?: number
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersUncheckedCreateNestedManyWithoutTenantsInput
+    duties?: dutiesUncheckedCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsUncheckedCreateNestedManyWithoutTenantsInput
+    programs?: programsUncheckedCreateNestedManyWithoutTenantsInput
+    projects?: projectsUncheckedCreateNestedManyWithoutTenantsInput
+    resources?: resourcesUncheckedCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsCreateOrConnectWithoutNotificationsInput = {
+    where: tenantsWhereUniqueInput
+    create: XOR<tenantsCreateWithoutNotificationsInput, tenantsUncheckedCreateWithoutNotificationsInput>
+  }
+
   export type usersUpsertWithoutNotificationsInput = {
     update: XOR<usersUpdateWithoutNotificationsInput, usersUncheckedUpdateWithoutNotificationsInput>
     create: XOR<usersCreateWithoutNotificationsInput, usersUncheckedCreateWithoutNotificationsInput>
@@ -25583,9 +26961,148 @@ export namespace Prisma {
     resources?: resourcesUncheckedUpdateManyWithoutUsersNestedInput
   }
 
+  export type tenantsUpsertWithoutNotificationsInput = {
+    update: XOR<tenantsUpdateWithoutNotificationsInput, tenantsUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<tenantsCreateWithoutNotificationsInput, tenantsUncheckedCreateWithoutNotificationsInput>
+    where?: tenantsWhereInput
+  }
+
+  export type tenantsUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: tenantsWhereInput
+    data: XOR<tenantsUpdateWithoutNotificationsInput, tenantsUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type tenantsUpdateWithoutNotificationsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUpdateManyWithoutTenantsNestedInput
+    programs?: programsUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUpdateManyWithoutTenantsNestedInput
+  }
+
+  export type tenantsUncheckedUpdateWithoutNotificationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUncheckedUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUncheckedUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUncheckedUpdateManyWithoutTenantsNestedInput
+    programs?: programsUncheckedUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUncheckedUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUncheckedUpdateManyWithoutTenantsNestedInput
+  }
+
+  export type tenantsCreateWithoutProgramsInput = {
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersCreateNestedManyWithoutTenantsInput
+    duties?: dutiesCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsCreateNestedManyWithoutTenantsInput
+    projects?: projectsCreateNestedManyWithoutTenantsInput
+    resources?: resourcesCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsUncheckedCreateWithoutProgramsInput = {
+    id?: number
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersUncheckedCreateNestedManyWithoutTenantsInput
+    duties?: dutiesUncheckedCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsUncheckedCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsUncheckedCreateNestedManyWithoutTenantsInput
+    projects?: projectsUncheckedCreateNestedManyWithoutTenantsInput
+    resources?: resourcesUncheckedCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsCreateOrConnectWithoutProgramsInput = {
+    where: tenantsWhereUniqueInput
+    create: XOR<tenantsCreateWithoutProgramsInput, tenantsUncheckedCreateWithoutProgramsInput>
+  }
+
+  export type tenantsUpsertWithoutProgramsInput = {
+    update: XOR<tenantsUpdateWithoutProgramsInput, tenantsUncheckedUpdateWithoutProgramsInput>
+    create: XOR<tenantsCreateWithoutProgramsInput, tenantsUncheckedCreateWithoutProgramsInput>
+    where?: tenantsWhereInput
+  }
+
+  export type tenantsUpdateToOneWithWhereWithoutProgramsInput = {
+    where?: tenantsWhereInput
+    data: XOR<tenantsUpdateWithoutProgramsInput, tenantsUncheckedUpdateWithoutProgramsInput>
+  }
+
+  export type tenantsUpdateWithoutProgramsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUpdateManyWithoutTenantsNestedInput
+  }
+
+  export type tenantsUncheckedUpdateWithoutProgramsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUncheckedUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUncheckedUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUncheckedUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUncheckedUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUncheckedUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUncheckedUpdateManyWithoutTenantsNestedInput
+  }
+
   export type projectsCreateWithoutProject_tasksInput = {
     title?: string | null
     description?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     status?: string | null
     progress?: number | null
     priority?: string | null
@@ -25594,12 +27111,15 @@ export namespace Prisma {
     assigned_to?: string | null
     budget?: Decimal | DecimalJsLike | number | string | null
     spent?: Decimal | DecimalJsLike | number | string | null
+    tenants?: tenantsCreateNestedOneWithoutProjectsInput
   }
 
   export type projectsUncheckedCreateWithoutProject_tasksInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     description?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     status?: string | null
     progress?: number | null
     priority?: string | null
@@ -25629,6 +27149,7 @@ export namespace Prisma {
   export type projectsUpdateWithoutProject_tasksInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     status?: NullableStringFieldUpdateOperationsInput | string | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     priority?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25637,12 +27158,15 @@ export namespace Prisma {
     assigned_to?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     spent?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tenants?: tenantsUpdateOneWithoutProjectsNestedInput
   }
 
   export type projectsUncheckedUpdateWithoutProject_tasksInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     status?: NullableStringFieldUpdateOperationsInput | string | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     priority?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25674,6 +27198,48 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type tenantsCreateWithoutProjectsInput = {
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersCreateNestedManyWithoutTenantsInput
+    duties?: dutiesCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsCreateNestedManyWithoutTenantsInput
+    programs?: programsCreateNestedManyWithoutTenantsInput
+    resources?: resourcesCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsUncheckedCreateWithoutProjectsInput = {
+    id?: number
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersUncheckedCreateNestedManyWithoutTenantsInput
+    duties?: dutiesUncheckedCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsUncheckedCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsUncheckedCreateNestedManyWithoutTenantsInput
+    programs?: programsUncheckedCreateNestedManyWithoutTenantsInput
+    resources?: resourcesUncheckedCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsCreateOrConnectWithoutProjectsInput = {
+    where: tenantsWhereUniqueInput
+    create: XOR<tenantsCreateWithoutProjectsInput, tenantsUncheckedCreateWithoutProjectsInput>
+  }
+
   export type project_tasksUpsertWithWhereUniqueWithoutProjectsInput = {
     where: project_tasksWhereUniqueInput
     update: XOR<project_tasksUpdateWithoutProjectsInput, project_tasksUncheckedUpdateWithoutProjectsInput>
@@ -25698,6 +27264,54 @@ export namespace Prisma {
     project_id?: IntNullableFilter<"project_tasks"> | number | null
     title?: StringNullableFilter<"project_tasks"> | string | null
     completed?: BoolNullableFilter<"project_tasks"> | boolean | null
+  }
+
+  export type tenantsUpsertWithoutProjectsInput = {
+    update: XOR<tenantsUpdateWithoutProjectsInput, tenantsUncheckedUpdateWithoutProjectsInput>
+    create: XOR<tenantsCreateWithoutProjectsInput, tenantsUncheckedCreateWithoutProjectsInput>
+    where?: tenantsWhereInput
+  }
+
+  export type tenantsUpdateToOneWithWhereWithoutProjectsInput = {
+    where?: tenantsWhereInput
+    data: XOR<tenantsUpdateWithoutProjectsInput, tenantsUncheckedUpdateWithoutProjectsInput>
+  }
+
+  export type tenantsUpdateWithoutProjectsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUpdateManyWithoutTenantsNestedInput
+    programs?: programsUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUpdateManyWithoutTenantsNestedInput
+  }
+
+  export type tenantsUncheckedUpdateWithoutProjectsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUncheckedUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUncheckedUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUncheckedUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUncheckedUpdateManyWithoutTenantsNestedInput
+    programs?: programsUncheckedUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUncheckedUpdateManyWithoutTenantsNestedInput
   }
 
   export type usersCreateWithoutResourcesInput = {
@@ -25754,6 +27368,48 @@ export namespace Prisma {
   export type usersCreateOrConnectWithoutResourcesInput = {
     where: usersWhereUniqueInput
     create: XOR<usersCreateWithoutResourcesInput, usersUncheckedCreateWithoutResourcesInput>
+  }
+
+  export type tenantsCreateWithoutResourcesInput = {
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersCreateNestedManyWithoutTenantsInput
+    duties?: dutiesCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsCreateNestedManyWithoutTenantsInput
+    programs?: programsCreateNestedManyWithoutTenantsInput
+    projects?: projectsCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsUncheckedCreateWithoutResourcesInput = {
+    id?: number
+    name: string
+    location?: string | null
+    website?: string | null
+    logo_url?: string | null
+    status?: string | null
+    created_at?: Date | string | null
+    currency?: string | null
+    tax_id?: string | null
+    primary_color?: string | null
+    users?: usersUncheckedCreateNestedManyWithoutTenantsInput
+    duties?: dutiesUncheckedCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsUncheckedCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsUncheckedCreateNestedManyWithoutTenantsInput
+    programs?: programsUncheckedCreateNestedManyWithoutTenantsInput
+    projects?: projectsUncheckedCreateNestedManyWithoutTenantsInput
+  }
+
+  export type tenantsCreateOrConnectWithoutResourcesInput = {
+    where: tenantsWhereUniqueInput
+    create: XOR<tenantsCreateWithoutResourcesInput, tenantsUncheckedCreateWithoutResourcesInput>
   }
 
   export type usersUpsertWithoutResourcesInput = {
@@ -25818,6 +27474,54 @@ export namespace Prisma {
     notifications?: notificationsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
+  export type tenantsUpsertWithoutResourcesInput = {
+    update: XOR<tenantsUpdateWithoutResourcesInput, tenantsUncheckedUpdateWithoutResourcesInput>
+    create: XOR<tenantsCreateWithoutResourcesInput, tenantsUncheckedCreateWithoutResourcesInput>
+    where?: tenantsWhereInput
+  }
+
+  export type tenantsUpdateToOneWithWhereWithoutResourcesInput = {
+    where?: tenantsWhereInput
+    data: XOR<tenantsUpdateWithoutResourcesInput, tenantsUncheckedUpdateWithoutResourcesInput>
+  }
+
+  export type tenantsUpdateWithoutResourcesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUpdateManyWithoutTenantsNestedInput
+    programs?: programsUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUpdateManyWithoutTenantsNestedInput
+  }
+
+  export type tenantsUncheckedUpdateWithoutResourcesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_id?: NullableStringFieldUpdateOperationsInput | string | null
+    primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUncheckedUpdateManyWithoutTenantsNestedInput
+    duties?: dutiesUncheckedUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUncheckedUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUncheckedUpdateManyWithoutTenantsNestedInput
+    programs?: programsUncheckedUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUncheckedUpdateManyWithoutTenantsNestedInput
+  }
+
   export type usersCreateWithoutTenantsInput = {
     name: string
     email: string
@@ -25879,6 +27583,196 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type dutiesCreateWithoutTenantsInput = {
+    title?: string | null
+    date?: Date | string | null
+    status?: string | null
+    category?: string | null
+    notes?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    report_submitted?: boolean | null
+    updated_at?: Date | string | null
+    users?: usersCreateNestedOneWithoutDutiesInput
+  }
+
+  export type dutiesUncheckedCreateWithoutTenantsInput = {
+    id?: number
+    title?: string | null
+    assigned_id?: number | null
+    date?: Date | string | null
+    status?: string | null
+    category?: string | null
+    notes?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    report_submitted?: boolean | null
+    updated_at?: Date | string | null
+  }
+
+  export type dutiesCreateOrConnectWithoutTenantsInput = {
+    where: dutiesWhereUniqueInput
+    create: XOR<dutiesCreateWithoutTenantsInput, dutiesUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type dutiesCreateManyTenantsInputEnvelope = {
+    data: dutiesCreateManyTenantsInput | dutiesCreateManyTenantsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type contributionsCreateWithoutTenantsInput = {
+    amount: Decimal | DecimalJsLike | number | string
+    date?: Date | string
+    category: string
+    method: string
+    notes?: string | null
+    created_at?: Date | string | null
+    member_name: string
+    users: usersCreateNestedOneWithoutContributionsInput
+  }
+
+  export type contributionsUncheckedCreateWithoutTenantsInput = {
+    id?: number
+    member_id: number
+    amount: Decimal | DecimalJsLike | number | string
+    date?: Date | string
+    category: string
+    method: string
+    notes?: string | null
+    created_at?: Date | string | null
+    member_name: string
+  }
+
+  export type contributionsCreateOrConnectWithoutTenantsInput = {
+    where: contributionsWhereUniqueInput
+    create: XOR<contributionsCreateWithoutTenantsInput, contributionsUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type contributionsCreateManyTenantsInputEnvelope = {
+    data: contributionsCreateManyTenantsInput | contributionsCreateManyTenantsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type notificationsCreateWithoutTenantsInput = {
+    title: string
+    message: string
+    read?: boolean
+    created_at?: Date | string
+    users: usersCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type notificationsUncheckedCreateWithoutTenantsInput = {
+    id?: number
+    user_id: number
+    title: string
+    message: string
+    read?: boolean
+    created_at?: Date | string
+  }
+
+  export type notificationsCreateOrConnectWithoutTenantsInput = {
+    where: notificationsWhereUniqueInput
+    create: XOR<notificationsCreateWithoutTenantsInput, notificationsUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type notificationsCreateManyTenantsInputEnvelope = {
+    data: notificationsCreateManyTenantsInput | notificationsCreateManyTenantsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type programsCreateWithoutTenantsInput = {
+    title?: string | null
+    date?: Date | string | null
+    time?: string | null
+    location?: string | null
+    category?: string | null
+    image?: string | null
+  }
+
+  export type programsUncheckedCreateWithoutTenantsInput = {
+    id?: number
+    title?: string | null
+    date?: Date | string | null
+    time?: string | null
+    location?: string | null
+    category?: string | null
+    image?: string | null
+  }
+
+  export type programsCreateOrConnectWithoutTenantsInput = {
+    where: programsWhereUniqueInput
+    create: XOR<programsCreateWithoutTenantsInput, programsUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type programsCreateManyTenantsInputEnvelope = {
+    data: programsCreateManyTenantsInput | programsCreateManyTenantsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type projectsCreateWithoutTenantsInput = {
+    title?: string | null
+    description?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    status?: string | null
+    progress?: number | null
+    priority?: string | null
+    start_date?: Date | string | null
+    end_date?: Date | string | null
+    assigned_to?: string | null
+    budget?: Decimal | DecimalJsLike | number | string | null
+    spent?: Decimal | DecimalJsLike | number | string | null
+    project_tasks?: project_tasksCreateNestedManyWithoutProjectsInput
+  }
+
+  export type projectsUncheckedCreateWithoutTenantsInput = {
+    id?: number
+    title?: string | null
+    description?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    status?: string | null
+    progress?: number | null
+    priority?: string | null
+    start_date?: Date | string | null
+    end_date?: Date | string | null
+    assigned_to?: string | null
+    budget?: Decimal | DecimalJsLike | number | string | null
+    spent?: Decimal | DecimalJsLike | number | string | null
+    project_tasks?: project_tasksUncheckedCreateNestedManyWithoutProjectsInput
+  }
+
+  export type projectsCreateOrConnectWithoutTenantsInput = {
+    where: projectsWhereUniqueInput
+    create: XOR<projectsCreateWithoutTenantsInput, projectsUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type projectsCreateManyTenantsInputEnvelope = {
+    data: projectsCreateManyTenantsInput | projectsCreateManyTenantsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type resourcesCreateWithoutTenantsInput = {
+    title?: string | null
+    url?: string | null
+    created_at?: Date | string | null
+    users?: usersCreateNestedOneWithoutResourcesInput
+  }
+
+  export type resourcesUncheckedCreateWithoutTenantsInput = {
+    id?: number
+    title?: string | null
+    url?: string | null
+    uploaded_by?: number | null
+    created_at?: Date | string | null
+  }
+
+  export type resourcesCreateOrConnectWithoutTenantsInput = {
+    where: resourcesWhereUniqueInput
+    create: XOR<resourcesCreateWithoutTenantsInput, resourcesUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type resourcesCreateManyTenantsInputEnvelope = {
+    data: resourcesCreateManyTenantsInput | resourcesCreateManyTenantsInput[]
+    skipDuplicates?: boolean
+  }
+
   export type usersUpsertWithWhereUniqueWithoutTenantsInput = {
     where: usersWhereUniqueInput
     update: XOR<usersUpdateWithoutTenantsInput, usersUncheckedUpdateWithoutTenantsInput>
@@ -25919,6 +27813,193 @@ export namespace Prisma {
     deleted_at?: DateTimeNullableFilter<"users"> | Date | string | null
   }
 
+  export type dutiesUpsertWithWhereUniqueWithoutTenantsInput = {
+    where: dutiesWhereUniqueInput
+    update: XOR<dutiesUpdateWithoutTenantsInput, dutiesUncheckedUpdateWithoutTenantsInput>
+    create: XOR<dutiesCreateWithoutTenantsInput, dutiesUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type dutiesUpdateWithWhereUniqueWithoutTenantsInput = {
+    where: dutiesWhereUniqueInput
+    data: XOR<dutiesUpdateWithoutTenantsInput, dutiesUncheckedUpdateWithoutTenantsInput>
+  }
+
+  export type dutiesUpdateManyWithWhereWithoutTenantsInput = {
+    where: dutiesScalarWhereInput
+    data: XOR<dutiesUpdateManyMutationInput, dutiesUncheckedUpdateManyWithoutTenantsInput>
+  }
+
+  export type dutiesScalarWhereInput = {
+    AND?: dutiesScalarWhereInput | dutiesScalarWhereInput[]
+    OR?: dutiesScalarWhereInput[]
+    NOT?: dutiesScalarWhereInput | dutiesScalarWhereInput[]
+    id?: IntFilter<"duties"> | number
+    tenant_id?: IntNullableFilter<"duties"> | number | null
+    title?: StringNullableFilter<"duties"> | string | null
+    assigned_id?: IntNullableFilter<"duties"> | number | null
+    date?: DateTimeNullableFilter<"duties"> | Date | string | null
+    status?: StringNullableFilter<"duties"> | string | null
+    category?: StringNullableFilter<"duties"> | string | null
+    notes?: StringNullableFilter<"duties"> | string | null
+    comments?: JsonNullableFilter<"duties">
+    report_submitted?: BoolNullableFilter<"duties"> | boolean | null
+    updated_at?: DateTimeNullableFilter<"duties"> | Date | string | null
+  }
+
+  export type contributionsUpsertWithWhereUniqueWithoutTenantsInput = {
+    where: contributionsWhereUniqueInput
+    update: XOR<contributionsUpdateWithoutTenantsInput, contributionsUncheckedUpdateWithoutTenantsInput>
+    create: XOR<contributionsCreateWithoutTenantsInput, contributionsUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type contributionsUpdateWithWhereUniqueWithoutTenantsInput = {
+    where: contributionsWhereUniqueInput
+    data: XOR<contributionsUpdateWithoutTenantsInput, contributionsUncheckedUpdateWithoutTenantsInput>
+  }
+
+  export type contributionsUpdateManyWithWhereWithoutTenantsInput = {
+    where: contributionsScalarWhereInput
+    data: XOR<contributionsUpdateManyMutationInput, contributionsUncheckedUpdateManyWithoutTenantsInput>
+  }
+
+  export type contributionsScalarWhereInput = {
+    AND?: contributionsScalarWhereInput | contributionsScalarWhereInput[]
+    OR?: contributionsScalarWhereInput[]
+    NOT?: contributionsScalarWhereInput | contributionsScalarWhereInput[]
+    id?: IntFilter<"contributions"> | number
+    tenant_id?: IntNullableFilter<"contributions"> | number | null
+    member_id?: IntFilter<"contributions"> | number
+    amount?: DecimalFilter<"contributions"> | Decimal | DecimalJsLike | number | string
+    date?: DateTimeFilter<"contributions"> | Date | string
+    category?: StringFilter<"contributions"> | string
+    method?: StringFilter<"contributions"> | string
+    notes?: StringNullableFilter<"contributions"> | string | null
+    created_at?: DateTimeNullableFilter<"contributions"> | Date | string | null
+    member_name?: StringFilter<"contributions"> | string
+  }
+
+  export type notificationsUpsertWithWhereUniqueWithoutTenantsInput = {
+    where: notificationsWhereUniqueInput
+    update: XOR<notificationsUpdateWithoutTenantsInput, notificationsUncheckedUpdateWithoutTenantsInput>
+    create: XOR<notificationsCreateWithoutTenantsInput, notificationsUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type notificationsUpdateWithWhereUniqueWithoutTenantsInput = {
+    where: notificationsWhereUniqueInput
+    data: XOR<notificationsUpdateWithoutTenantsInput, notificationsUncheckedUpdateWithoutTenantsInput>
+  }
+
+  export type notificationsUpdateManyWithWhereWithoutTenantsInput = {
+    where: notificationsScalarWhereInput
+    data: XOR<notificationsUpdateManyMutationInput, notificationsUncheckedUpdateManyWithoutTenantsInput>
+  }
+
+  export type notificationsScalarWhereInput = {
+    AND?: notificationsScalarWhereInput | notificationsScalarWhereInput[]
+    OR?: notificationsScalarWhereInput[]
+    NOT?: notificationsScalarWhereInput | notificationsScalarWhereInput[]
+    id?: IntFilter<"notifications"> | number
+    tenant_id?: IntNullableFilter<"notifications"> | number | null
+    user_id?: IntFilter<"notifications"> | number
+    title?: StringFilter<"notifications"> | string
+    message?: StringFilter<"notifications"> | string
+    read?: BoolFilter<"notifications"> | boolean
+    created_at?: DateTimeFilter<"notifications"> | Date | string
+  }
+
+  export type programsUpsertWithWhereUniqueWithoutTenantsInput = {
+    where: programsWhereUniqueInput
+    update: XOR<programsUpdateWithoutTenantsInput, programsUncheckedUpdateWithoutTenantsInput>
+    create: XOR<programsCreateWithoutTenantsInput, programsUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type programsUpdateWithWhereUniqueWithoutTenantsInput = {
+    where: programsWhereUniqueInput
+    data: XOR<programsUpdateWithoutTenantsInput, programsUncheckedUpdateWithoutTenantsInput>
+  }
+
+  export type programsUpdateManyWithWhereWithoutTenantsInput = {
+    where: programsScalarWhereInput
+    data: XOR<programsUpdateManyMutationInput, programsUncheckedUpdateManyWithoutTenantsInput>
+  }
+
+  export type programsScalarWhereInput = {
+    AND?: programsScalarWhereInput | programsScalarWhereInput[]
+    OR?: programsScalarWhereInput[]
+    NOT?: programsScalarWhereInput | programsScalarWhereInput[]
+    id?: IntFilter<"programs"> | number
+    tenant_id?: IntNullableFilter<"programs"> | number | null
+    title?: StringNullableFilter<"programs"> | string | null
+    date?: DateTimeNullableFilter<"programs"> | Date | string | null
+    time?: StringNullableFilter<"programs"> | string | null
+    location?: StringNullableFilter<"programs"> | string | null
+    category?: StringNullableFilter<"programs"> | string | null
+    image?: StringNullableFilter<"programs"> | string | null
+  }
+
+  export type projectsUpsertWithWhereUniqueWithoutTenantsInput = {
+    where: projectsWhereUniqueInput
+    update: XOR<projectsUpdateWithoutTenantsInput, projectsUncheckedUpdateWithoutTenantsInput>
+    create: XOR<projectsCreateWithoutTenantsInput, projectsUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type projectsUpdateWithWhereUniqueWithoutTenantsInput = {
+    where: projectsWhereUniqueInput
+    data: XOR<projectsUpdateWithoutTenantsInput, projectsUncheckedUpdateWithoutTenantsInput>
+  }
+
+  export type projectsUpdateManyWithWhereWithoutTenantsInput = {
+    where: projectsScalarWhereInput
+    data: XOR<projectsUpdateManyMutationInput, projectsUncheckedUpdateManyWithoutTenantsInput>
+  }
+
+  export type projectsScalarWhereInput = {
+    AND?: projectsScalarWhereInput | projectsScalarWhereInput[]
+    OR?: projectsScalarWhereInput[]
+    NOT?: projectsScalarWhereInput | projectsScalarWhereInput[]
+    id?: IntFilter<"projects"> | number
+    tenant_id?: IntNullableFilter<"projects"> | number | null
+    title?: StringNullableFilter<"projects"> | string | null
+    description?: StringNullableFilter<"projects"> | string | null
+    comments?: JsonNullableFilter<"projects">
+    status?: StringNullableFilter<"projects"> | string | null
+    progress?: IntNullableFilter<"projects"> | number | null
+    priority?: StringNullableFilter<"projects"> | string | null
+    start_date?: DateTimeNullableFilter<"projects"> | Date | string | null
+    end_date?: DateTimeNullableFilter<"projects"> | Date | string | null
+    assigned_to?: StringNullableFilter<"projects"> | string | null
+    budget?: DecimalNullableFilter<"projects"> | Decimal | DecimalJsLike | number | string | null
+    spent?: DecimalNullableFilter<"projects"> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type resourcesUpsertWithWhereUniqueWithoutTenantsInput = {
+    where: resourcesWhereUniqueInput
+    update: XOR<resourcesUpdateWithoutTenantsInput, resourcesUncheckedUpdateWithoutTenantsInput>
+    create: XOR<resourcesCreateWithoutTenantsInput, resourcesUncheckedCreateWithoutTenantsInput>
+  }
+
+  export type resourcesUpdateWithWhereUniqueWithoutTenantsInput = {
+    where: resourcesWhereUniqueInput
+    data: XOR<resourcesUpdateWithoutTenantsInput, resourcesUncheckedUpdateWithoutTenantsInput>
+  }
+
+  export type resourcesUpdateManyWithWhereWithoutTenantsInput = {
+    where: resourcesScalarWhereInput
+    data: XOR<resourcesUpdateManyMutationInput, resourcesUncheckedUpdateManyWithoutTenantsInput>
+  }
+
+  export type resourcesScalarWhereInput = {
+    AND?: resourcesScalarWhereInput | resourcesScalarWhereInput[]
+    OR?: resourcesScalarWhereInput[]
+    NOT?: resourcesScalarWhereInput | resourcesScalarWhereInput[]
+    id?: IntFilter<"resources"> | number
+    tenant_id?: IntNullableFilter<"resources"> | number | null
+    title?: StringNullableFilter<"resources"> | string | null
+    url?: StringNullableFilter<"resources"> | string | null
+    uploaded_by?: IntNullableFilter<"resources"> | number | null
+    created_at?: DateTimeNullableFilter<"resources"> | Date | string | null
+  }
+
   export type chat_participantsCreateWithoutUsersInput = {
     chats: chatsCreateNestedOneWithoutChat_participantsInput
   }
@@ -25945,10 +28026,12 @@ export namespace Prisma {
     notes?: string | null
     created_at?: Date | string | null
     member_name: string
+    tenants?: tenantsCreateNestedOneWithoutContributionsInput
   }
 
   export type contributionsUncheckedCreateWithoutUsersInput = {
     id?: number
+    tenant_id?: number | null
     amount: Decimal | DecimalJsLike | number | string
     date?: Date | string
     category: string
@@ -25974,17 +28057,23 @@ export namespace Prisma {
     status?: string | null
     category?: string | null
     notes?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: boolean | null
+    updated_at?: Date | string | null
+    tenants?: tenantsCreateNestedOneWithoutDutiesInput
   }
 
   export type dutiesUncheckedCreateWithoutUsersInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     date?: Date | string | null
     status?: string | null
     category?: string | null
     notes?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: boolean | null
+    updated_at?: Date | string | null
   }
 
   export type dutiesCreateOrConnectWithoutUsersInput = {
@@ -26027,10 +28116,12 @@ export namespace Prisma {
     message: string
     read?: boolean
     created_at?: Date | string
+    tenants?: tenantsCreateNestedOneWithoutNotificationsInput
   }
 
   export type notificationsUncheckedCreateWithoutUsersInput = {
     id?: number
+    tenant_id?: number | null
     title: string
     message: string
     read?: boolean
@@ -26051,10 +28142,12 @@ export namespace Prisma {
     title?: string | null
     url?: string | null
     created_at?: Date | string | null
+    tenants?: tenantsCreateNestedOneWithoutResourcesInput
   }
 
   export type resourcesUncheckedCreateWithoutUsersInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     url?: string | null
     created_at?: Date | string | null
@@ -26080,6 +28173,12 @@ export namespace Prisma {
     currency?: string | null
     tax_id?: string | null
     primary_color?: string | null
+    duties?: dutiesCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsCreateNestedManyWithoutTenantsInput
+    programs?: programsCreateNestedManyWithoutTenantsInput
+    projects?: projectsCreateNestedManyWithoutTenantsInput
+    resources?: resourcesCreateNestedManyWithoutTenantsInput
   }
 
   export type tenantsUncheckedCreateWithoutUsersInput = {
@@ -26093,6 +28192,12 @@ export namespace Prisma {
     currency?: string | null
     tax_id?: string | null
     primary_color?: string | null
+    duties?: dutiesUncheckedCreateNestedManyWithoutTenantsInput
+    contributions?: contributionsUncheckedCreateNestedManyWithoutTenantsInput
+    notifications?: notificationsUncheckedCreateNestedManyWithoutTenantsInput
+    programs?: programsUncheckedCreateNestedManyWithoutTenantsInput
+    projects?: projectsUncheckedCreateNestedManyWithoutTenantsInput
+    resources?: resourcesUncheckedCreateNestedManyWithoutTenantsInput
   }
 
   export type tenantsCreateOrConnectWithoutUsersInput = {
@@ -26132,21 +28237,6 @@ export namespace Prisma {
     data: XOR<contributionsUpdateManyMutationInput, contributionsUncheckedUpdateManyWithoutUsersInput>
   }
 
-  export type contributionsScalarWhereInput = {
-    AND?: contributionsScalarWhereInput | contributionsScalarWhereInput[]
-    OR?: contributionsScalarWhereInput[]
-    NOT?: contributionsScalarWhereInput | contributionsScalarWhereInput[]
-    id?: IntFilter<"contributions"> | number
-    member_id?: IntFilter<"contributions"> | number
-    amount?: DecimalFilter<"contributions"> | Decimal | DecimalJsLike | number | string
-    date?: DateTimeFilter<"contributions"> | Date | string
-    category?: StringFilter<"contributions"> | string
-    method?: StringFilter<"contributions"> | string
-    notes?: StringNullableFilter<"contributions"> | string | null
-    created_at?: DateTimeNullableFilter<"contributions"> | Date | string | null
-    member_name?: StringFilter<"contributions"> | string
-  }
-
   export type dutiesUpsertWithWhereUniqueWithoutUsersInput = {
     where: dutiesWhereUniqueInput
     update: XOR<dutiesUpdateWithoutUsersInput, dutiesUncheckedUpdateWithoutUsersInput>
@@ -26161,20 +28251,6 @@ export namespace Prisma {
   export type dutiesUpdateManyWithWhereWithoutUsersInput = {
     where: dutiesScalarWhereInput
     data: XOR<dutiesUpdateManyMutationInput, dutiesUncheckedUpdateManyWithoutUsersInput>
-  }
-
-  export type dutiesScalarWhereInput = {
-    AND?: dutiesScalarWhereInput | dutiesScalarWhereInput[]
-    OR?: dutiesScalarWhereInput[]
-    NOT?: dutiesScalarWhereInput | dutiesScalarWhereInput[]
-    id?: IntFilter<"duties"> | number
-    title?: StringNullableFilter<"duties"> | string | null
-    assigned_id?: IntNullableFilter<"duties"> | number | null
-    date?: DateTimeNullableFilter<"duties"> | Date | string | null
-    status?: StringNullableFilter<"duties"> | string | null
-    category?: StringNullableFilter<"duties"> | string | null
-    notes?: StringNullableFilter<"duties"> | string | null
-    report_submitted?: BoolNullableFilter<"duties"> | boolean | null
   }
 
   export type messagesUpsertWithWhereUniqueWithoutUsersInput = {
@@ -26209,18 +28285,6 @@ export namespace Prisma {
     data: XOR<notificationsUpdateManyMutationInput, notificationsUncheckedUpdateManyWithoutUsersInput>
   }
 
-  export type notificationsScalarWhereInput = {
-    AND?: notificationsScalarWhereInput | notificationsScalarWhereInput[]
-    OR?: notificationsScalarWhereInput[]
-    NOT?: notificationsScalarWhereInput | notificationsScalarWhereInput[]
-    id?: IntFilter<"notifications"> | number
-    user_id?: IntFilter<"notifications"> | number
-    title?: StringFilter<"notifications"> | string
-    message?: StringFilter<"notifications"> | string
-    read?: BoolFilter<"notifications"> | boolean
-    created_at?: DateTimeFilter<"notifications"> | Date | string
-  }
-
   export type resourcesUpsertWithWhereUniqueWithoutUsersInput = {
     where: resourcesWhereUniqueInput
     update: XOR<resourcesUpdateWithoutUsersInput, resourcesUncheckedUpdateWithoutUsersInput>
@@ -26235,17 +28299,6 @@ export namespace Prisma {
   export type resourcesUpdateManyWithWhereWithoutUsersInput = {
     where: resourcesScalarWhereInput
     data: XOR<resourcesUpdateManyMutationInput, resourcesUncheckedUpdateManyWithoutUsersInput>
-  }
-
-  export type resourcesScalarWhereInput = {
-    AND?: resourcesScalarWhereInput | resourcesScalarWhereInput[]
-    OR?: resourcesScalarWhereInput[]
-    NOT?: resourcesScalarWhereInput | resourcesScalarWhereInput[]
-    id?: IntFilter<"resources"> | number
-    title?: StringNullableFilter<"resources"> | string | null
-    url?: StringNullableFilter<"resources"> | string | null
-    uploaded_by?: IntNullableFilter<"resources"> | number | null
-    created_at?: DateTimeNullableFilter<"resources"> | Date | string | null
   }
 
   export type tenantsUpsertWithoutUsersInput = {
@@ -26269,6 +28322,12 @@ export namespace Prisma {
     currency?: NullableStringFieldUpdateOperationsInput | string | null
     tax_id?: NullableStringFieldUpdateOperationsInput | string | null
     primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    duties?: dutiesUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUpdateManyWithoutTenantsNestedInput
+    programs?: programsUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUpdateManyWithoutTenantsNestedInput
   }
 
   export type tenantsUncheckedUpdateWithoutUsersInput = {
@@ -26282,6 +28341,12 @@ export namespace Prisma {
     currency?: NullableStringFieldUpdateOperationsInput | string | null
     tax_id?: NullableStringFieldUpdateOperationsInput | string | null
     primary_color?: NullableStringFieldUpdateOperationsInput | string | null
+    duties?: dutiesUncheckedUpdateManyWithoutTenantsNestedInput
+    contributions?: contributionsUncheckedUpdateManyWithoutTenantsNestedInput
+    notifications?: notificationsUncheckedUpdateManyWithoutTenantsNestedInput
+    programs?: programsUncheckedUpdateManyWithoutTenantsNestedInput
+    projects?: projectsUncheckedUpdateManyWithoutTenantsNestedInput
+    resources?: resourcesUncheckedUpdateManyWithoutTenantsNestedInput
   }
 
   export type chat_participantsCreateManyChatsInput = {
@@ -26374,6 +28439,73 @@ export namespace Prisma {
     deleted_at?: Date | string | null
   }
 
+  export type dutiesCreateManyTenantsInput = {
+    id?: number
+    title?: string | null
+    assigned_id?: number | null
+    date?: Date | string | null
+    status?: string | null
+    category?: string | null
+    notes?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    report_submitted?: boolean | null
+    updated_at?: Date | string | null
+  }
+
+  export type contributionsCreateManyTenantsInput = {
+    id?: number
+    member_id: number
+    amount: Decimal | DecimalJsLike | number | string
+    date?: Date | string
+    category: string
+    method: string
+    notes?: string | null
+    created_at?: Date | string | null
+    member_name: string
+  }
+
+  export type notificationsCreateManyTenantsInput = {
+    id?: number
+    user_id: number
+    title: string
+    message: string
+    read?: boolean
+    created_at?: Date | string
+  }
+
+  export type programsCreateManyTenantsInput = {
+    id?: number
+    title?: string | null
+    date?: Date | string | null
+    time?: string | null
+    location?: string | null
+    category?: string | null
+    image?: string | null
+  }
+
+  export type projectsCreateManyTenantsInput = {
+    id?: number
+    title?: string | null
+    description?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    status?: string | null
+    progress?: number | null
+    priority?: string | null
+    start_date?: Date | string | null
+    end_date?: Date | string | null
+    assigned_to?: string | null
+    budget?: Decimal | DecimalJsLike | number | string | null
+    spent?: Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type resourcesCreateManyTenantsInput = {
+    id?: number
+    title?: string | null
+    url?: string | null
+    uploaded_by?: number | null
+    created_at?: Date | string | null
+  }
+
   export type usersUpdateWithoutTenantsInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -26445,12 +28577,210 @@ export namespace Prisma {
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type dutiesUpdateWithoutTenantsInput = {
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    report_submitted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: usersUpdateOneWithoutDutiesNestedInput
+  }
+
+  export type dutiesUncheckedUpdateWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    assigned_id?: NullableIntFieldUpdateOperationsInput | number | null
+    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    report_submitted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type dutiesUncheckedUpdateManyWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    assigned_id?: NullableIntFieldUpdateOperationsInput | number | null
+    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    report_submitted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type contributionsUpdateWithoutTenantsInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    member_name?: StringFieldUpdateOperationsInput | string
+    users?: usersUpdateOneRequiredWithoutContributionsNestedInput
+  }
+
+  export type contributionsUncheckedUpdateWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    member_id?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    member_name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type contributionsUncheckedUpdateManyWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    member_id?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    member_name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type notificationsUpdateWithoutTenantsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: usersUpdateOneRequiredWithoutNotificationsNestedInput
+  }
+
+  export type notificationsUncheckedUpdateWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type notificationsUncheckedUpdateManyWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type programsUpdateWithoutTenantsInput = {
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    time?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type programsUncheckedUpdateWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    time?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type programsUncheckedUpdateManyWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    time?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type projectsUpdateWithoutTenantsInput = {
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigned_to?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    spent?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    project_tasks?: project_tasksUpdateManyWithoutProjectsNestedInput
+  }
+
+  export type projectsUncheckedUpdateWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigned_to?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    spent?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    project_tasks?: project_tasksUncheckedUpdateManyWithoutProjectsNestedInput
+  }
+
+  export type projectsUncheckedUpdateManyWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigned_to?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    spent?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type resourcesUpdateWithoutTenantsInput = {
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: usersUpdateOneWithoutResourcesNestedInput
+  }
+
+  export type resourcesUncheckedUpdateWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    uploaded_by?: NullableIntFieldUpdateOperationsInput | number | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type resourcesUncheckedUpdateManyWithoutTenantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    uploaded_by?: NullableIntFieldUpdateOperationsInput | number | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type chat_participantsCreateManyUsersInput = {
     chat_id: number
   }
 
   export type contributionsCreateManyUsersInput = {
     id?: number
+    tenant_id?: number | null
     amount: Decimal | DecimalJsLike | number | string
     date?: Date | string
     category: string
@@ -26462,12 +28792,15 @@ export namespace Prisma {
 
   export type dutiesCreateManyUsersInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     date?: Date | string | null
     status?: string | null
     category?: string | null
     notes?: string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: boolean | null
+    updated_at?: Date | string | null
   }
 
   export type messagesCreateManyUsersInput = {
@@ -26480,6 +28813,7 @@ export namespace Prisma {
 
   export type notificationsCreateManyUsersInput = {
     id?: number
+    tenant_id?: number | null
     title: string
     message: string
     read?: boolean
@@ -26488,6 +28822,7 @@ export namespace Prisma {
 
   export type resourcesCreateManyUsersInput = {
     id?: number
+    tenant_id?: number | null
     title?: string | null
     url?: string | null
     created_at?: Date | string | null
@@ -26513,10 +28848,12 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     member_name?: StringFieldUpdateOperationsInput | string
+    tenants?: tenantsUpdateOneWithoutContributionsNestedInput
   }
 
   export type contributionsUncheckedUpdateWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: StringFieldUpdateOperationsInput | string
@@ -26528,6 +28865,7 @@ export namespace Prisma {
 
   export type contributionsUncheckedUpdateManyWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: StringFieldUpdateOperationsInput | string
@@ -26543,27 +28881,36 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    tenants?: tenantsUpdateOneWithoutDutiesNestedInput
   }
 
   export type dutiesUncheckedUpdateWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type dutiesUncheckedUpdateManyWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: NullableJsonNullValueInput | InputJsonValue
     report_submitted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type messagesUpdateWithoutUsersInput = {
@@ -26594,10 +28941,12 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenants?: tenantsUpdateOneWithoutNotificationsNestedInput
   }
 
   export type notificationsUncheckedUpdateWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     read?: BoolFieldUpdateOperationsInput | boolean
@@ -26606,6 +28955,7 @@ export namespace Prisma {
 
   export type notificationsUncheckedUpdateManyWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     read?: BoolFieldUpdateOperationsInput | boolean
@@ -26616,10 +28966,12 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    tenants?: tenantsUpdateOneWithoutResourcesNestedInput
   }
 
   export type resourcesUncheckedUpdateWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26627,6 +28979,7 @@ export namespace Prisma {
 
   export type resourcesUncheckedUpdateManyWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

@@ -1,10 +1,33 @@
-import pool from "../db.js";
+import db from "../lib/prisma.js";
+
+// Helper to format contribution records to camelCase
+const formatContribution = (c) => ({
+  id: c.id,
+  memberId: c.member_id,
+  memberName: c.member_name,
+  amount: c.amount,
+  date: c.date,
+  category: c.category,
+  method: c.method,
+  notes: c.notes,
+  createdAt: c.created_at,
+  tenantId: c.tenant_id
+});
 
 // Get all contributions
 export const getContributions = async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM contributions ORDER BY date DESC");
-    res.json(result.rows);
+    const tenantId = req.headers['x-tenant-id'];
+
+    const contributions = await db.contributions.findMany({
+      where: {
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      },
+      orderBy: {
+        date: 'desc'
+      }
+    });
+    res.json(contributions.map(formatContribution));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch contributions" });
@@ -14,12 +37,19 @@ export const getContributions = async (req, res) => {
 // Get contributions for a member
 export const getMemberContributions = async (req, res) => {
   try {
-    const memberId = req.params.memberId;
-    const result = await pool.query(
-      "SELECT * FROM contributions WHERE member_id=$1 ORDER BY date DESC",
-      [memberId]
-    );
-    res.json(result.rows);
+    const { memberId } = req.params;
+    const tenantId = req.headers['x-tenant-id'];
+
+    const contributions = await db.contributions.findMany({
+      where: {
+        member_id: parseInt(memberId),
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      },
+      orderBy: {
+        date: 'desc'
+      }
+    });
+    res.json(contributions.map(formatContribution));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch member contributions" });
@@ -30,14 +60,22 @@ export const getMemberContributions = async (req, res) => {
 export const addContribution = async (req, res) => {
   try {
     const { memberId, memberName, amount, date, category, method, notes } = req.body;
-    const result = await pool.query(
-      `INSERT INTO contributions
-        (member_id, member_name, amount, date, category, method, notes)
-       VALUES ($1,$2,$3,$4,$5,$6,$7)
-       RETURNING *`,
-      [memberId, memberName, amount, date || new Date(), category, method, notes]
-    );
-    res.json(result.rows[0]);
+    const tenantId = req.headers['x-tenant-id'];
+    
+    const newContribution = await db.contributions.create({
+      data: {
+        member_id: parseInt(memberId),
+        member_name: memberName,
+        amount: parseFloat(amount),
+        date: date ? new Date(date) : new Date(),
+        category,
+        method,
+        notes,
+        tenant_id: tenantId ? parseInt(tenantId) : null
+      }
+    });
+    
+    res.json(formatContribution(newContribution));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to add contribution" });
@@ -49,19 +87,28 @@ export const updateContribution = async (req, res) => {
   try {
     const { id } = req.params;
     const { amount, category, method, notes, date } = req.body;
+    const tenantId = req.headers['x-tenant-id'];
 
-    const result = await pool.query(
-      `UPDATE contributions
-       SET amount=$1, category=$2, method=$3, notes=$4, date=$5
-       WHERE id=$6
-       RETURNING *`,
-      [amount, category, method, notes, date, id]
-    );
+    const updatedContribution = await db.contributions.update({
+      where: { 
+        id: parseInt(id),
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      },
+      data: {
+        amount: amount !== undefined ? parseFloat(amount) : undefined,
+        category,
+        method,
+        notes,
+        date: date ? new Date(date) : undefined
+      }
+    });
 
-    if (!result.rows[0]) return res.status(404).json({ error: "Contribution not found" });
-    res.json(result.rows[0]);
+    res.json(formatContribution(updatedContribution));
   } catch (err) {
     console.error(err);
+    if (err.code === 'P2025') {
+        return res.status(404).json({ error: "Contribution not found" });
+    }
     res.status(500).json({ error: "Failed to update contribution" });
   }
 };
@@ -70,12 +117,21 @@ export const updateContribution = async (req, res) => {
 export const deleteContribution = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await pool.query("DELETE FROM contributions WHERE id=$1 RETURNING *", [id]);
+    const tenantId = req.headers['x-tenant-id'];
+    
+    await db.contributions.delete({
+      where: { 
+        id: parseInt(id),
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      }
+    });
 
-    if (!result.rows[0]) return res.status(404).json({ error: "Contribution not found" });
     res.json({ success: true });
   } catch (err) {
     console.error(err);
+    if (err.code === 'P2025') {
+        return res.status(404).json({ error: "Contribution not found" });
+    }
     res.status(500).json({ error: "Failed to delete contribution" });
   }
 };

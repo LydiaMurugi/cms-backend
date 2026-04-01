@@ -27,6 +27,7 @@ model chats {
 
 model contributions {
   id          Int       @id @default(autoincrement())
+  tenant_id   Int?
   member_id   Int
   amount      Decimal   @db.Decimal(12, 2)
   date        DateTime  @default(dbgenerated("CURRENT_DATE")) @db.Date
@@ -36,18 +37,23 @@ model contributions {
   created_at  DateTime? @default(now()) @db.Timestamp(6)
   member_name String
   users       users     @relation(fields: [member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tenants     tenants?  @relation(fields: [tenant_id], references: [id], onUpdate: NoAction)
 }
 
 model duties {
   id               Int       @id @default(autoincrement())
+  tenant_id        Int?
   title            String?
   assigned_id      Int?
   date             DateTime? @db.Date
   status           String?
   category         String?
   notes            String?
+  comments         Json?     @default("[]")
   report_submitted Boolean?  @default(false)
+  updated_at       DateTime? @updatedAt @db.Timestamp(6)
   users            users?    @relation(fields: [assigned_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tenants          tenants?  @relation(fields: [tenant_id], references: [id], onUpdate: NoAction)
 }
 
 model finance_categories {
@@ -69,12 +75,14 @@ model messages {
 
 model notifications {
   id         Int      @id @default(autoincrement())
+  tenant_id  Int?
   user_id    Int
   title      String
   message    String
   read       Boolean  @default(false)
   created_at DateTime @default(now()) @db.Timestamp(6)
   users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tenants    tenants? @relation(fields: [tenant_id], references: [id], onUpdate: NoAction)
 }
 
 model payment_methods {
@@ -83,13 +91,15 @@ model payment_methods {
 }
 
 model programs {
-  id       Int       @id @default(autoincrement())
-  title    String?
-  date     DateTime? @db.Date
-  time     String?
-  location String?
-  category String?
-  image    String?
+  id        Int       @id @default(autoincrement())
+  tenant_id Int?
+  title     String?
+  date      DateTime? @db.Date
+  time      String?
+  location  String?
+  category  String?
+  image     String?
+  tenants   tenants?  @relation(fields: [tenant_id], references: [id], onUpdate: NoAction)
 }
 
 model project_tasks {
@@ -102,8 +112,10 @@ model project_tasks {
 
 model projects {
   id            Int             @id @default(autoincrement())
+  tenant_id     Int?
   title         String?
   description   String?
+  comments      Json?           @default("[]")
   status        String?
   progress      Int?
   priority      String?
@@ -113,15 +125,18 @@ model projects {
   budget        Decimal?        @db.Decimal
   spent         Decimal?        @db.Decimal
   project_tasks project_tasks[]
+  tenants       tenants?        @relation(fields: [tenant_id], references: [id], onUpdate: NoAction)
 }
 
 model resources {
   id          Int       @id @default(autoincrement())
+  tenant_id   Int?
   title       String?
   url         String?
   uploaded_by Int?
   created_at  DateTime? @default(now()) @db.Timestamp(6)
   users       users?    @relation(fields: [uploaded_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tenants     tenants?  @relation(fields: [tenant_id], references: [id], onUpdate: NoAction)
 }
 
 model services {
@@ -144,17 +159,23 @@ model settings {
 }
 
 model tenants {
-  id            Int       @id @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   name          String
   location      String?
   website       String?
   logo_url      String?
-  status        String?   @default("Active")
-  created_at    DateTime? @default(now()) @db.Timestamp(6)
-  currency      String?   @default("USD")
+  status        String?         @default("Pending")
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
+  currency      String?         @default("USD")
   tax_id        String?
-  primary_color String?   @default("#795548")
+  primary_color String?         @default("#795548")
   users         users[]
+  duties        duties[]
+  contributions contributions[]
+  notifications notifications[]
+  programs      programs[]
+  projects      projects[]
+  resources     resources[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -166,7 +187,7 @@ model users {
   role              String?
   phone             String?
   ministry_group    String?
-  status            String?             @default("Active")
+  status            String?             @default("Pending")
   joined            DateTime?           @db.Date
   birthdate         DateTime?           @db.Date
   address           String?
@@ -174,7 +195,7 @@ model users {
   avatar            String?
   tenant_id         Int?
   permissions       Json?               @default("[]")
-  invite_token      String?
+  invite_token      String?             @unique
   invite_expires    DateTime?           @db.Timestamp(6)
   deleted_at        DateTime?           @db.Timestamp(6)
   chat_participants chat_participants[]

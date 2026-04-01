@@ -1,4 +1,4 @@
-import pool from '../db.js';
+import db from '../lib/prisma.js';
 
 export const saveSettings = async (req, res) => {
     try {
@@ -7,13 +7,17 @@ export const saveSettings = async (req, res) => {
 
         if (tenantId) {
             // SCENARIO A: Update Church-Specific Settings
-            const result = await pool.query(
-                `UPDATE tenants 
-                 SET name = $1, email = $2, currency = $3, tax_id = $4, primary_color = $5
-                 WHERE id = $6 RETURNING *`,
-                [churchName, email, currency, taxId, primaryColor, tenantId]
-            );
-            return res.json(result.rows[0]);
+            const updatedTenant = await db.tenants.update({
+                where: { id: parseInt(tenantId) },
+                data: {
+                    name: churchName,
+                    email,
+                    currency,
+                    tax_id: taxId,
+                    primary_color: primaryColor
+                }
+            });
+            return res.json(updatedTenant);
         } else {
             // SCENARIO B: Update Global Platform Settings
             // You would typically have a 'system_settings' table for this
@@ -22,6 +26,9 @@ export const saveSettings = async (req, res) => {
         }
     } catch (err) {
         console.error(err);
+        if (err.code === 'P2025') {
+            return res.status(404).json({ error: 'Tenant not found' });
+        }
         res.status(500).json({ error: 'Failed to save settings' });
     }
 };
@@ -30,14 +37,33 @@ export const getSettings = async (req, res) => {
     try {
         const tenantId = req.headers['x-tenant-id'];
         if (tenantId) {
-            const result = await pool.query(
-                'SELECT name as "churchName", email, currency, tax_id as "taxId", primary_color as "primaryColor" FROM tenants WHERE id = $1',
-                [tenantId]
-            );
-            return res.json(result.rows[0]);
+            const tenant = await db.tenants.findUnique({
+                where: { id: parseInt(tenantId) },
+                select: {
+                    name: true,
+                    email: true,
+                    currency: true,
+                    tax_id: true,
+                    primary_color: true
+                }
+            });
+
+            if (!tenant) {
+                return res.status(404).json({ error: 'Tenant not found' });
+            }
+
+            // Map to the expected response format
+            return res.json({
+                churchName: tenant.name,
+                email: tenant.email,
+                currency: tenant.currency,
+                taxId: tenant.tax_id,
+                primaryColor: tenant.primary_color
+            });
         }
         res.json({ churchName: "Platform Global", email: "admin@platform.com" });
     } catch (err) {
+        console.error(err);
         res.status(500).json({ error: 'Failed to fetch settings' });
     }
 };

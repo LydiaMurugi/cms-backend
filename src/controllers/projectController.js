@@ -1,26 +1,45 @@
-import pool from "../db.js"
+import db from "../lib/prisma.js"
 
 /* ================= GET ALL PROJECTS ================= */
 export const getProjects = async (req, res) => {
   try {
-    const result = await pool.query(`
-      SELECT 
-        id,
-        title,
-        description,
-        status,
-        progress,
-        priority,
-        start_date AS "startDate",
-        end_date AS "endDate",
-        assigned_to AS "assignedTo",
-        budget,
-        spent
-      FROM projects
-      ORDER BY start_date DESC
-    `)
+    const tenantId = req.headers['x-tenant-id'];
 
-    res.json(result.rows)
+    const projects = await db.projects.findMany({
+      where: {
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      },
+      orderBy: {
+        start_date: 'desc'
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        comments: true,
+        status: true,
+        progress: true,
+        priority: true,
+        start_date: true,
+        end_date: true,
+        assigned_to: true,
+        budget: true,
+        spent: true
+      }
+    });
+
+    // Map to camelCase for the response to match the previous SQL output
+    const formattedProjects = projects.map(p => ({
+      ...p,
+      startDate: p.start_date,
+      endDate: p.end_date,
+      assignedTo: p.assigned_to,
+      start_date: undefined,
+      end_date: undefined,
+      assigned_to: undefined
+    }));
+
+    res.json(formattedProjects)
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: "Failed to fetch projects" })
@@ -30,6 +49,7 @@ export const getProjects = async (req, res) => {
 /* ================= CREATE PROJECT ================= */
 export const createProject = async (req, res) => {
   try {
+    const tenantId = req.headers['x-tenant-id'];
     const {
       title,
       description,
@@ -40,73 +60,104 @@ export const createProject = async (req, res) => {
       budget
     } = req.body
 
-    const result = await pool.query(
-      `
-      INSERT INTO projects
-      (title, description, status, progress, priority, start_date, end_date, assigned_to, budget, spent)
-      VALUES ($1,$2,'To Do',0,$3,$4,$5,$6,$7,0)
-      RETURNING *
-      `,
-      [title, description, priority, startDate, endDate, assignedTo, budget]
-    )
+    const newProject = await db.projects.create({
+      data: {
+        title,
+        description,
+        comments: [], // Initialize empty array for JSON field
+        status: 'To Do',
+        progress: 0,
+        priority,
+        start_date: startDate ? new Date(startDate) : null,
+        end_date: endDate ? new Date(endDate) : null,
+        assigned_to: assignedTo,
+        budget: budget ? parseFloat(budget) : null,
+        spent: 0,
+        tenant_id: tenantId ? parseInt(tenantId) : null
+      }
+    });
 
-    res.status(201).json(result.rows[0])
+    res.status(201).json(newProject)
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: "Failed to create project" })
   }
 }
+
+/* ================= UPDATE PROJECT ================= */
 export const updateProject = async (req, res) => {
   try {
     const { id } = req.params
-    const { status, progress, spent } = req.body
+    const tenantId = req.headers['x-tenant-id'];
+    const { status, progress, spent, comments } = req.body
 
-    const result = await pool.query(
-      `
-      UPDATE projects
-      SET 
-        status = COALESCE($1, status),
-        progress = COALESCE($2, progress),
-        spent = COALESCE($3, spent)
-      WHERE id = $4
-      RETURNING 
-        id,
-        title,
-        description,
-        status,
-        progress,
-        priority,
-        start_date AS "startDate",
-        end_date AS "endDate",
-        assigned_to AS "assignedTo",
-        budget,
-        spent
-      `,
-      [status, progress, spent, id]
-    )
+    const updatedProject = await db.projects.update({
+      where: { 
+        id: parseInt(id),
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      },
+      data: {
+        status: status !== undefined ? status : undefined,
+        progress: progress !== undefined ? parseInt(progress) : undefined,
+        spent: spent !== undefined ? parseFloat(spent) : undefined,
+        comments: comments !== undefined ? comments : undefined
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        comments: true,
+        status: true,
+        progress: true,
+        priority: true,
+        start_date: true,
+        end_date: true,
+        assigned_to: true,
+        budget: true,
+        spent: true
+      }
+    });
 
-    res.json(result.rows[0])
+    // Map to camelCase for the response
+    const formattedProject = {
+      ...updatedProject,
+      startDate: updatedProject.start_date,
+      endDate: updatedProject.end_date,
+      assignedTo: updatedProject.assigned_to,
+      start_date: undefined,
+      end_date: undefined,
+      assigned_to: undefined
+    };
+
+    res.json(formattedProject)
   } catch (error) {
     console.error(error)
+    if (error.code === 'P2025') {
+        return res.status(404).json({ error: "Project not found" });
+    }
     res.status(500).json({ error: "Failed to update project" })
   }
 }
+
 /* ================= DELETE PROJECT ================= */
 export const deleteProject = async (req, res) => {
   try {
     const { id } = req.params
+    const tenantId = req.headers['x-tenant-id'];
 
-    await pool.query(
-      `DELETE FROM projects WHERE id = $1`,
-      [id]
-    )
+    await db.projects.delete({
+      where: { 
+        id: parseInt(id),
+        tenant_id: tenantId ? parseInt(tenantId) : undefined
+      }
+    })
 
     res.json({ message: "Project deleted" })
   } catch (error) {
     console.error(error)
+    if (error.code === 'P2025') {
+        return res.status(404).json({ error: "Project not found" });
+    }
     res.status(500).json({ error: "Failed to delete project" })
   }
 }
-
-
-

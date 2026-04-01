@@ -1,141 +1,178 @@
- import pool from '../db.js'
- import bcrypt from 'bcrypt'
-   
-  // Get all churches (Super Admin only)
-  export const getAllTenants = async (req, res) => {
+import db from '../lib/prisma.js'
+import bcrypt from 'bcrypt'
+import { v4 as uuidv4 } from 'uuid'
+import { sendInviteEmail } from '../services/emailService.js'
+
+// Get all churches (Super Admin only)
+export const getAllTenants = async (req, res) => {
     try {
-        const result = await pool.query(
-            `SELECT t.*, 
-                (SELECT email FROM users u WHERE u.tenant_id = t.id AND u.role = 'church-admin' LIMIT 1) as admin_email,
-                (SELECT COUNT(*) FROM users u WHERE u.tenant_id = t.id) as member_count
-             FROM tenants t
-             ORDER BY t.created_at DESC`
-        );
-        res.json(result.rows);
+        const tenants = await db.tenants.findMany({
+            include: {
+                users: {
+                    where: { role: 'church-admin' },
+                    take: 1,
+                    select: { email: true }
+                },
+                _count: {
+                    select: { users: true }
+                }
+            },
+            orderBy: {
+                created_at: 'desc'
+            }
+        });
+
+        // Format the response to match the previous SQL output
+        const formattedTenants = tenants.map(t => ({
+            ...t,
+            admin_email: t.users[0]?.email || null,
+            member_count: t._count.users,
+            users: undefined,
+            _count: undefined
+        }));
+
+        res.json(formattedTenants);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Failed to fetch tenants' });
     }
 };
-  
- // Register a New Church + Initial Admin (Atomic Operation)
- export const registerTenant = async (req, res) => {
-      const client = await pool.connect();
-     try {
-         const { churchName, location, website, adminName, adminEmail, initialPassword } = req.body;
 
-      await client.query('BEGIN');
+// Register a New Church + Initial Admin (Atomic Operation - Invite Based)
+export const registerTenant = async (req, res) => {
+    try {
+        const { churchName, location, website, adminName, adminEmail } = req.body;
 
-        // 1. Create the Tenant
-        const tenantResult = await client.query(
-            'INSERT INTO tenants (name, location, website) VALUES ($1, $2, $3) RETURNING id',
-            [churchName, location, website]
-        );
-        const tenantId = tenantResult.rows[0].id;
+        // 1. Prepare Invite Token (valid for 24 hours)
+        const inviteToken = uuidv4()
+        const inviteExpires = new Date(Date.now() + 24 * 60 * 60 * 1000)
 
-       // 2. Hash the admin password
-          const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(initialPassword, salt);
+        const result = await db.$transaction(async (tx) => {
+            // 2. Create the Tenant
+            const tenant = await tx.tenants.create({
+                data: {
+                    name: churchName,
+                    location,
+                    website
+                }
+            });
 
-          // 3. Create the Church Admin User
-        const userResult = await client.query(
-               `INSERT INTO users (name, email, password_hash, role, tenant_id, permissions) 
-               VALUES ($1, $2, $3, $4, $5, $6)
-             RETURNING id, name, email`,
-              [
-                adminName,
-                adminEmail,
-                hashedPassword,
-                'church-admin',
-                tenantId,
-                JSON.stringify(['view_dashboard', 'manage_members', 'manage_finances', 'manage_settings'])
-             ]
-         );
+            // 3. Create the Church Admin User (Invite-based)
+            const admin = await tx.users.create({
+                data: {
+                    name: adminName,
+                    email: adminEmail,
+                    role: 'church-admin',
+                    tenant_id: tenant.id,
+                    status: 'Pending',
+                    invite_token: inviteToken,
+                    invite_expires: inviteExpires,
+                    permissions: ['view_dashboard', 'manage_members', 'manage_finances', 'manage_settings']
+                },
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    status: true
+                }
+            });
 
-        await client.query('COMMIT');
-  
-    res.status(201).json({
-              message: 'Church and Admin registered successfully',
-               tenant: { id: tenantId, name: churchName },
-               admin: userResult.rows[0]
-          });
-  
-     } catch (err) {
-         await client.query('ROLLBACK');
-         console.error(err);
-         if (err.code === '23505') { // Unique violation for email
-             return res.status(400).json({ error: 'Admin email already exists' });
-         }
-         res.status(500).json({ error: 'Registration failed' });
-      } finally {
-        client.release();
+            return { tenant, admin };
+        });
+
+        // 4. Send the Invitation Email
+        try {
+            await sendInviteEmail(adminEmail, inviteToken);
+        } catch (emailErr) {
+            console.error('Church Admin Email failed to send:', emailErr);
         }
-    };
-    export const updateTenant = async (req, res) => {
+
+        res.status(201).json({
+            message: 'Church registered and invitation sent successfully',
+            tenant: { id: result.tenant.id, name: result.tenant.name },
+            admin: result.admin
+        });
+
+    } catch (err) {
+        console.error('Tenant Registration Error:', err);
+        if (err.code === 'P2002') { // Unique violation for email
+            return res.status(400).json({ error: 'Admin email already exists' });
+        }
+        res.status(500).json({ error: 'Registration failed' });
+    }
+};
+
+export const updateTenant = async (req, res) => {
     try {
         const { id } = req.params;
         const { churchName, location, status } = req.body;
 
-        const result = await pool.query(
-            `UPDATE tenants 
-             SET name = COALESCE($1, name),
-                 location = COALESCE($2, location),
-                 status = COALESCE($3, status)
-             WHERE id = $4
-             RETURNING *`,
-            [churchName, location, status, id]
-        );
+        const updatedTenant = await db.tenants.update({
+            where: { id: parseInt(id) },
+            data: {
+                name: churchName !== undefined ? churchName : undefined,
+                location: location !== undefined ? location : undefined,
+                status: status !== undefined ? status : undefined
+            }
+        });
 
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Church not found' });
-        }
-
-        res.json(result.rows[0]);
+        res.json(updatedTenant);
     } catch (err) {
         console.error(err);
+        if (err.code === 'P2025') {
+            return res.status(404).json({ error: 'Church not found' });
+        }
         res.status(500).json({ error: 'Update failed' });
     }
 };
+
 export const deleteTenant = async (req, res) => {
-    const client = await pool.connect();
     try {
         const { id } = req.params;
+        const tenantId = parseInt(id);
 
-        await client.query('BEGIN');
+        await db.$transaction(async (tx) => {
+            // 1. Check if church exists
+            const tenant = await tx.tenants.findUnique({
+                where: { id: tenantId },
+                select: { name: true }
+            });
 
-        // 1. Check if church exists
-        const check = await client.query('SELECT name FROM tenants WHERE id = $1', [id]);
-        if (check.rows.length === 0) {
-            await client.query('ROLLBACK');
-            return res.status(404).json({ error: 'Church not found' });
-        }
+            if (!tenant) {
+                throw new Error('NOT_FOUND');
+            }
 
-        // 2. Delete all related data (Cleanup)
-        // Note: If you have ON DELETE CASCADE in your SQL schema, 
-        // you only need the final DELETE tenants line.
+            // 2. Delete all related data (Cleanup)
+            
+            // Delete duties assigned to members of this tenant
+            await tx.duties.deleteMany({
+                where: {
+                    users: {
+                        tenant_id: tenantId
+                    }
+                }
+            });
 
-        // Delete duties assigned to members of this tenant
-        await client.query(`
-            DELETE FROM duties
-            WHERE assigned_id IN (SELECT id FROM users WHERE tenant_id = $1)
-        `, [id]);
+            // Delete all users belonging to this tenant
+            await tx.users.deleteMany({
+                where: { tenant_id: tenantId }
+            });
 
-        // Delete all users (members and admins) belonging to this tenant
-        await client.query('DELETE FROM users WHERE tenant_id = $1', [id]);
+            // 3. Delete the Tenant itself
+            await tx.tenants.delete({
+                where: { id: tenantId }
+            });
+            
+            return tenant.name;
+        });
 
-        // 3. Delete the Tenant itself
-        await client.query('DELETE FROM tenants WHERE id = $1', [id]);
-
-        await client.query('COMMIT');
-
-        console.log(`🗑️ Church "${check.rows[0].name}" and all associated data deleted.`);
         res.json({ success: true, message: 'Church and all associated data removed successfully' });
 
     } catch (err) {
-        await client.query('ROLLBACK');
+        if (err.message === 'NOT_FOUND') {
+            return res.status(404).json({ error: 'Church not found' });
+        }
         console.error('Church Deletion Error:', err);
         res.status(500).json({ error: 'Failed to delete church. There may be unhandled data dependencies.' });
-    } finally {
-        client.release();
     }
 };

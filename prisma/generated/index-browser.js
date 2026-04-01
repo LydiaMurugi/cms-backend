@@ -132,6 +132,7 @@ exports.Prisma.ChatsScalarFieldEnum = {
 
 exports.Prisma.ContributionsScalarFieldEnum = {
   id: 'id',
+  tenant_id: 'tenant_id',
   member_id: 'member_id',
   amount: 'amount',
   date: 'date',
@@ -144,13 +145,16 @@ exports.Prisma.ContributionsScalarFieldEnum = {
 
 exports.Prisma.DutiesScalarFieldEnum = {
   id: 'id',
+  tenant_id: 'tenant_id',
   title: 'title',
   assigned_id: 'assigned_id',
   date: 'date',
   status: 'status',
   category: 'category',
   notes: 'notes',
-  report_submitted: 'report_submitted'
+  comments: 'comments',
+  report_submitted: 'report_submitted',
+  updated_at: 'updated_at'
 };
 
 exports.Prisma.Finance_categoriesScalarFieldEnum = {
@@ -170,6 +174,7 @@ exports.Prisma.MessagesScalarFieldEnum = {
 
 exports.Prisma.NotificationsScalarFieldEnum = {
   id: 'id',
+  tenant_id: 'tenant_id',
   user_id: 'user_id',
   title: 'title',
   message: 'message',
@@ -184,6 +189,7 @@ exports.Prisma.Payment_methodsScalarFieldEnum = {
 
 exports.Prisma.ProgramsScalarFieldEnum = {
   id: 'id',
+  tenant_id: 'tenant_id',
   title: 'title',
   date: 'date',
   time: 'time',
@@ -201,8 +207,10 @@ exports.Prisma.Project_tasksScalarFieldEnum = {
 
 exports.Prisma.ProjectsScalarFieldEnum = {
   id: 'id',
+  tenant_id: 'tenant_id',
   title: 'title',
   description: 'description',
+  comments: 'comments',
   status: 'status',
   progress: 'progress',
   priority: 'priority',
@@ -215,6 +223,7 @@ exports.Prisma.ProjectsScalarFieldEnum = {
 
 exports.Prisma.ResourcesScalarFieldEnum = {
   id: 'id',
+  tenant_id: 'tenant_id',
   title: 'title',
   url: 'url',
   uploaded_by: 'uploaded_by',
