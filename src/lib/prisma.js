@@ -1,5 +1,5 @@
 import { PrismaPg } from '@prisma/adapter-pg'
-import { PrismaClient } from '../../prisma/generated/index.js' // adjust path as needed
+import { PrismaClient } from '@prisma/client'
 import pg from 'pg'
 
 const { Pool } = pg
