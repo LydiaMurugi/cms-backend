@@ -1,59 +1,59 @@
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer';
 
-// Lazily initialize resend to ensure environment variables are loaded
-let resend;
-
-const getResendClient = () => {
-  if (!resend) {
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
-      console.error('❌ RESEND_API_KEY is missing from environment variables');
-    } else {
-        console.log('✅ Resend client initialized with key starting with:', apiKey.substring(0, 5));
-    }
-    resend = new Resend(apiKey);
-  }
-  return resend;
-}
+// 1. Initialize the Transporter with explicit SMTP settings
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,            // Port 465 is for Secure SSL
+  secure: true,         // Must be true if using port 465
+  auth: {
+    user: process.env.SMTP_EMAIL,
+    pass: process.env.SMTP_PASSWORD, // Your 16-character App Password
+  },
+  // Optional: Increases reliability on some modern cloud hosts
+  pool: true, 
+  maxConnections: 5,
+});
 
 export const sendInviteEmail = async (email, token) => {
   try {
+    // Ensure environment variables exist before proceeding
     const appUrl = process.env.APP_URL;
-    if (!appUrl) {
-        console.error('❌ APP_URL is missing from environment variables');
-        throw new Error('APP_URL is missing');
+    const senderEmail = process.env.SMTP_EMAIL;
+
+    if (!appUrl || !senderEmail) {
+      throw new Error('Missing EMAIL or APP_URL environment variables');
     }
 
-    const inviteLink = `${appUrl}/set-password?token=${token}`
-    const client = getResendClient();
+    const inviteLink = `${appUrl}/set-password?token=${token}`;
 
-    console.log(`📨 Attempting to send invite email to: ${email}`);
-    console.log(`🔗 Invite link: ${inviteLink}`);
-
-    const payload = {
-      from: 'Church MS <onboarding@resend.dev>',
+    // 2. Configure the Mail Options
+    const mailOptions = {
+      from: `"Church MS" <${senderEmail}>`, 
       to: email,
       subject: 'You are invited 🎉',
       html: `
-        <h2>Welcome!</h2>
-        <p>You have been invited to join the platform.</p>
-        <p>Click below to set your password:</p>
-        <a href="${inviteLink}" target="_blank">Set Password</a>
-        <p>This link will expire in 24 hours.</p>
-      `
+        <div style="font-family: sans-serif; max-width: 600px; margin: auto;">
+          <h2>Welcome!</h2>
+          <p>You have been invited to join the Church Management System.</p>
+          <p>Click the button below to set your password and get started:</p>
+          <a href="${inviteLink}" 
+             style="background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+             Set Password
+          </a>
+          <p style="margin-top: 20px; font-size: 0.8em; color: #666;">
+            This link will expire in 24 hours.
+          </p>
+        </div>
+      `,
     };
 
-    const response = await client.emails.send(payload);
-
-    if (response.error) {
-      console.error('❌ Resend API Error:', response.error);
-      throw response.error;
-    }
-
-    console.log('✅ Email sent successfully. Resend Response ID:', response.data?.id);
-    return response.data;
-  } catch (err) {
-    console.error('❌ Failed to send invite email:', err);
-    throw err;
+    // 3. Send the email
+    const info = await transporter.sendMail(mailOptions);
+    
+    console.log('✅ Email sent successfully:', info.messageId);
+    return info;
+  } catch (error) {
+    console.error('❌ SMTP Error:', error);
+    throw error;
   }
-}
+};

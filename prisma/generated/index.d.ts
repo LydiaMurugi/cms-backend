@@ -14939,6 +14939,8 @@ export namespace Prisma {
     title: string | null
     url: string | null
     uploaded_by: number | null
+    isPublic: boolean | null
+    targetGroup: string | null
     created_at: Date | null
   }
 
@@ -14948,6 +14950,8 @@ export namespace Prisma {
     title: string | null
     url: string | null
     uploaded_by: number | null
+    isPublic: boolean | null
+    targetGroup: string | null
     created_at: Date | null
   }
 
@@ -14957,6 +14961,8 @@ export namespace Prisma {
     title: number
     url: number
     uploaded_by: number
+    isPublic: number
+    targetGroup: number
     created_at: number
     _all: number
   }
@@ -14980,6 +14986,8 @@ export namespace Prisma {
     title?: true
     url?: true
     uploaded_by?: true
+    isPublic?: true
+    targetGroup?: true
     created_at?: true
   }
 
@@ -14989,6 +14997,8 @@ export namespace Prisma {
     title?: true
     url?: true
     uploaded_by?: true
+    isPublic?: true
+    targetGroup?: true
     created_at?: true
   }
 
@@ -14998,6 +15008,8 @@ export namespace Prisma {
     title?: true
     url?: true
     uploaded_by?: true
+    isPublic?: true
+    targetGroup?: true
     created_at?: true
     _all?: true
   }
@@ -15094,6 +15106,8 @@ export namespace Prisma {
     title: string | null
     url: string | null
     uploaded_by: number | null
+    isPublic: boolean | null
+    targetGroup: string | null
     created_at: Date | null
     _count: ResourcesCountAggregateOutputType | null
     _avg: ResourcesAvgAggregateOutputType | null
@@ -15122,6 +15136,8 @@ export namespace Prisma {
     title?: boolean
     url?: boolean
     uploaded_by?: boolean
+    isPublic?: boolean
+    targetGroup?: boolean
     created_at?: boolean
     users?: boolean | resources$usersArgs<ExtArgs>
     tenants?: boolean | resources$tenantsArgs<ExtArgs>
@@ -15133,6 +15149,8 @@ export namespace Prisma {
     title?: boolean
     url?: boolean
     uploaded_by?: boolean
+    isPublic?: boolean
+    targetGroup?: boolean
     created_at?: boolean
     users?: boolean | resources$usersArgs<ExtArgs>
     tenants?: boolean | resources$tenantsArgs<ExtArgs>
@@ -15144,6 +15162,8 @@ export namespace Prisma {
     title?: boolean
     url?: boolean
     uploaded_by?: boolean
+    isPublic?: boolean
+    targetGroup?: boolean
     created_at?: boolean
     users?: boolean | resources$usersArgs<ExtArgs>
     tenants?: boolean | resources$tenantsArgs<ExtArgs>
@@ -15155,10 +15175,12 @@ export namespace Prisma {
     title?: boolean
     url?: boolean
     uploaded_by?: boolean
+    isPublic?: boolean
+    targetGroup?: boolean
     created_at?: boolean
   }
 
-  export type resourcesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenant_id" | "title" | "url" | "uploaded_by" | "created_at", ExtArgs["result"]["resources"]>
+  export type resourcesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenant_id" | "title" | "url" | "uploaded_by" | "isPublic" | "targetGroup" | "created_at", ExtArgs["result"]["resources"]>
   export type resourcesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | resources$usersArgs<ExtArgs>
     tenants?: boolean | resources$tenantsArgs<ExtArgs>
@@ -15184,6 +15206,8 @@ export namespace Prisma {
       title: string | null
       url: string | null
       uploaded_by: number | null
+      isPublic: boolean | null
+      targetGroup: string | null
       created_at: Date | null
     }, ExtArgs["result"]["resources"]>
     composites: {}
@@ -15615,6 +15639,8 @@ export namespace Prisma {
     readonly title: FieldRef<"resources", 'String'>
     readonly url: FieldRef<"resources", 'String'>
     readonly uploaded_by: FieldRef<"resources", 'Int'>
+    readonly isPublic: FieldRef<"resources", 'Boolean'>
+    readonly targetGroup: FieldRef<"resources", 'String'>
     readonly created_at: FieldRef<"resources", 'DateTime'>
   }
     
@@ -19551,7 +19577,8 @@ export namespace Prisma {
     password_hash: string | null
     role: string | null
     phone: string | null
-    ministry_group: string | null
+    gender: string | null
+    group: string | null
     status: string | null
     joined: Date | null
     birthdate: Date | null
@@ -19571,7 +19598,8 @@ export namespace Prisma {
     password_hash: string | null
     role: string | null
     phone: string | null
-    ministry_group: string | null
+    gender: string | null
+    group: string | null
     status: string | null
     joined: Date | null
     birthdate: Date | null
@@ -19591,7 +19619,8 @@ export namespace Prisma {
     password_hash: number
     role: number
     phone: number
-    ministry_group: number
+    gender: number
+    group: number
     status: number
     joined: number
     birthdate: number
@@ -19624,7 +19653,8 @@ export namespace Prisma {
     password_hash?: true
     role?: true
     phone?: true
-    ministry_group?: true
+    gender?: true
+    group?: true
     status?: true
     joined?: true
     birthdate?: true
@@ -19644,7 +19674,8 @@ export namespace Prisma {
     password_hash?: true
     role?: true
     phone?: true
-    ministry_group?: true
+    gender?: true
+    group?: true
     status?: true
     joined?: true
     birthdate?: true
@@ -19664,7 +19695,8 @@ export namespace Prisma {
     password_hash?: true
     role?: true
     phone?: true
-    ministry_group?: true
+    gender?: true
+    group?: true
     status?: true
     joined?: true
     birthdate?: true
@@ -19772,7 +19804,8 @@ export namespace Prisma {
     password_hash: string | null
     role: string | null
     phone: string | null
-    ministry_group: string | null
+    gender: string | null
+    group: string | null
     status: string | null
     joined: Date | null
     birthdate: Date | null
@@ -19812,7 +19845,8 @@ export namespace Prisma {
     password_hash?: boolean
     role?: boolean
     phone?: boolean
-    ministry_group?: boolean
+    gender?: boolean
+    group?: boolean
     status?: boolean
     joined?: boolean
     birthdate?: boolean
@@ -19841,7 +19875,8 @@ export namespace Prisma {
     password_hash?: boolean
     role?: boolean
     phone?: boolean
-    ministry_group?: boolean
+    gender?: boolean
+    group?: boolean
     status?: boolean
     joined?: boolean
     birthdate?: boolean
@@ -19863,7 +19898,8 @@ export namespace Prisma {
     password_hash?: boolean
     role?: boolean
     phone?: boolean
-    ministry_group?: boolean
+    gender?: boolean
+    group?: boolean
     status?: boolean
     joined?: boolean
     birthdate?: boolean
@@ -19885,7 +19921,8 @@ export namespace Prisma {
     password_hash?: boolean
     role?: boolean
     phone?: boolean
-    ministry_group?: boolean
+    gender?: boolean
+    group?: boolean
     status?: boolean
     joined?: boolean
     birthdate?: boolean
@@ -19899,7 +19936,7 @@ export namespace Prisma {
     deleted_at?: boolean
   }
 
-  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password_hash" | "role" | "phone" | "ministry_group" | "status" | "joined" | "birthdate" | "address" | "created_at" | "avatar" | "tenant_id" | "permissions" | "invite_token" | "invite_expires" | "deleted_at", ExtArgs["result"]["users"]>
+  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password_hash" | "role" | "phone" | "gender" | "group" | "status" | "joined" | "birthdate" | "address" | "created_at" | "avatar" | "tenant_id" | "permissions" | "invite_token" | "invite_expires" | "deleted_at", ExtArgs["result"]["users"]>
   export type usersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chat_participants?: boolean | users$chat_participantsArgs<ExtArgs>
     contributions?: boolean | users$contributionsArgs<ExtArgs>
@@ -19935,7 +19972,8 @@ export namespace Prisma {
       password_hash: string | null
       role: string | null
       phone: string | null
-      ministry_group: string | null
+      gender: string | null
+      group: string | null
       status: string | null
       joined: Date | null
       birthdate: Date | null
@@ -20383,7 +20421,8 @@ export namespace Prisma {
     readonly password_hash: FieldRef<"users", 'String'>
     readonly role: FieldRef<"users", 'String'>
     readonly phone: FieldRef<"users", 'String'>
-    readonly ministry_group: FieldRef<"users", 'String'>
+    readonly gender: FieldRef<"users", 'String'>
+    readonly group: FieldRef<"users", 'String'>
     readonly status: FieldRef<"users", 'String'>
     readonly joined: FieldRef<"users", 'DateTime'>
     readonly birthdate: FieldRef<"users", 'DateTime'>
@@ -21131,6 +21170,8 @@ export namespace Prisma {
     title: 'title',
     url: 'url',
     uploaded_by: 'uploaded_by',
+    isPublic: 'isPublic',
+    targetGroup: 'targetGroup',
     created_at: 'created_at'
   };
 
@@ -21185,7 +21226,8 @@ export namespace Prisma {
     password_hash: 'password_hash',
     role: 'role',
     phone: 'phone',
-    ministry_group: 'ministry_group',
+    gender: 'gender',
+    group: 'group',
     status: 'status',
     joined: 'joined',
     birthdate: 'birthdate',
@@ -22059,6 +22101,8 @@ export namespace Prisma {
     title?: StringNullableFilter<"resources"> | string | null
     url?: StringNullableFilter<"resources"> | string | null
     uploaded_by?: IntNullableFilter<"resources"> | number | null
+    isPublic?: BoolNullableFilter<"resources"> | boolean | null
+    targetGroup?: StringNullableFilter<"resources"> | string | null
     created_at?: DateTimeNullableFilter<"resources"> | Date | string | null
     users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
     tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
@@ -22070,6 +22114,8 @@ export namespace Prisma {
     title?: SortOrderInput | SortOrder
     url?: SortOrderInput | SortOrder
     uploaded_by?: SortOrderInput | SortOrder
+    isPublic?: SortOrderInput | SortOrder
+    targetGroup?: SortOrderInput | SortOrder
     created_at?: SortOrderInput | SortOrder
     users?: usersOrderByWithRelationInput
     tenants?: tenantsOrderByWithRelationInput
@@ -22084,6 +22130,8 @@ export namespace Prisma {
     title?: StringNullableFilter<"resources"> | string | null
     url?: StringNullableFilter<"resources"> | string | null
     uploaded_by?: IntNullableFilter<"resources"> | number | null
+    isPublic?: BoolNullableFilter<"resources"> | boolean | null
+    targetGroup?: StringNullableFilter<"resources"> | string | null
     created_at?: DateTimeNullableFilter<"resources"> | Date | string | null
     users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
     tenants?: XOR<TenantsNullableScalarRelationFilter, tenantsWhereInput> | null
@@ -22095,6 +22143,8 @@ export namespace Prisma {
     title?: SortOrderInput | SortOrder
     url?: SortOrderInput | SortOrder
     uploaded_by?: SortOrderInput | SortOrder
+    isPublic?: SortOrderInput | SortOrder
+    targetGroup?: SortOrderInput | SortOrder
     created_at?: SortOrderInput | SortOrder
     _count?: resourcesCountOrderByAggregateInput
     _avg?: resourcesAvgOrderByAggregateInput
@@ -22112,6 +22162,8 @@ export namespace Prisma {
     title?: StringNullableWithAggregatesFilter<"resources"> | string | null
     url?: StringNullableWithAggregatesFilter<"resources"> | string | null
     uploaded_by?: IntNullableWithAggregatesFilter<"resources"> | number | null
+    isPublic?: BoolNullableWithAggregatesFilter<"resources"> | boolean | null
+    targetGroup?: StringNullableWithAggregatesFilter<"resources"> | string | null
     created_at?: DateTimeNullableWithAggregatesFilter<"resources"> | Date | string | null
   }
 
@@ -22348,7 +22400,8 @@ export namespace Prisma {
     password_hash?: StringNullableFilter<"users"> | string | null
     role?: StringNullableFilter<"users"> | string | null
     phone?: StringNullableFilter<"users"> | string | null
-    ministry_group?: StringNullableFilter<"users"> | string | null
+    gender?: StringNullableFilter<"users"> | string | null
+    group?: StringNullableFilter<"users"> | string | null
     status?: StringNullableFilter<"users"> | string | null
     joined?: DateTimeNullableFilter<"users"> | Date | string | null
     birthdate?: DateTimeNullableFilter<"users"> | Date | string | null
@@ -22376,7 +22429,8 @@ export namespace Prisma {
     password_hash?: SortOrderInput | SortOrder
     role?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
-    ministry_group?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
+    group?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     joined?: SortOrderInput | SortOrder
     birthdate?: SortOrderInput | SortOrder
@@ -22408,7 +22462,8 @@ export namespace Prisma {
     password_hash?: StringNullableFilter<"users"> | string | null
     role?: StringNullableFilter<"users"> | string | null
     phone?: StringNullableFilter<"users"> | string | null
-    ministry_group?: StringNullableFilter<"users"> | string | null
+    gender?: StringNullableFilter<"users"> | string | null
+    group?: StringNullableFilter<"users"> | string | null
     status?: StringNullableFilter<"users"> | string | null
     joined?: DateTimeNullableFilter<"users"> | Date | string | null
     birthdate?: DateTimeNullableFilter<"users"> | Date | string | null
@@ -22435,7 +22490,8 @@ export namespace Prisma {
     password_hash?: SortOrderInput | SortOrder
     role?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
-    ministry_group?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
+    group?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     joined?: SortOrderInput | SortOrder
     birthdate?: SortOrderInput | SortOrder
@@ -22464,7 +22520,8 @@ export namespace Prisma {
     password_hash?: StringNullableWithAggregatesFilter<"users"> | string | null
     role?: StringNullableWithAggregatesFilter<"users"> | string | null
     phone?: StringNullableWithAggregatesFilter<"users"> | string | null
-    ministry_group?: StringNullableWithAggregatesFilter<"users"> | string | null
+    gender?: StringNullableWithAggregatesFilter<"users"> | string | null
+    group?: StringNullableWithAggregatesFilter<"users"> | string | null
     status?: StringNullableWithAggregatesFilter<"users"> | string | null
     joined?: DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
     birthdate?: DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
@@ -23158,6 +23215,8 @@ export namespace Prisma {
   export type resourcesCreateInput = {
     title?: string | null
     url?: string | null
+    isPublic?: boolean | null
+    targetGroup?: string | null
     created_at?: Date | string | null
     users?: usersCreateNestedOneWithoutResourcesInput
     tenants?: tenantsCreateNestedOneWithoutResourcesInput
@@ -23169,12 +23228,16 @@ export namespace Prisma {
     title?: string | null
     url?: string | null
     uploaded_by?: number | null
+    isPublic?: boolean | null
+    targetGroup?: string | null
     created_at?: Date | string | null
   }
 
   export type resourcesUpdateInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    targetGroup?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: usersUpdateOneWithoutResourcesNestedInput
     tenants?: tenantsUpdateOneWithoutResourcesNestedInput
@@ -23186,6 +23249,8 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     uploaded_by?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    targetGroup?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -23195,12 +23260,16 @@ export namespace Prisma {
     title?: string | null
     url?: string | null
     uploaded_by?: number | null
+    isPublic?: boolean | null
+    targetGroup?: string | null
     created_at?: Date | string | null
   }
 
   export type resourcesUpdateManyMutationInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    targetGroup?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -23210,6 +23279,8 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     uploaded_by?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    targetGroup?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -23462,7 +23533,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -23489,7 +23561,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -23515,7 +23588,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23542,7 +23616,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23569,7 +23644,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -23589,7 +23665,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23609,7 +23686,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -24417,6 +24495,8 @@ export namespace Prisma {
     title?: SortOrder
     url?: SortOrder
     uploaded_by?: SortOrder
+    isPublic?: SortOrder
+    targetGroup?: SortOrder
     created_at?: SortOrder
   }
 
@@ -24432,6 +24512,8 @@ export namespace Prisma {
     title?: SortOrder
     url?: SortOrder
     uploaded_by?: SortOrder
+    isPublic?: SortOrder
+    targetGroup?: SortOrder
     created_at?: SortOrder
   }
 
@@ -24441,6 +24523,8 @@ export namespace Prisma {
     title?: SortOrder
     url?: SortOrder
     uploaded_by?: SortOrder
+    isPublic?: SortOrder
+    targetGroup?: SortOrder
     created_at?: SortOrder
   }
 
@@ -24647,7 +24731,8 @@ export namespace Prisma {
     password_hash?: SortOrder
     role?: SortOrder
     phone?: SortOrder
-    ministry_group?: SortOrder
+    gender?: SortOrder
+    group?: SortOrder
     status?: SortOrder
     joined?: SortOrder
     birthdate?: SortOrder
@@ -24673,7 +24758,8 @@ export namespace Prisma {
     password_hash?: SortOrder
     role?: SortOrder
     phone?: SortOrder
-    ministry_group?: SortOrder
+    gender?: SortOrder
+    group?: SortOrder
     status?: SortOrder
     joined?: SortOrder
     birthdate?: SortOrder
@@ -24693,7 +24779,8 @@ export namespace Prisma {
     password_hash?: SortOrder
     role?: SortOrder
     phone?: SortOrder
-    ministry_group?: SortOrder
+    gender?: SortOrder
+    group?: SortOrder
     status?: SortOrder
     joined?: SortOrder
     birthdate?: SortOrder
@@ -26000,7 +26087,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -26026,7 +26114,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -26089,7 +26178,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26115,7 +26205,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26235,7 +26326,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -26261,7 +26353,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -26344,7 +26437,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26370,7 +26464,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26443,7 +26538,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -26469,7 +26565,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -26552,7 +26649,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26578,7 +26676,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26667,7 +26766,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -26693,7 +26793,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -26756,7 +26857,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26782,7 +26884,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26807,7 +26910,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -26833,7 +26937,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -26916,7 +27021,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26942,7 +27048,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27320,7 +27427,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -27346,7 +27454,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -27429,7 +27538,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27455,7 +27565,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27528,7 +27639,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -27554,7 +27666,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -27751,6 +27864,8 @@ export namespace Prisma {
   export type resourcesCreateWithoutTenantsInput = {
     title?: string | null
     url?: string | null
+    isPublic?: boolean | null
+    targetGroup?: string | null
     created_at?: Date | string | null
     users?: usersCreateNestedOneWithoutResourcesInput
   }
@@ -27760,6 +27875,8 @@ export namespace Prisma {
     title?: string | null
     url?: string | null
     uploaded_by?: number | null
+    isPublic?: boolean | null
+    targetGroup?: string | null
     created_at?: Date | string | null
   }
 
@@ -27799,7 +27916,8 @@ export namespace Prisma {
     password_hash?: StringNullableFilter<"users"> | string | null
     role?: StringNullableFilter<"users"> | string | null
     phone?: StringNullableFilter<"users"> | string | null
-    ministry_group?: StringNullableFilter<"users"> | string | null
+    gender?: StringNullableFilter<"users"> | string | null
+    group?: StringNullableFilter<"users"> | string | null
     status?: StringNullableFilter<"users"> | string | null
     joined?: DateTimeNullableFilter<"users"> | Date | string | null
     birthdate?: DateTimeNullableFilter<"users"> | Date | string | null
@@ -27997,6 +28115,8 @@ export namespace Prisma {
     title?: StringNullableFilter<"resources"> | string | null
     url?: StringNullableFilter<"resources"> | string | null
     uploaded_by?: IntNullableFilter<"resources"> | number | null
+    isPublic?: BoolNullableFilter<"resources"> | boolean | null
+    targetGroup?: StringNullableFilter<"resources"> | string | null
     created_at?: DateTimeNullableFilter<"resources"> | Date | string | null
   }
 
@@ -28141,6 +28261,8 @@ export namespace Prisma {
   export type resourcesCreateWithoutUsersInput = {
     title?: string | null
     url?: string | null
+    isPublic?: boolean | null
+    targetGroup?: string | null
     created_at?: Date | string | null
     tenants?: tenantsCreateNestedOneWithoutResourcesInput
   }
@@ -28150,6 +28272,8 @@ export namespace Prisma {
     tenant_id?: number | null
     title?: string | null
     url?: string | null
+    isPublic?: boolean | null
+    targetGroup?: string | null
     created_at?: Date | string | null
   }
 
@@ -28426,7 +28550,8 @@ export namespace Prisma {
     password_hash?: string | null
     role?: string | null
     phone?: string | null
-    ministry_group?: string | null
+    gender?: string | null
+    group?: string | null
     status?: string | null
     joined?: Date | string | null
     birthdate?: Date | string | null
@@ -28503,6 +28628,8 @@ export namespace Prisma {
     title?: string | null
     url?: string | null
     uploaded_by?: number | null
+    isPublic?: boolean | null
+    targetGroup?: string | null
     created_at?: Date | string | null
   }
 
@@ -28512,7 +28639,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -28538,7 +28666,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -28564,7 +28693,8 @@ export namespace Prisma {
     password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    ministry_group?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     joined?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     birthdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -28754,6 +28884,8 @@ export namespace Prisma {
   export type resourcesUpdateWithoutTenantsInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    targetGroup?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: usersUpdateOneWithoutResourcesNestedInput
   }
@@ -28763,6 +28895,8 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     uploaded_by?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    targetGroup?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -28771,6 +28905,8 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     uploaded_by?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    targetGroup?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -28825,6 +28961,8 @@ export namespace Prisma {
     tenant_id?: number | null
     title?: string | null
     url?: string | null
+    isPublic?: boolean | null
+    targetGroup?: string | null
     created_at?: Date | string | null
   }
 
@@ -28965,6 +29103,8 @@ export namespace Prisma {
   export type resourcesUpdateWithoutUsersInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    targetGroup?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tenants?: tenantsUpdateOneWithoutResourcesNestedInput
   }
@@ -28974,6 +29114,8 @@ export namespace Prisma {
     tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    targetGroup?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -28982,6 +29124,8 @@ export namespace Prisma {
     tenant_id?: NullableIntFieldUpdateOperationsInput | number | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    targetGroup?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 

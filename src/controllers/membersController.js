@@ -21,7 +21,7 @@ export const getMembers = async (req, res) => {
         name: true,
         email: true,
         phone: true,
-        ministry_group: true,
+        group: true, // Now maps to ministry_group in DB automatically
         status: true,
         joined: true,
         address: true,
@@ -29,14 +29,7 @@ export const getMembers = async (req, res) => {
       }
     })
 
-    // Map ministry_group to group for the response
-    const formattedMembers = members.map(m => ({
-      ...m,
-      group: m.ministry_group,
-      ministry_group: undefined
-    }))
-
-    res.json(formattedMembers)
+    res.json(members)
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Failed to fetch members' })
@@ -67,12 +60,13 @@ export const createMember = async (req, res) => {
     }
 
     // 🗄️ Insert user WITHOUT password
+    // 'joined' will be automatically set by DB default(now())
     const newUser = await db.users.create({
       data: {
         name,
         email,
         phone,
-        ministry_group: group,
+        group, // Maps to 'ministry_group' in DB
         address,
         birthdate: birthdate ? new Date(birthdate) : null,
         role: 'member',
@@ -86,7 +80,7 @@ export const createMember = async (req, res) => {
         name: true,
         email: true,
         phone: true,
-        ministry_group: true,
+        group: true,
         status: true,
         joined: true,
         address: true,
@@ -99,11 +93,7 @@ export const createMember = async (req, res) => {
       await sendInviteEmail(email, inviteToken)
     }
 
-    res.json({
-      ...newUser,
-      group: newUser.ministry_group,
-      ministry_group: undefined
-    })
+    res.json(newUser)
 
   } catch (error) {
     console.error('Database Error:', error)
@@ -192,7 +182,7 @@ export const updateMember = async (req, res) => {
         name,
         email,
         phone,
-        ministry_group: group,
+        group, // Maps to 'ministry_group' in DB
         status
       },
       select: {
@@ -200,7 +190,7 @@ export const updateMember = async (req, res) => {
         name: true,
         email: true,
         phone: true,
-        ministry_group: true,
+        group: true,
         status: true,
         joined: true,
         address: true,
@@ -208,11 +198,7 @@ export const updateMember = async (req, res) => {
       }
     })
 
-    res.json({
-      ...updatedUser,
-      group: updatedUser.ministry_group,
-      ministry_group: undefined
-    })
+    res.json(updatedUser)
   } catch (error) {
     console.error(error)
     if (error.code === 'P2025') {

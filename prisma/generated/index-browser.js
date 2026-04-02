@@ -227,6 +227,8 @@ exports.Prisma.ResourcesScalarFieldEnum = {
   title: 'title',
   url: 'url',
   uploaded_by: 'uploaded_by',
+  isPublic: 'isPublic',
+  targetGroup: 'targetGroup',
   created_at: 'created_at'
 };
 
@@ -269,7 +271,8 @@ exports.Prisma.UsersScalarFieldEnum = {
   password_hash: 'password_hash',
   role: 'role',
   phone: 'phone',
-  ministry_group: 'ministry_group',
+  gender: 'gender',
+  group: 'group',
   status: 'status',
   joined: 'joined',
   birthdate: 'birthdate',

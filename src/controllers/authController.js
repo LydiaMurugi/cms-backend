@@ -6,19 +6,12 @@ import { sendInviteEmail } from '../services/emailService.js'
 
 export const getMe = async (req, res) => {
   try {
-    const userId = req.user.userId || req.user.id
+    const userId = parseInt(req.user.userId || req.user.id)
+    
     const result = await db.users.findUnique({
       where: { id: userId },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        phone: true,
-        avatar: true,
-        created_at: true,
-        role: true,
-        tenant_id: true,
-        permissions: true
+      include: {
+        tenants: true // Fetch the church details too!
       }
     })
 
@@ -26,7 +19,13 @@ export const getMe = async (req, res) => {
       return res.status(404).json({ message: 'User not found' })
     }
 
-    return res.json(result);
+    // Map the tenant name so the frontend dashboard can show it
+    const userWithTenant = {
+      ...result,
+      tenantName: result.tenants?.name || null
+    }
+
+    return res.json(userWithTenant);
   } catch (err) {
     console.error(err)
     res.status(500).json({ message: 'Server error' })
@@ -58,7 +57,8 @@ export const login = async (req, res) => {
       {
         userId: user.id,
         role: user.role,
-        tenantId: user.tenant_id
+        tenantId: user.tenant_id,
+        group: user.group
       },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
@@ -71,11 +71,15 @@ export const login = async (req, res) => {
         name: user.name,
         email: user.email,
         phone: user.phone || null,
+        gender: user.gender || null,
         avatar: user.avatar || null,
         created_at: user.created_at,
         role: user.role,
         tenantId: user.tenant_id,
-        permissions: user.permissions
+        permissions: user.permissions,
+        birthdate: user.birthdate,
+        address: user.address,
+        group: user.group
       },
     })
   } catch (error) {
@@ -112,7 +116,7 @@ export const register = async (req, res) => {
         name,
         email,
         role: role || 'member',
-        tenant_id: tenantId || null,
+        tenant_id: tenantId ? parseInt(tenantId) : null,
         permissions: permissions || [],
         status: 'Pending',
         invite_token: inviteToken,
@@ -150,7 +154,7 @@ export const register = async (req, res) => {
 export const updateMe = async (req, res) => {
   try {
     const userId = req.user.userId || req.user.id
-    const { name, email, phone } = req.body
+    const { name, email, phone, gender, birthdate, address, avatar } = req.body
 
     if (email) {
       const existing = await db.users.findFirst({
@@ -168,6 +172,10 @@ export const updateMe = async (req, res) => {
     if (name !== undefined) updateData.name = name;
     if (email !== undefined) updateData.email = email;
     if (phone !== undefined) updateData.phone = phone;
+    if (gender !== undefined) updateData.gender = gender;
+    if (birthdate !== undefined) updateData.birthdate = birthdate ? new Date(birthdate) : null;
+    if (address !== undefined) updateData.address = address;
+    if (avatar !== undefined) updateData.avatar = avatar;
 
     const updatedUser = await db.users.update({
       where: { id: userId },
@@ -180,11 +188,14 @@ export const updateMe = async (req, res) => {
         name: updatedUser.name,
         email: updatedUser.email,
         phone: updatedUser.phone || null,
+        gender: updatedUser.gender || null,
         avatar: updatedUser.avatar || null,
         created_at: updatedUser.created_at,
         role: updatedUser.role,
         tenantId: updatedUser.tenant_id,
-        permissions: updatedUser.permissions
+        permissions: updatedUser.permissions,
+        birthdate: updatedUser.birthdate,
+        address: updatedUser.address
       },
     })
   } catch (err) {

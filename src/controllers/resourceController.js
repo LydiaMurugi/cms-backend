@@ -3,10 +3,15 @@ import db from "../lib/prisma.js"
 export const getResources = async (req, res) => {
   try {
     const tenantId = req.headers['x-tenant-id'];
+    const userGroup = req.user?.group || req.user?.ministry_group; // From JWT
 
     const resources = await db.resources.findMany({
       where: {
-        tenant_id: tenantId ? parseInt(tenantId) : undefined
+        tenant_id: tenantId ? parseInt(tenantId) : undefined,
+        OR: [
+          { isPublic: true },
+          { targetGroup: userGroup || undefined }
+        ]
       },
       orderBy: {
         created_at: 'desc'
@@ -16,6 +21,8 @@ export const getResources = async (req, res) => {
         title: true,
         url: true,
         uploaded_by: true,
+        isPublic: true,
+        targetGroup: true,
         created_at: true
       }
     });
@@ -26,6 +33,8 @@ export const getResources = async (req, res) => {
       title: r.title,
       url: r.url,
       uploadedBy: r.uploaded_by,
+      isPublic: r.isPublic,
+      targetGroup: r.targetGroup,
       createdAt: r.created_at
     }));
 
@@ -42,7 +51,7 @@ export const getResources = async (req, res) => {
  */
 export const uploadResource = async (req, res) => {
   try {
-    const { title, url, fileUrl } = req.body
+    const { title, url, fileUrl, isPublic, targetGroup } = req.body
     const tenantId = req.headers['x-tenant-id'];
 
     // Support both 'url' and 'fileUrl' keys from frontend
@@ -59,13 +68,17 @@ export const uploadResource = async (req, res) => {
         title: title || 'Untitled Resource',
         url: finalUrl,
         uploaded_by: parseInt(userId),
-        tenant_id: tenantId ? parseInt(tenantId) : null
+        tenant_id: tenantId ? parseInt(tenantId) : null,
+        isPublic: isPublic !== undefined ? isPublic : true,
+        targetGroup: targetGroup || null
       },
       select: {
         id: true,
         title: true,
         url: true,
         uploaded_by: true,
+        isPublic: true,
+        targetGroup: true,
         created_at: true
       }
     });
@@ -75,6 +88,8 @@ export const uploadResource = async (req, res) => {
       title: newResource.title,
       url: newResource.url,
       uploadedBy: newResource.uploaded_by,
+      isPublic: newResource.isPublic,
+      targetGroup: newResource.targetGroup,
       createdAt: newResource.created_at
     })
   } catch (error) {

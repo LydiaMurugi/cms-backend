@@ -134,6 +134,8 @@ model resources {
   title       String?
   url         String?
   uploaded_by Int?
+  isPublic    Boolean?  @default(true)
+  targetGroup String?
   created_at  DateTime? @default(now()) @db.Timestamp(6)
   users       users?    @relation(fields: [uploaded_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tenants     tenants?  @relation(fields: [tenant_id], references: [id], onUpdate: NoAction)
@@ -186,9 +188,10 @@ model users {
   password_hash     String?
   role              String?
   phone             String?
-  ministry_group    String?
+  gender            String?
+  group             String?             @map("ministry_group")
   status            String?             @default("Pending")
-  joined            DateTime?           @db.Date
+  joined            DateTime?           @default(now()) @db.Date
   birthdate         DateTime?           @db.Date
   address           String?
   created_at        DateTime?           @default(now()) @db.Timestamp(6)
@@ -205,4 +208,6 @@ model users {
   notifications     notifications[]
   resources         resources[]
   tenants           tenants?            @relation(fields: [tenant_id], references: [id], onUpdate: NoAction)
+
+  @@map("users")
 }
