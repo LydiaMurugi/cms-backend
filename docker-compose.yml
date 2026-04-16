@@ -14,16 +14,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # backend:
-  #   build: .
-  #   container_name: church_backend
-  #   restart: always
-  #   ports:
-  #     - "4000:4000"
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - db
+  backend:
+    build: .
+    container_name: church_backend
+    restart: always
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    depends_on:
+      - db
 
 volumes:
   postgres_data:
